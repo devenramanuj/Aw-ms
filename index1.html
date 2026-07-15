@@ -218,7 +218,7 @@ input, textarea, button, a{-webkit-user-select:text}
   </div>
 </div>
 
-<div id="syncStatus" class="sync-status" style="display:none;cursor:pointer" onclick="if(centerCode && syncQueue.length > 0) processSyncQueue()">
+<div id="syncStatus" class="sync-status" style="display:none;cursor:pointer" onclick="if(window.centerCode && window.syncQueue.length > 0) window.processSyncQueue()">
   ☁️ <span id="syncStatusText">ક્લાઉડ સાથે સિંક થયેલ છે</span>
   <span id="queueCount" style="display:none;margin-left:6px;background:rgba(0,0,0,.2);padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700">📤 <span id="queueNum">0</span> pending</span>
 </div>
@@ -231,15 +231,15 @@ input, textarea, button, a{-webkit-user-select:text}
 <div class="footer">My Daily Report © 2026 | Cloud: Google Drive | Devendra Ramanuj 9276505035</div>
 
 <script>
-/* ============================================================
-   CONFIG - તમારો Google Apps Script URL અહીં paste કરો
-============================================================ */
+// ============================================================
+// CONFIG
+// ============================================================
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyn0jjWbl6zmiWHn0hgwaMqNG33SHJtzIjH52YTGmmJS0RXeZBc7Vk9X_f9OGyVNLdnCw/exec";
 const ADMIN_PASSWORD = "Dev@1";
 
-/* ============================================================
-   CONSTANTS
-============================================================ */
+// ============================================================
+// CONSTANTS
+// ============================================================
 const ITEMS = Object.freeze([
   {id:"ghau", name:"ઘઉં", emoji:"🌾", bg:"#fff3cd", color:"#856404"},
   {id:"chokha", name:"ચોખા", emoji:"🍚", bg:"#d1e7dd", color:"#0a3622"},
@@ -256,18 +256,17 @@ const DEFAULT_INV = {ghau:{o:500,r:200},chokha:{o:300,r:100},tel:{o:50,r:20},cha
 
 const SAJO_CREDS = {'આકરૂ': {}, 'ધંધુકા': {}, 'વાગડ': {}, 'હડાળા': {}};
 
-/* ============================================================
-   STATE - Check both old and new localStorage keys
-============================================================ */
-// Try new key first, then old key
-let currentSajo = localStorage.getItem('current_sajo') || 'આકરૂ';
-let centerCode = localStorage.getItem("mdr_center_code") || localStorage.getItem("anganwadi_center_code") || "";
+// ============================================================
+// STATE - Make globals accessible
+// ============================================================
+window.currentSajo = localStorage.getItem('current_sajo') || 'આકરૂ';
+window.centerCode = localStorage.getItem("mdr_center_code") || localStorage.getItem("anganwadi_center_code") || "";
 
-console.log("=== BOOT DEBUG ===");
-console.log("centerCode from localStorage:", centerCode);
-console.log("currentSajo:", currentSajo);
+console.log("=== BOOT ===");
+console.log("centerCode:", window.centerCode);
+console.log("currentSajo:", window.currentSajo);
 
-let state = {
+window.state = {
   inv: JSON.parse(JSON.stringify(DEFAULT_INV)),
   ben: {},
   tab: 0,
@@ -282,60 +281,60 @@ let state = {
   con: { loading:false, error:"", centers:[], selY:new Date().getFullYear(), selM:new Date().getMonth() }
 };
 
-/* ============================================================
-   SYNC QUEUE
-============================================================ */
-let syncQueue = [];
+// ============================================================
+// SYNC QUEUE - Make global
+// ============================================================
+window.syncQueue = [];
 let isSyncing = false;
 let isOnline = navigator.onLine;
 
-window.addEventListener('online', () => { isOnline = true; setStatus("🟢 Online — Syncing...", "#1b8f57"); processSyncQueue(); });
+window.addEventListener('online', () => { isOnline = true; setStatus("🟢 Online", "#1b8f57"); window.processSyncQueue(); });
 window.addEventListener('offline', () => { isOnline = false; setStatus("🔴 Offline", "#e67e22"); });
 
 function loadSyncQueue(){
-  if(!centerCode) return;
-  const raw = localStorage.getItem("mdr_sync_queue_" + centerCode) || localStorage.getItem("sync_queue_" + centerCode);
-  if(raw){ try{ syncQueue = JSON.parse(raw); }catch(_){ syncQueue = []; } }
+  if(!window.centerCode) return;
+  const raw = localStorage.getItem("mdr_sync_queue_" + window.centerCode) || localStorage.getItem("sync_queue_" + window.centerCode);
+  if(raw){ try{ window.syncQueue = JSON.parse(raw); }catch(_){ window.syncQueue = []; } }
 }
 
 function persistQueue(){
-  if(!centerCode) return;
-  localStorage.setItem("mdr_sync_queue_" + centerCode, JSON.stringify(syncQueue));
+  if(!window.centerCode) return;
+  localStorage.setItem("mdr_sync_queue_" + window.centerCode, JSON.stringify(window.syncQueue));
 }
 
 function addToSyncQueue(data){
-  syncQueue.push({action:'SAVE', data, centerCode, sajoName:currentSajo, timestamp:Date.now(), retries:0});
+  window.syncQueue.push({action:'SAVE', data, centerCode:window.centerCode, sajoName:window.currentSajo, timestamp:Date.now(), retries:0});
   persistQueue();
   updateSyncStatus();
 }
 
-async function processSyncQueue(){
-  if(isSyncing || !isOnline || syncQueue.length === 0 || !_hasURL()) return;
+window.processSyncQueue = async function(){
+  if(isSyncing || !isOnline || window.syncQueue.length === 0 || !_hasURL()) return;
   isSyncing = true;
   let successCount = 0;
-  for(let i = 0; i < syncQueue.length; i++){
-    const ok = await cloudSave(syncQueue[i].data, 2);
-    if(ok){ successCount++; syncQueue.splice(i, 1); i--; }
-    else { syncQueue[i].retries++; if(syncQueue[i].retries > 5){ syncQueue.splice(i, 1); i--; } }
+  for(let i = 0; i < window.syncQueue.length; i++){
+    const ok = await cloudSave(window.syncQueue[i].data, 2);
+    if(ok){ successCount++; window.syncQueue.splice(i, 1); i--; }
+    else { window.syncQueue[i].retries++; if(window.syncQueue[i].retries > 5){ window.syncQueue.splice(i, 1); i--; } }
     await new Promise(r => setTimeout(r, 600));
   }
   persistQueue();
   isSyncing = false;
   if(successCount > 0) setStatus(`✅ ${successCount} synced`, "#1b8f57");
   updateSyncStatus();
-}
+};
 
-/* ============================================================
-   CLOUD API
-============================================================ */
+// ============================================================
+// CLOUD API
+// ============================================================
 function _hasURL(){
   return APPS_SCRIPT_URL && !APPS_SCRIPT_URL.includes("YOUR_URL") && APPS_SCRIPT_URL.includes("script.google.com");
 }
 
-async function saveState(){
-  if(!centerCode){ console.log("saveState: no centerCode"); return; }
-  const payload = {inv:state.inv, ben:state.ben, timestamp:new Date().toISOString(), sajoName:currentSajo};
-  localStorage.setItem("mdr_local_" + centerCode, JSON.stringify(payload));
+window.saveState = async function(){
+  if(!window.centerCode){ console.log("saveState: no centerCode"); return; }
+  const payload = {inv:window.state.inv, ben:window.state.ben, timestamp:new Date().toISOString(), sajoName:window.currentSajo};
+  localStorage.setItem("mdr_local_" + window.centerCode, JSON.stringify(payload));
   
   if(!_hasURL()){ setStatus("💾 Local only", "#e67e22"); return; }
   
@@ -346,7 +345,7 @@ async function saveState(){
     addToSyncQueue(payload);
     setStatus("📤 Offline queued", "#f59e0b");
   }
-}
+};
 
 async function cloudSave(data, maxRetries = 3){
   for(let attempt = 1; attempt <= maxRetries; attempt++){
@@ -360,8 +359,8 @@ async function cloudSave(data, maxRetries = 3){
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
           action: "SAVE",
-          centerCode: centerCode,
-          sajoName: currentSajo,
+          centerCode: window.centerCode,
+          sajoName: window.currentSajo,
           inv: data.inv,
           ben: data.ben,
           timestamp: data.timestamp
@@ -388,14 +387,14 @@ async function cloudSave(data, maxRetries = 3){
   return false;
 }
 
-async function syncCloud(){
-  if(!_hasURL() || !centerCode) return;
+window.syncCloud = async function(){
+  if(!_hasURL() || !window.centerCode) return;
   setStatus("⏳ Loading...", "#2563a8");
   try{
     const url = new URL(APPS_SCRIPT_URL);
     url.searchParams.set("action", "LOAD");
-    url.searchParams.set("centerCode", centerCode);
-    url.searchParams.set("sajoName", currentSajo);
+    url.searchParams.set("centerCode", window.centerCode);
+    url.searchParams.set("sajoName", window.currentSajo);
     
     const ctrl = new AbortController();
     const tid = setTimeout(() => ctrl.abort(), 12000);
@@ -407,14 +406,14 @@ async function syncCloud(){
     
     if(data.status === "error") throw new Error(data.msg || "Server error");
     if(data.status === "new_user"){
-      setStatus(`🆕 New: ${centerCode}`, "#2563a8");
+      setStatus(`🆕 New: ${window.centerCode}`, "#2563a8");
       return;
     }
     if(data.inv || data.ben){
-      if(data.inv) state.inv = data.inv;
-      if(data.ben) state.ben = data.ben;
-      localStorage.setItem("mdr_local_" + centerCode, JSON.stringify({
-        inv: state.inv, ben: state.ben, sajoName: currentSajo, timestamp: new Date().toISOString()
+      if(data.inv) window.state.inv = data.inv;
+      if(data.ben) window.state.ben = data.ben;
+      localStorage.setItem("mdr_local_" + window.centerCode, JSON.stringify({
+        inv: window.state.inv, ben: window.state.ben, sajoName: window.currentSajo, timestamp: new Date().toISOString()
       }));
       setStatus(`☁️ Loaded`, "#1b8f57");
       invalidateCache();
@@ -427,15 +426,15 @@ async function syncCloud(){
     const msg = err.name === "AbortError" ? "Timeout" : err.message;
     setStatus(`⚠️ Load failed: ${msg}`, "#e67e22");
   }
-}
+};
 
 async function sendLog(action, details){
-  if(!_hasURL() || !centerCode) return;
+  if(!_hasURL() || !window.centerCode) return;
   try{
     await fetch(APPS_SCRIPT_URL, {
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({action:"LOG", centerCode, sajoName:currentSajo, logAction:action, logDetails:details, timestamp:new Date().toISOString()})
+      body: JSON.stringify({action:"LOG", centerCode:window.centerCode, sajoName:window.currentSajo, logAction:action, logDetails:details, timestamp:new Date().toISOString()})
     });
   } catch(_){}
 }
@@ -447,11 +446,11 @@ async function fetchLogs(){
     const res = await fetch(APPS_SCRIPT_URL, {
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({action:"GET_LOGS", centerCode, sajoName:currentSajo})
+      body: JSON.stringify({action:"GET_LOGS", centerCode:window.centerCode, sajoName:window.currentSajo})
     });
     const data = await res.json();
-    state.logData = data.logs || [];
-    setStatus(`✅ ${state.logData.length} logs`, "#1b8f57");
+    window.state.logData = data.logs || [];
+    setStatus(`✅ ${window.state.logData.length} logs`, "#1b8f57");
   } catch(err){
     setStatus("❌ Log failed", "#cc3d3d");
   }
@@ -460,29 +459,29 @@ async function fetchLogs(){
 
 async function fetchAllCenters(){
   if(!_hasURL()) return;
-  state.con.loading = true; state.con.error = ""; render();
+  window.state.con.loading = true; window.state.con.error = ""; render();
   setStatus("⏳ Loading centers...", "#2563a8");
   try{
     const res = await fetch(APPS_SCRIPT_URL, {
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({action:"GET_ALL_CENTERS", sajoName:currentSajo})
+      body: JSON.stringify({action:"GET_ALL_CENTERS", sajoName:window.currentSajo})
     });
     const data = await res.json();
     if(data.status === "ok"){
-      state.con.centers = data.centers || [];
-      setStatus(`✅ ${state.con.centers.length} centers`, "#1b8f57");
+      window.state.con.centers = data.centers || [];
+      setStatus(`✅ ${window.state.con.centers.length} centers`, "#1b8f57");
     } else throw new Error(data.msg || "Unknown");
   } catch(err){
-    state.con.error = err.message;
+    window.state.con.error = err.message;
     setStatus("❌ Failed", "#cc3d3d");
   }
-  state.con.loading = false; render();
+  window.state.con.loading = false; render();
 }
 
-/* ============================================================
-   UI HELPERS
-============================================================ */
+// ============================================================
+// UI HELPERS
+// ============================================================
 function setStatus(msg, color){
   console.log("Status:", msg);
   const s = document.getElementById("syncStatus");
@@ -500,7 +499,7 @@ function updateSyncStatus(){
   const qCountEl = document.getElementById("queueCount");
   const qNumEl = document.getElementById("queueNum");
   if(!qCountEl || !qNumEl) return;
-  if(syncQueue.length > 0){ qCountEl.style.display = "inline-block"; qNumEl.textContent = syncQueue.length; }
+  if(window.syncQueue.length > 0){ qCountEl.style.display = "inline-block"; qNumEl.textContent = window.syncQueue.length; }
   else { qCountEl.style.display = "none"; }
 }
 
@@ -514,18 +513,18 @@ function showNav(){
 function showHeaderInfo(){
   const bar = document.getElementById("centerInfoBar");
   const btn = document.getElementById("btnLogoutHeader");
-  if(bar && centerCode){ bar.style.display = "block"; bar.innerHTML = `🏢 કેન્દ્ર: <b style="color:#f39c12">${centerCode}</b> | સેજો: ${currentSajo}`; }
+  if(bar && window.centerCode){ bar.style.display = "block"; bar.innerHTML = `🏢 કેન્દ્ર: <b style="color:#f39c12">${window.centerCode}</b> | સેજો: ${window.currentSajo}`; }
   if(btn) btn.style.display = "block";
 }
 
-/* ============================================================
-   BOOT - FIXED: Always call proper init
-============================================================ */
+// ============================================================
+// BOOT - CRITICAL FIX: Wait for DOM
+// ============================================================
 function bootApp(){
-  console.log("bootApp called, centerCode:", centerCode);
-  if(!centerCode){ 
-    console.log("No centerCode, showing setup"); 
-    // Hide nav when no center
+  console.log("bootApp called, centerCode:", window.centerCode);
+  
+  if(!window.centerCode){ 
+    console.log("No centerCode, showing setup");
     const nav = document.getElementById("nav");
     const sync = document.getElementById("syncStatus");
     const bar = document.getElementById("centerInfoBar");
@@ -539,12 +538,12 @@ function bootApp(){
   }
   
   // Load local data
-  const raw = localStorage.getItem("mdr_local_" + centerCode) || localStorage.getItem("mdr_offline_" + centerCode);
+  const raw = localStorage.getItem("mdr_local_" + window.centerCode) || localStorage.getItem("mdr_offline_" + window.centerCode);
   if(raw){
     try{
       const d = JSON.parse(raw);
-      if(d.inv) state.inv = d.inv;
-      if(d.ben) state.ben = d.ben;
+      if(d.inv) window.state.inv = d.inv;
+      if(d.ben) window.state.ben = d.ben;
       console.log("Local data loaded");
     } catch(e){ console.error("Local parse error:", e); }
   }
@@ -556,13 +555,13 @@ function bootApp(){
   
   if(isOnline && _hasURL()){
     console.log("Starting cloud sync...");
-    setTimeout(() => syncCloud(), 500);
+    setTimeout(() => window.syncCloud(), 500);
   }
 }
 
-/* ============================================================
-   CALCULATIONS
-============================================================ */
+// ============================================================
+// CALCULATIONS
+// ============================================================
 function calcUsage(dow, n){
   n = Number(n) || 0;
   const u = {};
@@ -616,11 +615,71 @@ function calcMonthUsage(y,m,ben){
 function invalidateCache(){ _muCache = null; _muCacheKey = ""; }
 const fmt = (n,d=0) => (n==null||isNaN(n)) ? "0" : Number(n).toFixed(d);
 
-/* ============================================================
-   RENDER PAGES
-============================================================ */
+// ============================================================
+// RENDER - CRITICAL FIX: Check app element exists
+// ============================================================
+let _renderPending = false;
+function render(){
+  if(_renderPending) return;
+  _renderPending = true;
+  
+  requestAnimationFrame(() => {
+    _renderPending = false;
+    const app = document.getElementById('app');
+    
+    console.log("render() called, app element:", app ? "found" : "NOT FOUND");
+    
+    if(!app){
+      console.error("CRITICAL: #app element not found!");
+      return;
+    }
+    
+    if(!window.centerCode){
+      console.log("No centerCode, rendering setup");
+      const nav = document.getElementById("nav");
+      const sync = document.getElementById("syncStatus");
+      if(nav) nav.style.display = "none";
+      if(sync) sync.style.display = "none";
+      app.innerHTML = renderSetupPage();
+      return;
+    }
+    
+    document.querySelectorAll('#nav button').forEach(b => {
+      b.classList.toggle('active', Number(b.dataset.tab) === window.state.tab);
+    });
+    
+    const curMU = calcMonthUsage(window.state.calY, window.state.calM, window.state.ben);
+    let html = "";
+    
+    try {
+      if(window.state.tab === 0) html = renderInventoryPage(curMU);
+      else if(window.state.tab === 1) html = renderCalendarPage();
+      else if(window.state.tab === 2) html = renderDashboardPage(curMU);
+      else if(window.state.tab === 3) html = renderReportPage();
+      else if(window.state.tab === 5) html = renderBillPage();
+      else if(window.state.tab === 4) html = renderAdminPage();
+      
+      html += renderModal();
+      app.innerHTML = html;
+      
+      if(window.state.modal){
+        const inp = document.getElementById('modalInput');
+        if(inp){ inp.focus(); inp.select(); }
+      }
+      if(window.state.tab === 3 && !window.state.modal) initReportZoom();
+      
+    } catch(err) {
+      console.error("Render error:", err);
+      app.innerHTML = `<div class="container"><div class="card"><div class="section-head" style="background:#cc3d3d">❌ Error</div><div class="section-body"><p>${err.message}</p><pre style="font-size:10px;overflow:auto">${err.stack}</pre></div></div></div>`;
+    }
+  });
+}
+
+// ============================================================
+// RENDER PAGES
+// ============================================================
 function renderSetupPage(){
-  const sajoOptions = Object.keys(SAJO_CREDS).map(s => `<option value="${s}" ${s===currentSajo?'selected':''}>${s}</option>`).join('');
+  const sajoOptions = Object.keys(SAJO_CREDS).map(s => `<option value="${s}" ${s===window.currentSajo?'selected':''}>${s}</option>`).join('');
   return `<div class="setup-box">
     <h2>🌾 Sajo MDR System</h2>
     <p style="font-size:11px;color:#64748b;margin-bottom:12px">સેજો અને કેન્દ્રનું નામ લખો</p>
@@ -634,7 +693,7 @@ function renderSetupPage(){
 
 function renderInventoryPage(curMU){
   const cards = ITEMS.map(it => {
-    const iv = state.inv[it.id];
+    const iv = window.state.inv[it.id];
     const opening = iv.o + iv.r;
     const used = (curMU[it.id] || 0) / 1000;
     const closing = opening - used;
@@ -648,8 +707,8 @@ function renderInventoryPage(curMU){
   
   return `<div class="container tab-content">
     <div class="card">
-      <div class="section-head">📦 ઈન્વેન્ટરી (${MONTHS_FULL[state.calM]} ${state.calY})
-        <span style="font-size:11px;background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:8px">કોડ: ${centerCode}</span>
+      <div class="section-head">📦 ઈન્વેન્ટરી (${MONTHS_FULL[window.state.calM]} ${window.state.calY})
+        <span style="font-size:11px;background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:8px">કોડ: ${window.centerCode}</span>
       </div>
       <div class="section-body"><div class="inv-grid">${cards}</div></div>
     </div>
@@ -670,7 +729,7 @@ function renderInventoryPage(curMU){
 }
 
 function renderCalendarPage(){
-  const y = state.calY, m = state.calM;
+  const y = window.state.calY, m = window.state.calM;
   const first = new Date(y,m,1).getDay();
   const dim = new Date(y,m+1,0).getDate();
   const today = new Date();
@@ -679,7 +738,7 @@ function renderCalendarPage(){
   for(let i=0; i<first; i++) cells += `<div class="cal-cell empty"></div>`;
   for(let d=1; d<=dim; d++){
     const k = dkf(y,m,d);
-    const n = Number(state.ben[k] || 0);
+    const n = Number(window.state.ben[k] || 0);
     const dow = new Date(y,m,d).getDay();
     const isToday = (d===today.getDate() && m===today.getMonth() && y===today.getFullYear());
     if(n>0){ monthN += n; monthD++; }
@@ -711,11 +770,11 @@ function renderCalendarPage(){
 
 function renderDashboardPage(curMU){
   let fruitBenCount = 0;
-  const dim = new Date(state.calY, state.calM+1, 0).getDate();
+  const dim = new Date(window.state.calY, window.state.calM+1, 0).getDate();
   for(let d=1; d<=dim; d++){
-    const k = dkf(state.calY, state.calM, d);
-    const n = Number(state.ben[k] || 0);
-    const dow = new Date(state.calY, state.calM, d).getDay();
+    const k = dkf(window.state.calY, window.state.calM, d);
+    const n = Number(window.state.ben[k] || 0);
+    const dow = new Date(window.state.calY, window.state.calM, d).getDay();
     if(dow === 1 || dow === 4) fruitBenCount += n;
   }
   const chanaDalBenCount = (curMU['chananA'] || 0) + (curMU['dalnA'] || 0);
@@ -726,7 +785,7 @@ function renderDashboardPage(curMU){
   
   return `<div class="container tab-content">
     <div class="card">
-      <div class="section-head" style="background:linear-gradient(135deg,#1e40af,#2563a8)">📊 ડેશબોર્ડ — ${MONTHS_FULL[state.calM]} ${state.calY}</div>
+      <div class="section-head" style="background:linear-gradient(135deg,#1e40af,#2563a8)">📊 ડેશબોર્ડ — ${MONTHS_FULL[window.state.calM]} ${window.state.calY}</div>
       <div style="padding:12px">
         <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px">
           <div style="padding:12px;background:linear-gradient(135deg,#e0f2fe,#cffafe);border-radius:8px;border-left:4px solid #0284c7">
@@ -767,13 +826,13 @@ function renderDashboardPage(curMU){
 }
 
 function renderBillPage(){
-  const curMU = calcMonthUsage(state.calY, state.calM, state.ben);
+  const curMU = calcMonthUsage(window.state.calY, window.state.calM, window.state.ben);
   let fruitBenCount = 0;
-  const dim = new Date(state.calY, state.calM+1, 0).getDate();
+  const dim = new Date(window.state.calY, window.state.calM+1, 0).getDate();
   for(let d=1; d<=dim; d++){
-    const k = dkf(state.calY, state.calM, d);
-    const n = Number(state.ben[k] || 0);
-    const dow = new Date(state.calY, state.calM, d).getDay();
+    const k = dkf(window.state.calY, window.state.calM, d);
+    const n = Number(window.state.ben[k] || 0);
+    const dow = new Date(window.state.calY, window.state.calM, d).getDay();
     if(dow === 1 || dow === 4) fruitBenCount += n;
   }
   const chanaDalBenCount = (curMU['chananA'] || 0) + (curMU['dalnA'] || 0);
@@ -816,7 +875,7 @@ function renderBillPage(){
 
   return `<div class="container tab-content">
     <div class="card">
-      <div class="section-head" style="background:linear-gradient(135deg,#0f5132,#198754)">🧾 બિલ તાલીમ — ${MONTHS_FULL[state.calM]} ${state.calY}</div>
+      <div class="section-head" style="background:linear-gradient(135deg,#0f5132,#198754)">🧾 બિલ તાલીમ — ${MONTHS_FULL[window.state.calM]} ${window.state.calY}</div>
       <div style="padding:14px;border-bottom:1px solid #d1dce8;background:#f0f6f1">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
           <div><div style="font-size:11px;color:#64748b">કાર્ય દિવસ:</div><div style="font-size:14px;font-weight:700;color:#198754">${curMU.days} દિવસ</div></div>
@@ -845,45 +904,9 @@ function renderBillPage(){
 function renderReportPage(){
   const today = new Date();
   const todayK = dkf(today.getFullYear(), today.getMonth(), today.getDate());
-  const todayN = Number(state.ben[todayK] || 0);
+  const todayN = Number(window.state.ben[todayK] || 0);
   const todayU = calcUsage(today.getDay(), todayN);
-  const curMU = calcMonthUsage(state.calY, state.calM, state.ben);
+  const curMU = calcMonthUsage(window.state.calY, window.state.calM, window.state.ben);
 
   const dailyRows = ITEMS.map(it => {
-    const iv = state.inv[it.id], opening = iv.o + iv.r;
-    const mor = morU(it.id, todayU), aft = aftU(it.id, todayU), tot = todayU[it.id] || 0;
-    return `<tr>
-      <td style="text-align:left"><span class="badge" style="background:${it.bg};color:${it.color}">${it.emoji} ${it.name}</span></td>
-      <td style="color:#2563a8;font-weight:700">${todayN}</td>
-      <td style="color:#2980b9;font-weight:700">${fmt(opening,3)}</td>
-      <td>${mor||"—"}</td><td>${aft||"—"}</td>
-      <td style="color:#e67e22;font-weight:700">${tot||"—"}</td>
-      <td style="color:#1b8f57;font-weight:700">${fmt(opening-tot/1000,3)}</td>
-    </tr>`;
-  }).join("");
-
-  const runBal = {};
-  ITEMS.forEach(it => { runBal[it.id] = state.inv[it.id].o + state.inv[it.id].r; });
-  const totals = {n:0};
-  ITEMS.forEach(it => { totals[it.id+"M"]=0; totals[it.id+"A"]=0; totals[it.id]=0; });
-  
-  const dim = new Date(state.calY, state.calM+1, 0).getDate();
-  const dateRowsArr = [];
-  
-  for(let d=1; d<=dim; d++){
-    const k = dkf(state.calY, state.calM, d);
-    const n = Number(state.ben[k] || 0);
-    const dow = new Date(state.calY, state.calM, d).getDay();
-    const u = calcUsage(dow, n);
-    totals.n += n;
-    const colsArr = [];
-    ITEMS.forEach(it => {
-      const mg = u[it.id+"M"] || 0, ag = u[it.id+"A"] || 0, t = u[it.id] || 0;
-      runBal[it.id] -= t/1000;
-      totals[it.id+"M"] += mg; totals[it.id+"A"] += ag; totals[it.id] += t;
-      colsArr.push(`<td>${mg||"—"}</td><td>${ag||"—"}</td><td style="font-weight:700;color:${t?'#e67e22':'#cbd5e1'}">${t||"—"}</td><td style="font-weight:700;color:#1b8f57">${fmt(runBal[it.id],3)}</td>`);
-    });
-    dateRowsArr.push(`<tr class="${dow===0?'sun-row':''}"><td class="sticky-c1"><b>${d}</b></td><td class="sticky-c2">${DAYS_TBL[dow]}</td><td class="sticky-c3" style="${n>0?'color:#2563a8;font-weight:700':'color:#cbd5e1'}">${n||"—"}</td>${colsArr.join("")}</tr>`);
-  }
-
-  const totalCols = ITEMS.map(it => `<td>${fmt(totals[it
+    const iv = window.state.inv
