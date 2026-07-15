@@ -10,7 +10,10 @@
 <meta name="apple-mobile-web-app-title" content="My Daily Report" />
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%230f2442' width='192' height='192'/><text x='50%' y='50%' font-size='80' text-anchor='middle' dominant-baseline='middle' fill='%23fff' font-weight='bold'>🌾</text></svg>" />
 <link rel="manifest" href="data:application/manifest+json,{%22name%22:%22My%20Daily%20Report%22,%22short_name%22:%22MDR%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20192%20192%27%3E%3Crect%20fill=%27%230f2442%27%20width=%27192%27%20height=%27192%27/%3E%3Ctext%20x=%2750%25%27%20y=%2750%25%27%20font-size=%2780%27%20text-anchor=%27middle%27%20dominant-baseline=%27middle%27%20fill=%27%23fff%27%20font-weight=%27bold%27%3E🌾%3C/text%3E%3C/svg%3E%22,%22sizes%22:%22192x192%22,%22type%22:%22image/svg+xml%22,%22purpose%22:%22any%22}],%22start_url%22:%22/%22,%22scope%22:%22/%22,%22display%22:%22standalone%22,%22orientation%22:%22portrait-primary%22,%22theme_color%22:%22%230f2442%22,%22background_color%22:%22%23f0f4f8%22}" />
-<title>My Daily Report</title>
+<title>Sajo MDR System</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
 <!-- ✅ FIX 1: font-display:swap + preload = no blocking -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -311,6 +314,15 @@ const DEFAULT_INV = {ghau:{o:500,r:200},chokha:{o:300,r:100},tel:{o:50,r:20},cha
 /* ============================================================
    STATE
 ============================================================ */
+// Sajo Management Configuration
+const SAJO_CREDS = {
+  'આકરૂ': {},
+  'ધંધુકા': {},
+  'વાગડ': {},
+  'હડાળા': {}
+};
+
+let currentSajo = localStorage.getItem('current_sajo') || 'આકરૂ';
 let centerCode = localStorage.getItem("anganwadi_center_code") || "";
 let state = {
   inv: JSON.parse(JSON.stringify(DEFAULT_INV)),
@@ -866,35 +878,21 @@ const fmt = (n,d=0) => (n==null||isNaN(n)) ? "0" : Number(n).toFixed(d);
 /* ============================================================
    RENDER — PAGES
 ============================================================ */
-function restoreData(){
-  const allKeys = Object.keys(localStorage);
-  
-  // Find all Aw05 variants (case insensitive)
-  const aw05Keys = allKeys.filter(k => 
-    (k.includes('Aw05') || k.includes('AW05') || k.includes('aw05') || k.includes('Aw 05')) && 
-    k.includes('offline')
-  );
-  
-  if(aw05Keys.length === 0){
-    alert("❌ ડેટા મિલ્યો નહીં");
-    return;
-  }
-  
-  // Copy all variants to standard key
-  const sourceKey = aw05Keys[0];
-  const data = localStorage.getItem(sourceKey);
-  
-  localStorage.setItem('mdr_offline_Aw05', data);
-  alert("✅ ડેટા પુનર્સ્થાપિત થયો!\nાર હવે 'Aw05' લખીને શરૂ કરો");
-}
-
 function renderSetupPage(){
+  const sajoOptions = Object.keys(SAJO_CREDS).map(s => `<option value="${s}" ${s === currentSajo ? 'selected' : ''}>${s}</option>`).join('');
   return `<div class="setup-box">
-    <h2>🏢 આંગણવાડી કેન્દ્ર લોગિન</h2>
-    <p style="font-size:13px;color:#64748b;margin-bottom:15px">તમારો ડેટા અલગ રાખવા માટે કેન્દ્રનો કોડ નાખો.</p>
-    <input type="text" id="centerCodeInput" placeholder="દા.ત. Aw05" value="${centerCode}" autocomplete="off">
-    <button id="btnSubmitSetup">એપ શરૂ કરો ➔</button>
-    <button id="btnRestoreData" style="width:100%;padding:8px;background:#f39c12;color:#fff;border:none;border-radius:6px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;margin-top:8px">📥 ડેટા પુનર્સ્થાપિત કરો</button>
+    <h2>🌾 Sajo MDR System</h2>
+    <p style="font-size:11px;color:#64748b;margin-bottom:12px">સેજો અને કેન્દ્રનું નામ લખો</p>
+    
+    <label style="font-size:10px;font-weight:700;color:#475569;margin-bottom:4px;display:block">📍 સેજો</label>
+    <select id="sajoInput" style="width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:6px;font-family:inherit;font-size:11px;margin-bottom:12px">
+      ${sajoOptions}
+    </select>
+    
+    <label style="font-size:10px;font-weight:700;color:#475569;margin-bottom:4px;display:block">🏢 કેન્દ્રનું નામ</label>
+    <input type="text" id="centerNameInput" placeholder="દા.ત. પંચમહાલ અંગણવાડી" autocomplete="off" style="width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:6px;font-family:inherit;font-size:11px;box-sizing:border-box;margin-bottom:12px">
+    
+    <button id="btnStart" style="width:100%;padding:10px;background:#2563a8;color:#fff;border:none;border-radius:6px;font-weight:700;font-family:inherit;font-size:11px;cursor:pointer">🚀 શરૂ કરો</button>
   </div>`;
 }
 
@@ -1782,22 +1780,10 @@ function importBackup(file){
       const data=JSON.parse(e.target.result);
       if(data.inv) state.inv=data.inv;
       if(data.ben) state.ben=data.ben;
-      
-      // Force save to localStorage
-      if(centerCode){
-        const dataToSave = {inv:state.inv, ben:state.ben, timestamp: new Date().toISOString()};
-        localStorage.setItem("mdr_offline_" + centerCode, JSON.stringify(dataToSave));
-      }
-      
-      invalidateCache(); 
-      render();
-      alert("✅ ડેટા import થયો!");
-    }catch(err){ 
-      console.error('Import error:', err);
-      alert("❌ ખોટી file - JSON format બરાબર નથી"); 
-    }
+      invalidateCache(); saveState(); render();
+      alert("✅ Restore!");
+    }catch(_){ alert("❌ ખોટી file"); }
   };
-  r.onerror=()=>{ alert("❌ File read failed"); };
   r.readAsText(file);
 }
 
@@ -1883,12 +1869,31 @@ function initReportZoom(){
 document.addEventListener('click', e=>{
   const t=e.target;
   // Setup
-  if(t.id==='btnSubmitSetup'){
-    const val=document.getElementById("centerCodeInput").value.trim();
-    if(!val){alert("⚠️ Code!");return;}
-    centerCode=val;
-    localStorage.setItem("anganwadi_center_code",centerCode);
-    sendLog('LOGIN',`Login — ${centerCode}`);
+  if(t.id==='btnStart'){
+    const sajo = document.getElementById("sajoInput").value.trim();
+    const name = document.getElementById("centerNameInput").value.trim();
+    
+    if(!sajo){ alert("⚠️ સેજો પસંદ કર"); return; }
+    if(!name){ alert("⚠️ કેન્દ્રનું નામ લખો"); return; }
+    
+    // Check if center already exists
+    const key = 'sajo_' + sajo + '_centers';
+    const centers = JSON.parse(localStorage.getItem(key) || '[]');
+    let center = centers.find(c => c.name === name);
+    
+    if(!center){
+      // Create new center
+      const code = sajo.slice(0,2).toUpperCase() + '-' + String(centers.length + 1).padStart(3, '0');
+      center = {name, code, createdAt: new Date().toISOString()};
+      centers.push(center);
+      localStorage.setItem(key, JSON.stringify(centers));
+    }
+    
+    currentSajo = sajo;
+    centerCode = center.code;
+    localStorage.setItem('current_sajo', sajo);
+    localStorage.setItem('anganwadi_center_code', centerCode);
+    sendLog('LOGIN', `Sajo: ${sajo} | Center: ${name}`);
     bootApp();
     return;
   }
@@ -1952,14 +1957,6 @@ document.addEventListener('click', e=>{
   if(t.id==='btnPDF'){ generateMonthlyPDF(); return; }
   if(t.id==='btnExport'){ exportBackup(); return; }
   if(t.id==='btnImport'){ document.getElementById('fileImport').click(); return; }
-});
-
-// File import handler
-document.getElementById('fileImport')?.addEventListener('change', e=>{
-  if(e.target.files && e.target.files[0]){
-    importBackup(e.target.files[0]);
-    e.target.value = '';
-  }
 });
 
 document.addEventListener('input', e=>{
@@ -2040,6 +2037,17 @@ if(window.beforeinstallprompt){
       }
     }, 3000);
   });
+}
+
+// Cache busting on app version update
+const CURRENT_VERSION='2.5.0';
+const STORED_VERSION=localStorage.getItem('app_version');
+if(STORED_VERSION!==CURRENT_VERSION){
+  console.log('✅ App updated to v'+CURRENT_VERSION+' - clearing cache...');
+  localStorage.setItem('app_version',CURRENT_VERSION);
+  if('caches' in window){
+    caches.keys().then(names=>names.forEach(n=>caches.delete(n)));
+  }
 }
 </script>
   <footer style="text-align: center; margin: 20px 0; clear: both; display: block; position: relative; z-index: 9999;">
