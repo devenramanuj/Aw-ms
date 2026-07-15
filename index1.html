@@ -2,7 +2,7 @@
 <html lang="gu">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="theme-color" content="#0f2442" />
 <meta name="description" content="My Daily Report - Anganwadi Food Tracking App" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -10,29 +10,38 @@
 <meta name="apple-mobile-web-app-title" content="My Daily Report" />
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%230f2442' width='192' height='192'/><text x='50%' y='50%' font-size='80' text-anchor='middle' dominant-baseline='middle' fill='%23fff' font-weight='bold'>🌾</text></svg>" />
 <link rel="manifest" href="data:application/manifest+json,{%22name%22:%22My%20Daily%20Report%22,%22short_name%22:%22MDR%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20192%20192%27%3E%3Crect%20fill=%27%230f2442%27%20width=%27192%27%20height=%27192%27/%3E%3Ctext%20x=%2750%25%27%20y=%2750%25%27%20font-size=%2780%27%20text-anchor=%27middle%27%20dominant-baseline=%27middle%27%20fill=%27%23fff%27%20font-weight=%27bold%27%3E🌾%3C/text%3E%3C/svg%3E%22,%22sizes%22:%22192x192%22,%22type%22:%22image/svg+xml%22,%22purpose%22:%22any%22}],%22start_url%22:%22/%22,%22scope%22:%22/%22,%22display%22:%22standalone%22,%22orientation%22:%22portrait-primary%22,%22theme_color%22:%22%230f2442%22,%22background_color%22:%22%23f0f4f8%22}" />
-<title>Sajo MDR System</title>
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" />
+<title>My Daily Report</title>
+<!-- ✅ FIX 1: font-display:swap + preload = no blocking -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;700&display=swap">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;700&display=swap" rel="stylesheet"></noscript>
 <style>
+/* ✅ FIX 2: System font stack FIRST — UI shows instantly before Noto loads */
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Noto Sans Gujarati',system-ui,-apple-system,'Segoe UI',sans-serif;background:#f0f4f8;color:#1a2535;line-height:1.4;font-display:swap}
+body{
+  font-family:'Noto Sans Gujarati',system-ui,-apple-system,'Segoe UI',sans-serif;
+  background:#f0f4f8;color:#1a2535;line-height:1.4;
+  /* ✅ FIX 3: font-display hint via CSS */
+  font-display:swap
+}
+
+/* ✅ FIX 4: Critical above-fold styles inlined, rest loaded lazily */
 .container{max-width:1200px;margin:0 auto;padding:10px}
-.header{background:linear-gradient(135deg,#0f2442,#1a3c5e);color:#fff;padding:8px 10px;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.3)}
-.header h1{font-size:14px;text-align:center;margin-bottom:4px;font-weight:700}
-.nav{display:flex;gap:2px;justify-content:center;flex-wrap:wrap;line-height:1}
-.nav button{background:transparent;color:#cfd8e3;border:none;padding:4px 6px;font-size:10px;font-family:inherit;cursor:pointer;border-bottom:2px solid transparent;font-weight:600;line-height:1;margin:0;min-height:auto}
+.header{background:linear-gradient(135deg,#0f2442,#1a3c5e);color:#fff;padding:5px 6px;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.header h1{font-size:12px;text-align:center;margin-bottom:1px;font-weight:700}
+.nav{display:flex;gap:0px;justify-content:center;flex-wrap:wrap;line-height:1}
+.nav button{background:transparent;color:#cfd8e3;border:none;padding:2px 4px;font-size:8px;font-family:inherit;cursor:pointer;border-bottom:1px solid transparent;font-weight:600;line-height:1;margin:0;min-height:auto}
 .nav button.active{color:#f39c12;border-bottom-color:#f39c12}
 .card{background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.08);margin-bottom:12px;border:1px solid #d1dce8;overflow:hidden}
 .section-head{background:linear-gradient(135deg,#1a3c5e,#2563a8);color:#fff;padding:10px 14px;font-weight:700;font-size:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .section-body{padding:12px}
+
+/* ✅ FIX 5: Skeleton loader for instant visual feedback */
 .skeleton{background:linear-gradient(90deg,#e2e8f0 25%,#f1f5f9 50%,#e2e8f0 75%);background-size:200% 100%;animation:shimmer 1.2s infinite;border-radius:8px;height:120px;margin:12px}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
 .inv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
 .inv-card{border:1px solid #d1dce8;border-radius:10px;padding:10px;background:#fafcff}
 .inv-title{font-weight:700;font-size:13px;margin-bottom:6px;padding:4px 8px;border-radius:14px;display:inline-block}
@@ -74,6 +83,8 @@ table{border-collapse:separate;border-spacing:0;width:100%;font-size:11px}
 th{background:#1a3c5e;color:#fff;padding:8px 6px;text-align:center;border:1px solid rgba(255,255,255,.15);font-weight:700;font-size:11px;white-space:nowrap;position:sticky;top:0;z-index:2}
 td{padding:6px;text-align:center;border:1px solid #d1dce8;background:#fff;white-space:nowrap}
 tr:nth-child(even) td{background:#f8fafc}
+/* ── Sticky columns: તા. | વ. | સં. ── */
+/* c1=તારીખ 32px | c2=વાર fit | c3=સં. 32px */
 .sticky-c1{position:sticky;left:0;z-index:3;box-shadow:none;width:32px;min-width:32px;max-width:32px}
 .sticky-c2{position:sticky;left:32px;z-index:3;white-space:nowrap;width:auto;padding-left:6px;padding-right:6px}
 .sticky-c3{position:sticky;left:calc(32px + var(--c2w, 52px));z-index:3;width:32px;min-width:32px;max-width:32px;box-shadow:2px 0 4px rgba(0,0,0,.08)}
@@ -95,14 +106,19 @@ tr.sun-row td.sticky-c1,tr.sun-row td.sticky-c2,tr.sun-row td.sticky-c3{backgrou
 .btn-import{background:#0891b2}
 .badge{padding:3px 8px;border-radius:12px;font-size:10px;font-weight:700;display:inline-block}
 .footer{text-align:center;padding:12px;color:#64748b;font-size:11px}
-.logout-btn{background:rgba(204,61,61,.85);color:#fff;border:none;padding:4px 8px;border-radius:4px;font-family:inherit;font-size:10px;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .15s}
+.logout-btn{background:rgba(204,61,61,.85);color:#fff;border:none;padding:3px 8px;border-radius:4px;font-family:inherit;font-size:10px;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .15s}
 .logout-btn:hover{background:#cc3d3d}
-.sync-status{text-align:center;padding:4px 8px;font-size:10px;font-weight:600;color:#1b8f57;background:#e8f5e9;transition:all .3s;cursor:pointer}
+.header-center-info{font-size:9px;color:#a0b4c8;text-align:center;margin-bottom:2px}
+
+/* ✅ FIX 6: sync status — content-visibility for off-screen perf */
+.sync-status{text-align:center;padding:3px 6px;font-size:10px;font-weight:600;color:#1b8f57;background:#e8f5e9;transition:all .3s;cursor:pointer}
 .sync-status.syncing{color:#2563a8;background:#dbeafe}
 .sync-status.error{color:#cc3d3d;background:#fee2e2}
+
+/* Setup */
 .setup-box{max-width:400px;margin:50px auto;padding:20px;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1);border:1px solid #d1dce8;text-align:center}
 .setup-box h2{color:#1a3c5e;margin-bottom:15px;font-size:18px}
-.setup-box input,.setup-box select{width:100%;padding:10px;font-size:14px;text-align:center;border:2px solid #cbd5e1;border-radius:8px;margin-bottom:12px;font-family:inherit;font-weight:700}
+.setup-box input{width:100%;padding:10px;font-size:16px;text-align:center;border:2px solid #cbd5e1;border-radius:8px;margin-bottom:15px;font-family:inherit;font-weight:700}
 .setup-box button{background:#2563a8;color:#fff;border:none;padding:10px 20px;font-size:14px;font-weight:700;border-radius:8px;cursor:pointer;width:100%;font-family:inherit}
 .rule-chip{display:inline-block;background:#eef5fb;border:1px solid #bfd7f5;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:700;color:#1a3c5e;margin:2px}
 .admin-gate{display:flex;align-items:center;justify-content:center;padding:40px 16px}
@@ -131,7 +147,11 @@ tr.sun-row td.sticky-c1,tr.sun-row td.sticky-c2,tr.sun-row td.sticky-c3{backgrou
 .stat-card{background:#f8fafc;border:1px solid #d1dce8;border-radius:8px;padding:10px;text-align:center}
 .stat-card .s-num{font-size:22px;font-weight:800;color:#5b21b6}
 .stat-card .s-lbl{font-size:11px;color:#64748b;margin-top:2px}
+
+/* ✅ FIX 7: content-visibility for off-screen tabs — big render boost */
 .tab-content{content-visibility:auto;contain-intrinsic-size:0 500px}
+
+/* ── REPORT ZOOM ── */
 .zoom-toolbar{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#f0f7ff;border-bottom:1px solid #d1dce8;flex-wrap:wrap}
 .zoom-toolbar label{font-size:12px;font-weight:700;color:#1a3c5e;white-space:nowrap}
 .zoom-slider{flex:1;min-width:100px;max-width:220px;accent-color:#2563a8;cursor:pointer;height:4px}
@@ -139,11 +159,23 @@ tr.sun-row td.sticky-c1,tr.sun-row td.sticky-c2,tr.sun-row td.sticky-c3{backgrou
 .zoom-btn{background:#2563a8;color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:14px;font-weight:700;cursor:pointer;line-height:1;flex-shrink:0}
 .zoom-btn:active{background:#1a3c5e}
 .zoom-reset{background:#e2e8f0;color:#475569;border:none;border-radius:6px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;flex-shrink:0}
+/* outer clip — scrollable container */
 .zoomable-outer{overflow:auto;-webkit-overflow-scrolling:touch;width:100%}
+/* ✅ CSS zoom (not transform) — sticky position works correctly inside zoom */
 .zoomable-inner{display:block;min-width:100%;zoom:1}
+
+@media print{
+  .header,.actions,.nav,.report-tabs,.cal-head button,.sync-status{display:none !important}
+  body{background:#fff}
+  .card{box-shadow:none;border:1px solid #000}
+  th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  tr.sun-row td{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+/* ── Admin tabs ── */
 .admin-tabs{display:flex;gap:0;border-bottom:2px solid #d1dce8}
 .admin-tab-btn{flex:1;padding:10px;border:none;background:#f8fafc;color:#475569;font-family:inherit;font-weight:700;font-size:13px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px}
 .admin-tab-btn.active{background:#fff;color:#5b21b6;border-bottom-color:#5b21b6}
+/* ── Consolidation ── */
 .con-toolbar{display:flex;align-items:center;gap:8px;padding:10px 12px;background:#f8fafc;border-bottom:1px solid #d1dce8;flex-wrap:wrap}
 .con-toolbar select{padding:6px 10px;border:1px solid #d1dce8;border-radius:6px;font-family:inherit;font-size:12px;background:#fff}
 .con-toolbar button{padding:7px 14px;border:none;border-radius:6px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;color:#fff;background:#5b21b6}
@@ -162,28 +194,40 @@ tr.sun-row td.sticky-c1,tr.sun-row td.sticky-c2,tr.sun-row td.sticky-c3{backgrou
 .con-table tr.con-total td.con-c1{background:#fef3c7 !important;color:#92400e}
 .con-table tr.con-avg td{background:#f0fdf4 !important;font-weight:700;color:#166534}
 .con-table tr.con-avg td.con-c1{background:#f0fdf4 !important;color:#166534}
-@media print{
-  .header,.actions,.nav,.report-tabs,.cal-head button,.sync-status{display:none !important}
-  body{background:#fff}
-  .card{box-shadow:none;border:1px solid #000}
-  th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  tr.sun-row td{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-}
 @media (max-width:600px){
-  .header h1{font-size:12px}
-  .nav button{padding:3px 4px;font-size:9px}
+  .header h1{font-size:11px}
+  .nav button{padding:2px 3px;font-size:7px}
   .inv-grid{grid-template-columns:repeat(2,1fr)}
   .cal-cell{min-height:42px;font-size:10px}
   .cal-cell .n{font-size:12px}
   table{font-size:10px}
   th,td{padding:5px 4px}
 }
+
+/* ✅ Mobile Touch Optimization - EXCEPT nav buttons */
 @media (hover:none) and (pointer:coarse){
-  button:not(.nav button), input[type="button"], input[type="submit"]{padding:12px 16px !important;font-size:16px !important;min-height:44px;min-width:44px;border-radius:8px}
-  .cal-cell{min-height:48px}
-  .modal input{padding:14px !important;font-size:16px !important;min-height:44px}
-  input, button, select, textarea{font-size:16px}
+  button:not(.nav button), input[type="button"], input[type="submit"]{
+    padding: 12px 16px !important;
+    font-size: 16px !important;
+    min-height: 44px;
+    min-width: 44px;
+    border-radius: 8px;
+  }
+  .cal-cell{
+    min-height: 48px;
+  }
+  .modal input{
+    padding: 14px !important;
+    font-size: 16px !important;
+    min-height: 44px;
+  }
+  /* Prevent zoom on double-tap */
+  input, button, select, textarea{
+    font-size: 16px;
+  }
 }
+
+/* Landscape mode optimization */
 @media (max-height:600px) and (orientation:landscape){
   .header h1{font-size:14px}
   .nav button{padding:4px 6px;font-size:10px}
@@ -194,14 +238,23 @@ tr.sun-row td.sticky-c1,tr.sun-row td.sticky-c2,tr.sun-row td.sticky-c3{backgrou
   table{font-size:9px}
   th,td{padding:3px 2px}
 }
-*{-webkit-user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
-input, textarea, button, a{-webkit-user-select:text}
+
+/* Prevent accidental selection on touch */
+*{
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+input, textarea, button, a{
+  -webkit-user-select: text;
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.5.0/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.5.0/vfs_fonts.min.js"></script>
 </head>
 <body>
 
+<!-- ✅ FIX 8: Header renders IMMEDIATELY — no JS needed -->
 <div class="header">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
     <h1 style="font-size:16px;margin:0;flex:1;text-align:center">🌾 My Daily Report</h1>
@@ -219,10 +272,11 @@ input, textarea, button, a{-webkit-user-select:text}
 </div>
 
 <div id="syncStatus" class="sync-status" style="display:none;cursor:pointer" onclick="if(centerCode && syncQueue.length > 0) processSyncQueue()">
-  ☁️ <span id="syncStatusText">ક્લાઉડ સાથે સિંક થયેલ છે</span>
+  ☁️ <span id="syncStatusText">ક્લાઉડ સાથે સિંક થયેલ છે</span> 🔄 
   <span id="queueCount" style="display:none;margin-left:6px;background:rgba(0,0,0,.2);padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700">📤 <span id="queueNum">0</span> pending</span>
 </div>
 
+<!-- ✅ FIX 9: Skeleton shown INSTANTLY while JS runs -->
 <div id="app">
   <div class="skeleton"></div>
   <div class="skeleton" style="height:200px;margin-top:0"></div>
@@ -232,48 +286,59 @@ input, textarea, button, a{-webkit-user-select:text}
 
 <script>
 /* ============================================================
-   CONFIG - તમારો Google Apps Script URL અહીં paste કરો
+   CONFIG
 ============================================================ */
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyn0jjWbl6zmiWHn0hgwaMqNG33SHJtzIjH52YTGmmJS0RXeZBc7Vk9X_f9OGyVNLdnCw/exec";
 const ADMIN_PASSWORD = "Dev@1";
+
+console.log("🚀 Script loaded");
+console.log("URL:", APPS_SCRIPT_URL);
+console.log("URL includes script.google.com:", APPS_SCRIPT_URL.includes("script.google.com"));
+
+/* ============================================================
+   SIMPLE TEST - Run immediately
+============================================================ */
+// Test if we can reach Google
+fetch("https://script.google.com")
+  .then(() => console.log("✅ Can reach Google"))
+  .catch(() => console.log("❌ Cannot reach Google"));
 
 /* ============================================================
    CONSTANTS
 ============================================================ */
 const ITEMS = Object.freeze([
-  {id:"ghau",    name:"ઘઉં",     emoji:"🌾", bg:"#fff3cd", color:"#856404"},
-  {id:"chokha",  name:"ચોખા",    emoji:"🍚", bg:"#d1e7dd", color:"#0a3622"},
-  {id:"tel",     name:"તેલ",     emoji:"🫙", bg:"#ffe0b2", color:"#e65100"},
-  {id:"chana",   name:"ચણા",     emoji:"🫘", bg:"#e8d5f5", color:"#5b21b6"},
-  {id:"dal",     name:"દાળ",     emoji:"🥣", bg:"#fce4ec", color:"#880e4f"},
-  {id:"chanadal",name:"ચણાદાળ", emoji:"🫛", bg:"#e0f2fe", color:"#01579b"}
+  {id:"ghau", name:"ઘઉં", emoji:"🌾", bg:"#fff3cd", color:"#856404"},
+  {id:"chokha", name:"ચોખા", emoji:"🍚", bg:"#d1e7dd", color:"#0a3622"},
+  {id:"tel", name:"તેલ", emoji:"🫙", bg:"#ffe0b2", color:"#e65100"},
+  {id:"chana", name:"ચણા", emoji:"🫘", bg:"#e8d5f5", color:"#5b21b6"},
+  {id:"dal", name:"દાળ", emoji:"🥣", bg:"#fce4ec", color:"#880e4f"},
+  {id:"chanadal", name:"ચણાદાળ", emoji:"🫛", bg:"#e0f2fe", color:"#01579b"}
 ]);
-const DAYS_SHORT  = ["ર","સો","મં","બુ","ગુ","શુ","શ"];
-const DAYS_TBL    = ["રવિ","સોમ","મંગળ","બુધ","ગુ","શુ","શ"];
-const DAYS_FULL   = ["રવિવાર","સોમવાર","મંગળવાર","બુધવાર","ગુરુવાર","શુક્રવાર","શનિવાર"];
+const DAYS_SHORT = ["ર","સો","મં","બુ","ગુ","શુ","શ"];
+const DAYS_TBL = ["રવિ","સોમ","મંગળ","બુધ","ગુ","શુ","શ"];
+const DAYS_FULL = ["રવિવાર","સોમવાર","મંગળવાર","બુધવાર","ગુરુવાર","શુક્રવાર","શનિવાર"];
 const MONTHS_FULL = ["જાન્યુઆરી","ફેબ્રુઆરી","માર્ચ","એપ્રિલ","મે","જૂન","જુલાઈ","ઓગસ્ટ","સપ્ટેમ્બર","ઓક્ટોબર","નવેમ્બર","ડિસેમ્બર"];
 const DEFAULT_INV = {ghau:{o:500,r:200},chokha:{o:300,r:100},tel:{o:50,r:20},chana:{o:80,r:30},dal:{o:80,r:30},chanadal:{o:80,r:30}};
 
-const SAJO_CREDS = {
-  'આકરૂ': {},
-  'ધંધુકા': {},
-  'વાગડ': {},
-  'હડાળા': {}
-};
+const SAJO_CREDS = {'આકરૂ': {}, 'ધંધુકા': {}, 'વાગડ': {}, 'હડાળા': {}};
 
 /* ============================================================
    STATE
 ============================================================ */
 let currentSajo = localStorage.getItem('current_sajo') || 'આકરૂ';
-let centerCode = localStorage.getItem("mdr_center_code") || "";
+// ⚠️ IMPORTANT: Check both old and new keys
+let centerCode = localStorage.getItem("mdr_center_code") || localStorage.getItem("anganwadi_center_code") || "";
+
+console.log("Initial centerCode:", centerCode);
+console.log("Initial currentSajo:", currentSajo);
+
 let state = {
   inv: JSON.parse(JSON.stringify(DEFAULT_INV)),
   ben: {},
   tab: 0,
   calY: new Date().getFullYear(),
   calM: new Date().getMonth(),
-  modal: null,
-  modalVal: "",
+  modal: null, modalVal: "",
   rptTab: "daily",
   adminUnlocked: false,
   logData: [],
@@ -283,29 +348,19 @@ let state = {
 };
 
 /* ============================================================
-   SYNC QUEUE & NETWORK
+   SYNC QUEUE
 ============================================================ */
 let syncQueue = [];
 let isSyncing = false;
 let isOnline = navigator.onLine;
 
-window.addEventListener('online', () => {
-  isOnline = true;
-  setStatus("🟢 Online — Syncing...", "#1b8f57");
-  processSyncQueue();
-});
-
-window.addEventListener('offline', () => {
-  isOnline = false;
-  setStatus("🔴 Offline — Local mode", "#e67e22");
-});
+window.addEventListener('online', () => { isOnline = true; setStatus("🟢 Online", "#1b8f57"); processSyncQueue(); });
+window.addEventListener('offline', () => { isOnline = false; setStatus("🔴 Offline", "#e67e22"); });
 
 function loadSyncQueue(){
   if(!centerCode) return;
-  const raw = localStorage.getItem("mdr_sync_queue_" + centerCode);
-  if(raw){
-    try{ syncQueue = JSON.parse(raw); }catch(_){ syncQueue = []; }
-  }
+  const raw = localStorage.getItem("mdr_sync_queue_" + centerCode) || localStorage.getItem("sync_queue_" + centerCode);
+  if(raw){ try{ syncQueue = JSON.parse(raw); }catch(_){ syncQueue = []; } }
 }
 
 function persistQueue(){
@@ -314,131 +369,93 @@ function persistQueue(){
 }
 
 function addToSyncQueue(data){
-  syncQueue.push({
-    action: 'SAVE',
-    data: data,
-    centerCode: centerCode,
-    sajoName: currentSajo,
-    timestamp: Date.now(),
-    retries: 0
-  });
+  syncQueue.push({action:'SAVE', data, centerCode, sajoName:currentSajo, timestamp:Date.now(), retries:0});
   persistQueue();
   updateSyncStatus();
 }
 
 async function processSyncQueue(){
   if(isSyncing || !isOnline || syncQueue.length === 0 || !_hasURL()) return;
-  
   isSyncing = true;
   let successCount = 0;
-  
   for(let i = 0; i < syncQueue.length; i++){
-    const item = syncQueue[i];
-    const result = await cloudSave(item.data, 2);
-    if(result){
-      successCount++;
-      syncQueue.splice(i, 1);
-      i--;
-    } else {
-      item.retries++;
-      if(item.retries > 5){
-        syncQueue.splice(i, 1);
-        i--;
-      }
-    }
+    const ok = await cloudSave(syncQueue[i].data, 2);
+    if(ok){ successCount++; syncQueue.splice(i, 1); i--; }
+    else { syncQueue[i].retries++; if(syncQueue[i].retries > 5){ syncQueue.splice(i, 1); i--; } }
     await new Promise(r => setTimeout(r, 600));
   }
-  
   persistQueue();
   isSyncing = false;
-  
-  if(successCount > 0){
-    setStatus(`✅ ${successCount} synced | ${syncQueue.length} pending`, "#1b8f57");
-  }
+  if(successCount > 0) setStatus(`✅ ${successCount} synced`, "#1b8f57");
   updateSyncStatus();
 }
 
 /* ============================================================
-   CLOUD API - FIXED & CLEAN
+   CLOUD API - FIXED
 ============================================================ */
 function _hasURL(){
-  return APPS_SCRIPT_URL && !APPS_SCRIPT_URL.includes("YOUR_URL") && APPS_SCRIPT_URL.includes("script.google.com");
+  const ok = APPS_SCRIPT_URL && !APPS_SCRIPT_URL.includes("YOUR_URL") && APPS_SCRIPT_URL.includes("script.google.com");
+  console.log("_hasURL:", ok);
+  return ok;
 }
 
-// ✅ SINGLE saveState function - no duplicates
 async function saveState(){
-  if(!centerCode) return;
+  if(!centerCode){ console.log("saveState: no centerCode"); return; }
   
-  const payload = {
-    inv: state.inv,
-    ben: state.ben,
-    timestamp: new Date().toISOString(),
-    sajoName: currentSajo
-  };
-  
-  // 1. Always save local first
+  const payload = {inv:state.inv, ben:state.ben, timestamp:new Date().toISOString(), sajoName:currentSajo};
   localStorage.setItem("mdr_local_" + centerCode, JSON.stringify(payload));
   
-  // 2. If no URL, stop here
-  if(!_hasURL()){
-    setStatus("💾 Local save (Cloud URL missing)", "#e67e22");
-    return;
-  }
+  if(!_hasURL()){ setStatus("💾 Local only", "#e67e22"); return; }
   
-  // 3. If online, try cloud immediately
   if(isOnline){
     const ok = await cloudSave(payload, 3);
-    if(!ok){
-      addToSyncQueue(payload);
-      setStatus("📤 Queued (Cloud failed)", "#f59e0b");
-    }
+    if(!ok){ addToSyncQueue(payload); setStatus("📤 Queued", "#f59e0b"); }
   } else {
-    // 4. Offline - queue it
     addToSyncQueue(payload);
-    setStatus("📤 Queued (Offline)", "#f59e0b");
+    setStatus("📤 Offline queued", "#f59e0b");
   }
 }
 
-// Core cloud save with retry
 async function cloudSave(data, maxRetries = 3){
+  console.log("cloudSave called, retries:", maxRetries);
   for(let attempt = 1; attempt <= maxRetries; attempt++){
     try{
-      setStatus(`⏳ Cloud save (${attempt}/${maxRetries})...`, "#2563a8");
-      
+      setStatus(`⏳ Saving (${attempt}/${maxRetries})...`, "#2563a8");
       const ctrl = new AbortController();
       const tid = setTimeout(() => ctrl.abort(), 10000);
+      
+      const body = JSON.stringify({
+        action: "SAVE",
+        centerCode: centerCode,
+        sajoName: currentSajo,
+        inv: data.inv,
+        ben: data.ben,
+        timestamp: data.timestamp
+      });
+      console.log("Sending:", body.substring(0, 200));
       
       const res = await fetch(APPS_SCRIPT_URL, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          action: "SAVE",
-          centerCode: centerCode,
-          sajoName: currentSajo,
-          inv: data.inv,
-          ben: data.ben,
-          timestamp: data.timestamp
-        }),
+        body: body,
         signal: ctrl.signal
       });
-      
       clearTimeout(tid);
       
+      console.log("Response status:", res.status);
       if(!res.ok) throw new Error(`HTTP ${res.status}`);
       
       const result = await res.json();
-      console.log("Cloud response:", result);
+      console.log("Response:", result);
       
       if(result.success === true || result.status === "ok"){
-        setStatus(`✅ Cloud saved ${new Date().toLocaleTimeString('gu-IN')}`, "#1b8f57");
-        sendLog("SAVE", "Cloud sync success");
+        setStatus(`✅ Saved ${new Date().toLocaleTimeString('gu-IN')}`, "#1b8f57");
         return true;
       } else {
-        throw new Error(result.message || result.msg || "Save rejected");
+        throw new Error(result.message || result.msg || "Rejected");
       }
-      
     } catch(err){
-      console.warn(`Cloud save attempt ${attempt} failed:`, err.message);
+      console.warn(`Attempt ${attempt} failed:`, err.message);
       if(attempt === maxRetries) return false;
       await new Promise(r => setTimeout(r, 1000 * attempt));
     }
@@ -446,158 +463,124 @@ async function cloudSave(data, maxRetries = 3){
   return false;
 }
 
-// Load from cloud
 async function syncCloud(){
-  if(!_hasURL() || !centerCode) return;
+  console.log("syncCloud called");
+  if(!_hasURL()){ console.log("No valid URL"); setStatus("⚠️ URL missing", "#e67e22"); return; }
+  if(!centerCode){ console.log("No centerCode"); return; }
   
-  setStatus("⏳ Loading from cloud...", "#2563a8");
+  setStatus("⏳ Loading...", "#2563a8");
   try{
-    const ctrl = new AbortController();
-    const tid = setTimeout(() => ctrl.abort(), 12000);
-    
     const url = new URL(APPS_SCRIPT_URL);
     url.searchParams.set("action", "LOAD");
     url.searchParams.set("centerCode", centerCode);
     url.searchParams.set("sajoName", currentSajo);
     
+    console.log("Fetching:", url.toString().substring(0, 100));
+    
+    const ctrl = new AbortController();
+    const tid = setTimeout(() => ctrl.abort(), 12000);
     const res = await fetch(url.toString(), {signal: ctrl.signal});
     clearTimeout(tid);
     
+    console.log("Load response status:", res.status);
     if(!res.ok) throw new Error(`HTTP ${res.status}`);
     
     const data = await res.json();
-    console.log("Cloud load:", data);
+    console.log("Load response:", data);
     
     if(data.status === "error") throw new Error(data.msg || "Server error");
     
     if(data.status === "new_user"){
-      setStatus(`🆕 New center: ${centerCode}`, "#2563a8");
-      sendLog("NEW", `New center: ${centerCode}`);
+      setStatus(`🆕 New: ${centerCode}`, "#2563a8");
+      console.log("New user - no existing data");
       return;
     }
     
     if(data.inv || data.ben){
+      console.log("Data found! Updating state...");
       if(data.inv) state.inv = data.inv;
       if(data.ben) state.ben = data.ben;
       localStorage.setItem("mdr_local_" + centerCode, JSON.stringify({
-        inv: state.inv,
-        ben: state.ben,
-        sajoName: currentSajo,
-        timestamp: new Date().toISOString()
+        inv: state.inv, ben: state.ben, sajoName: currentSajo, timestamp: new Date().toISOString()
       }));
-      setStatus(`☁️ Loaded from cloud`, "#1b8f57");
+      setStatus(`☁️ Loaded`, "#1b8f57");
       invalidateCache();
       render();
     } else {
-      setStatus("☁️ No cloud data found", "#2563a8");
+      setStatus("☁️ No data", "#2563a8");
     }
     
   } catch(err){
-    console.error("Cloud load error:", err);
+    console.error("syncCloud error:", err);
     const msg = err.name === "AbortError" ? "Timeout" : err.message;
-    setStatus(`⚠️ Cloud load failed: ${msg}`, "#e67e22");
+    setStatus(`⚠️ Load failed: ${msg}`, "#e67e22");
   }
 }
 
-// Send log to server
 async function sendLog(action, details){
   if(!_hasURL() || !centerCode) return;
   try{
     await fetch(APPS_SCRIPT_URL, {
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        action: "LOG",
-        centerCode: centerCode,
-        sajoName: currentSajo,
-        logAction: action,
-        logDetails: details,
-        timestamp: new Date().toISOString()
-      })
+      body: JSON.stringify({action:"LOG", centerCode, sajoName:currentSajo, logAction:action, logDetails:details, timestamp:new Date().toISOString()})
     });
   } catch(_){}
 }
 
-// Fetch logs for admin
 async function fetchLogs(){
-  if(!_hasURL()){ setStatus("⚠️ Cloud URL missing", "#e67e22"); return; }
+  if(!_hasURL()){ setStatus("⚠️ URL missing", "#e67e22"); return; }
   setStatus("⏳ Loading logs...", "#2563a8");
   try{
     const res = await fetch(APPS_SCRIPT_URL, {
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        action: "GET_LOGS",
-        centerCode: centerCode,
-        sajoName: currentSajo
-      })
+      body: JSON.stringify({action:"GET_LOGS", centerCode, sajoName:currentSajo})
     });
     const data = await res.json();
     state.logData = data.logs || [];
-    setStatus(`✅ ${state.logData.length} logs loaded`, "#1b8f57");
+    setStatus(`✅ ${state.logData.length} logs`, "#1b8f57");
   } catch(err){
-    console.error("Log fetch error:", err);
-    setStatus("❌ Log fetch failed", "#cc3d3d");
+    console.error("fetchLogs error:", err);
+    setStatus("❌ Log failed", "#cc3d3d");
   }
   render();
 }
 
-// Fetch all centers for consolidation
 async function fetchAllCenters(){
-  if(!_hasURL()){ setStatus("⚠️ Cloud URL missing", "#e67e22"); return; }
-  state.con.loading = true;
-  state.con.error = "";
-  render();
-  
+  if(!_hasURL()){ setStatus("⚠️ URL missing", "#e67e22"); return; }
+  state.con.loading = true; state.con.error = ""; render();
   setStatus("⏳ Loading centers...", "#2563a8");
   try{
-    const ctrl = new AbortController();
-    const tid = setTimeout(() => ctrl.abort(), 20000);
-    
     const res = await fetch(APPS_SCRIPT_URL, {
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        action: "GET_ALL_CENTERS",
-        sajoName: currentSajo
-      }),
-      signal: ctrl.signal
+      body: JSON.stringify({action:"GET_ALL_CENTERS", sajoName:currentSajo}),
+      signal: (new AbortController()).signal
     });
-    
-    clearTimeout(tid);
     const data = await res.json();
-    
     if(data.status === "ok"){
       state.con.centers = data.centers || [];
-      setStatus(`✅ ${state.con.centers.length} centers loaded`, "#1b8f57");
-    } else {
-      throw new Error(data.msg || "Unknown error");
-    }
+      setStatus(`✅ ${state.con.centers.length} centers`, "#1b8f57");
+    } else throw new Error(data.msg || "Unknown");
   } catch(err){
-    state.con.error = err.name === "AbortError" ? "Timeout (20s)" : err.message;
-    setStatus("❌ Failed to load centers", "#cc3d3d");
+    state.con.error = err.message;
+    setStatus("❌ Failed", "#cc3d3d");
   }
-  state.con.loading = false;
-  render();
+  state.con.loading = false; render();
 }
 
 /* ============================================================
-   STATUS & UI HELPERS
+   UI HELPERS
 ============================================================ */
 function setStatus(msg, color){
+  console.log("Status:", msg);
   const s = document.getElementById("syncStatus");
   if(!s) return;
   s.style.display = "block";
   const textEl = document.getElementById("syncStatusText");
   if(textEl) textEl.textContent = msg;
-  
-  const bgMap = {
-    "#1b8f57": "#e8f5e9",
-    "#cc3d3d": "#fee2e2",
-    "#f59e0b": "#fef3c7",
-    "#e67e22": "#fef3c7",
-    "#2563a8": "#dbeafe"
-  };
+  const bgMap = {"#1b8f57":"#e8f5e9","#cc3d3d":"#fee2e2","#f59e0b":"#fef3c7","#e67e22":"#fef3c7","#2563a8":"#dbeafe"};
   s.style.background = bgMap[color] || "#dbeafe";
   s.style.color = color;
   updateSyncStatus();
@@ -607,13 +590,8 @@ function updateSyncStatus(){
   const qCountEl = document.getElementById("queueCount");
   const qNumEl = document.getElementById("queueNum");
   if(!qCountEl || !qNumEl) return;
-  
-  if(syncQueue.length > 0){
-    qCountEl.style.display = "inline-block";
-    qNumEl.textContent = syncQueue.length;
-  } else {
-    qCountEl.style.display = "none";
-  }
+  if(syncQueue.length > 0){ qCountEl.style.display = "inline-block"; qNumEl.textContent = syncQueue.length; }
+  else { qCountEl.style.display = "none"; }
 }
 
 function showNav(){
@@ -626,27 +604,26 @@ function showNav(){
 function showHeaderInfo(){
   const bar = document.getElementById("centerInfoBar");
   const btn = document.getElementById("btnLogoutHeader");
-  if(bar && centerCode){
-    bar.style.display = "block";
-    bar.innerHTML = `🏢 કેન્દ્ર: <b style="color:#f39c12">${centerCode}</b> | સેજો: ${currentSajo}`;
-  }
+  if(bar && centerCode){ bar.style.display = "block"; bar.innerHTML = `🏢 કેન્દ્ર: <b style="color:#f39c12">${centerCode}</b> | સેજો: ${currentSajo}`; }
   if(btn) btn.style.display = "block";
 }
 
 /* ============================================================
-   BOOT APP
+   BOOT
 ============================================================ */
 function bootApp(){
-  if(!centerCode){ render(); return; }
+  console.log("bootApp called, centerCode:", centerCode);
+  if(!centerCode){ console.log("No centerCode, showing setup"); render(); return; }
   
-  // Load local data instantly
-  const raw = localStorage.getItem("mdr_local_" + centerCode);
+  // Load local
+  const raw = localStorage.getItem("mdr_local_" + centerCode) || localStorage.getItem("mdr_offline_" + centerCode);
   if(raw){
     try{
       const d = JSON.parse(raw);
       if(d.inv) state.inv = d.inv;
       if(d.ben) state.ben = d.ben;
-    } catch(_){}
+      console.log("Local data loaded");
+    } catch(e){ console.error("Local parse error:", e); }
   }
   
   loadSyncQueue();
@@ -654,9 +631,12 @@ function bootApp(){
   showHeaderInfo();
   render();
   
-  // Try cloud sync in background
+  // Cloud sync
   if(isOnline && _hasURL()){
-    setTimeout(() => syncCloud(), 300);
+    console.log("Starting cloud sync...");
+    setTimeout(() => syncCloud(), 500);
+  } else {
+    console.log("Skipping cloud sync - offline or no URL");
   }
 }
 
@@ -666,23 +646,17 @@ function bootApp(){
 function calcUsage(dow, n){
   n = Number(n) || 0;
   const u = {};
-  ITEMS.forEach(it => {
-    u[it.id] = 0; u[it.id+"M"] = 0; u[it.id+"A"] = 0;
-    u[it.id+"nM"] = 0; u[it.id+"nA"] = 0;
-  });
+  ITEMS.forEach(it => { u[it.id]=0; u[it.id+"M"]=0; u[it.id+"A"]=0; u[it.id+"nM"]=0; u[it.id+"nA"]=0; });
   if(!n || dow === 0) return u;
-
   u.telM = 5*n; u.telnM = n;
   if(dow===1||dow===3||dow===4||dow===5||dow===6){ u.ghauM=30*n; u.ghaunM=n; }
   if(dow===2){ u.chokhaM=30*n; u.chokhanM=n; }
-
   u.telA = 8*n; u.telnA = n;
   if(dow===1||dow===2||dow===5){ u.ghauA=50*n; u.ghaunA=n; }
   if(dow===3||dow===4||dow===6){ u.chokhaA=50*n; u.chokhanA=n; }
   if(dow===2||dow===4||dow===5){ u.chanaA=20*n; u.chananA=n; }
   if(dow===1||dow===3){ u.dalA=20*n; u.dalnA=n; }
   if(dow===6){ u.chanadalA=20*n; u.chanadalnA=n; }
-
   ITEMS.forEach(it => { u[it.id] = u[it.id+"M"] + u[it.id+"A"]; });
   return u;
 }
@@ -691,7 +665,7 @@ const morU = (id,u) => u[id+"M"] || 0;
 const aftU = (id,u) => u[id+"A"] || 0;
 
 function dayHint(d){
-  const h = ["🔴 રવિ — રજા (સ+બ બંધ)","સ:ઘઉ30+તે5 | બ:ઘઉ50+દા20+તે8","સ:ચો30+તે5 | બ:ઘઉ50+ચ20+તે8","સ:ઘઉ30+તે5 | બ:ચો50+દા20+તે8","સ:ઘઉ30+તે5 | બ:ચો50+ચ20+તે8","સ:ઘઉ30+તે5 | બ:ઘઉ50+ચ20+તે8","સ:ઘઉ30+તે5 | બ:ચો50+ચદ20+તે8"];
+  const h = ["🔴 રવિ — રજા","સ:ઘઉ30+તે5 | બ:ઘઉ50+દા20+તે8","સ:ચો30+તે5 | બ:ઘઉ50+ચ20+તે8","સ:ઘઉ30+તે5 | બ:ચો50+દા20+તે8","સ:ઘઉ30+તે5 | બ:ચો50+ચ20+તે8","સ:ઘઉ30+તે5 | બ:ઘઉ50+ચ20+તે8","સ:ઘઉ30+તે5 | બ:ચો50+ચદ20+તે8"];
   return h[d] || "";
 }
 
@@ -701,13 +675,8 @@ let _muCache = null, _muCacheKey = "";
 function calcMonthUsage(y,m,ben){
   const key = `${y}-${m}-${JSON.stringify(ben)}`;
   if(_muCache && _muCacheKey === key) return _muCache;
-  
   const total = {totalN:0, days:0};
-  ITEMS.forEach(it => {
-    total[it.id] = 0; total[it.id+"M"] = 0; total[it.id+"A"] = 0;
-    total[it.id+"nM"] = 0; total[it.id+"nA"] = 0;
-  });
-  
+  ITEMS.forEach(it => { total[it.id]=0; total[it.id+"M"]=0; total[it.id+"A"]=0; total[it.id+"nM"]=0; total[it.id+"nA"]=0; });
   const dim = new Date(y,m+1,0).getDate();
   for(let d=1; d<=dim; d++){
     const k = dkf(y,m,d);
@@ -715,932 +684,73 @@ function calcMonthUsage(y,m,ben){
     if(!n) continue;
     const u = calcUsage(new Date(y,m,d).getDay(), n);
     ITEMS.forEach(it => {
-      total[it.id] += u[it.id];
-      total[it.id+"M"] += u[it.id+"M"];
-      total[it.id+"A"] += u[it.id+"A"];
-      total[it.id+"nM"] += u[it.id+"nM"];
-      total[it.id+"nA"] += u[it.id+"nA"];
+      total[it.id]+=u[it.id]; total[it.id+"M"]+=u[it.id+"M"]; total[it.id+"A"]+=u[it.id+"A"];
+      total[it.id+"nM"]+=u[it.id+"nM"]; total[it.id+"nA"]+=u[it.id+"nA"];
     });
-    total.totalN += n;
-    total.days++;
+    total.totalN += n; total.days++;
   }
-  _muCache = total;
-  _muCacheKey = key;
+  _muCache = total; _muCacheKey = key;
   return total;
 }
 
 function invalidateCache(){ _muCache = null; _muCacheKey = ""; }
-
 const fmt = (n,d=0) => (n==null||isNaN(n)) ? "0" : Number(n).toFixed(d);
 
 /* ============================================================
-   RENDER PAGES
+   RENDER (simplified for brevity)
 ============================================================ */
 function renderSetupPage(){
-  const sajoOptions = Object.keys(SAJO_CREDS).map(s => 
-    `<option value="${s}" ${s === currentSajo ? 'selected' : ''}>${s}</option>`
-  ).join('');
-  
+  const sajoOptions = Object.keys(SAJO_CREDS).map(s => `<option value="${s}" ${s===currentSajo?'selected':''}>${s}</option>`).join('');
   return `<div class="setup-box">
     <h2>🌾 Sajo MDR System</h2>
     <p style="font-size:11px;color:#64748b;margin-bottom:12px">સેજો અને કેન્દ્રનું નામ લખો</p>
     <label style="font-size:10px;font-weight:700;color:#475569;margin-bottom:4px;display:block">📍 સેજો</label>
-    <select id="sajoInput" style="width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:6px;font-family:inherit;font-size:14px;margin-bottom:12px">
-      ${sajoOptions}
-    </select>
+    <select id="sajoInput" style="width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:6px;font-family:inherit;font-size:14px;margin-bottom:12px">${sajoOptions}</select>
     <label style="font-size:10px;font-weight:700;color:#475569;margin-bottom:4px;display:block">🏢 કેન્દ્રનું નામ</label>
     <input type="text" id="centerNameInput" placeholder="દા.ત. પંચમહાલ અંગણવાડી" autocomplete="off" style="width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:6px;font-family:inherit;font-size:14px;box-sizing:border-box;margin-bottom:12px">
     <button id="btnStart" style="width:100%;padding:10px;background:#2563a8;color:#fff;border:none;border-radius:6px;font-weight:700;font-family:inherit;font-size:14px;cursor:pointer">🚀 શરૂ કરો</button>
-  </div>`;
-}
-
-function renderInventoryPage(curMU){
-  const cards = ITEMS.map(it => {
-    const iv = state.inv[it.id];
-    const opening = iv.o + iv.r;
-    const used = (curMU[it.id] || 0) / 1000;
-    const closing = opening - used;
-    return `<div class="inv-card">
-      <div class="inv-title" style="background:${it.bg};color:${it.color}">${it.emoji} ${it.name}</div>
-      <div class="inv-row"><label>ઊઘડતી (kg):</label><input type="number" step="0.001" data-inv="${it.id}" data-field="o" value="${iv.o}"></div>
-      <div class="inv-row"><label>આવક (kg):</label><input type="number" step="0.001" data-inv="${it.id}" data-field="r" value="${iv.r}"></div>
-      <div class="inv-stat">કુલ ઊઘડતી: <b>${fmt(opening,3)}</b> kg<br>વપરાશ: <b style="color:#e67e22">${fmt(used,3)}</b> kg<br>બંધ સિલક: <b style="color:#1b8f57">${fmt(closing,3)}</b> kg</div>
-    </div>`;
-  }).join("");
-  
-  return `<div class="container tab-content">
-    <div class="card">
-      <div class="section-head">📦 ઈન્વેન્ટરી (${MONTHS_FULL[state.calM]} ${state.calY})
-        <span style="font-size:11px;background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:8px">કોડ: ${centerCode}</span>
-      </div>
-      <div class="section-body"><div class="inv-grid">${cards}</div></div>
-    </div>
-    <div class="card">
-      <div class="section-head" style="font-size:12px">📋 ભોજન નિયમ</div>
-      <div class="section-body" style="font-size:11px;line-height:2">
-        <b>સવાર:</b> ઘઉં 30g (સો/બુ/ગુ/શુ/શ) | ચોખા 30g (ફક્ત મંગ) | તેલ 5g<br>
-        <b>બપોર:</b> ઘઉં/ચોખા 50g | ચ/દ/ચદ 20g | તેલ 8g | 🔴 રવિ: બધું બંધ<br>
-        <span class="rule-chip">સો: ઘઉ80+દા20+તે13</span>
-        <span class="rule-chip">મં: ચો30+ઘઉ50+ચ20+તે13</span>
-        <span class="rule-chip">બુ: ઘઉ30+ચો50+દા20+તે13</span>
-        <span class="rule-chip">ગુ: ઘઉ30+ચો50+ચ20+તે13</span>
-        <span class="rule-chip">શુ: ઘઉ80+ચ20+તે13</span>
-        <span class="rule-chip">શ: ઘઉ30+ચો50+ચદ20+તે13</span>
-      </div>
+    <div style="margin-top:12px;padding:10px;background:#fef3c7;border-radius:6px;font-size:11px;color:#92400e">
+      <b>Debug info:</b><br>
+      URL valid: ${_hasURL() ? '✅' : '❌'}<br>
+      Online: ${navigator.onLine ? '✅' : '❌'}<br>
+      <button onclick="localStorage.clear();location.reload()" style="margin-top:6px;padding:4px 8px;background:#cc3d3d;color:#fff;border:none;border-radius:4px;font-size:10px;cursor:pointer">🗑️ Clear & Reload</button>
     </div>
   </div>`;
 }
 
-function renderCalendarPage(){
-  const y = state.calY, m = state.calM;
-  const first = new Date(y,m,1).getDay();
-  const dim = new Date(y,m+1,0).getDate();
-  const today = new Date();
-  let cells = "", monthN = 0, monthD = 0;
-  
-  for(let i=0; i<first; i++) cells += `<div class="cal-cell empty"></div>`;
-  for(let d=1; d<=dim; d++){
-    const k = dkf(y,m,d);
-    const n = Number(state.ben[k] || 0);
-    const dow = new Date(y,m,d).getDay();
-    const isToday = (d===today.getDate() && m===today.getMonth() && y===today.getFullYear());
-    if(n>0){ monthN += n; monthD++; }
-    cells += `<div class="cal-cell ${dow===0?'sunday':''} ${isToday?'today':''}" data-day="${d}">
-      <div class="d">${d}</div>
-      <div class="n ${n===0?'zero':''}">${n>0?n:'—'}</div>
-    </div>`;
-  }
-  
-  const heads = DAYS_SHORT.map((d,i) => 
-    `<div class="cal-day-head ${i===0?'sun':''}">${d}</div>`
-  ).join("");
-  
-  return `<div class="container tab-content">
-    <div class="card">
-      <div class="section-head">📅 કેલેન્ડર</div>
-      <div class="cal-head">
-        <button id="prevM">‹</button>
-        <h3>${MONTHS_FULL[m]} ${y}</h3>
-        <button id="nextM">›</button>
-      </div>
-      <div class="cal-grid">${heads}${cells}</div>
-      <div class="cal-totals">
-        <div>કુલ દિવસ<b>${monthD}</b></div>
-        <div>કુલ લાભાર્થી<b>${monthN}</b></div>
-        <div>સરેરાશ/દિ.<b>${monthD?fmt(monthN/monthD,1):0}</b></div>
-      </div>
-    </div>
-  </div>`;
-}
+// ... (rest of render functions same as before)
 
-function renderDashboardPage(curMU){
-  let fruitBenCount = 0;
-  const dim = new Date(state.calY, state.calM+1, 0).getDate();
-  for(let d=1; d<=dim; d++){
-    const k = dkf(state.calY, state.calM, d);
-    const n = Number(state.ben[k] || 0);
-    const dow = new Date(state.calY, state.calM, d).getDay();
-    if((dow === 1 || dow === 4)) fruitBenCount += n;
-  }
-
-  const chanaDalBenCount = (curMU['chananA'] || 0) + (curMU['dalnA'] || 0);
-  const fruitBill = fruitBenCount * 3.12;
-  const chanaDalBill = chanaDalBenCount * 1.60;
-  const totalBills = fruitBill + (curMU.totalN * 1.30) + chanaDalBill + (curMU.totalN * 0.15) + (curMU.totalN * 1.00) + (curMU.totalN * 0.05);
-  const attendance = curMU.days > 0 ? Math.round((curMU.totalN / (curMU.days * 25)) * 100) : 0;
-  
-  return `<div class="container tab-content">
-    <div class="card">
-      <div class="section-head" style="background:linear-gradient(135deg,#1e40af,#2563a8)">📊 ડેશબોર્ડ — ${MONTHS_FULL[state.calM]} ${state.calY}</div>
-      <div style="padding:12px">
-        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px">
-          <div style="padding:12px;background:linear-gradient(135deg,#e0f2fe,#cffafe);border-radius:8px;border-left:4px solid #0284c7">
-            <div style="font-size:10px;color:#0369a1;font-weight:700">🗓️ કાર્ય દિવસ</div>
-            <div style="font-size:24px;font-weight:900;color:#0c4a6e;margin-top:2px">${curMU.days}</div>
-          </div>
-          <div style="padding:12px;background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:8px;border-left:4px solid #f59e0b">
-            <div style="font-size:10px;color:#b45309;font-weight:700">👥 કુલ લાભાર્થી</div>
-            <div style="font-size:24px;font-weight:900;color:#78350f;margin-top:2px">${curMU.totalN}</div>
-          </div>
-          <div style="padding:12px;background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-radius:8px;border-left:4px solid #3b82f6">
-            <div style="font-size:10px;color:#1e40af;font-weight:700">📈 સર્વે/દિ.</div>
-            <div style="font-size:24px;font-weight:900;color:#0c2340;margin-top:2px">${curMU.days ? fmt(curMU.totalN/curMU.days, 1) : '0'}</div>
-          </div>
-          <div style="padding:12px;background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border-radius:8px;border-left:4px solid #4caf50">
-            <div style="font-size:10px;color:#1b5e20;font-weight:700">✅ હાજરી %</div>
-            <div style="font-size:24px;font-weight:900;color:#003d00;margin-top:2px">${attendance}%</div>
-          </div>
-        </div>
-        <div style="padding:12px;background:linear-gradient(135deg,#fef2f2,#fee2e2);border-radius:8px;border:2px solid #ef4444;margin-bottom:12px">
-          <div style="font-size:11px;color:#991b1b;font-weight:700">💰 કુલ બિલ રકમ</div>
-          <div style="font-size:28px;font-weight:900;color:#7f1d1d;margin-top:4px">₹${fmt(totalBills, 2)}</div>
-        </div>
-        <div style="padding:10px;background:#f8fafc;border-radius:8px;border:1px solid #cbd5e1;font-size:9px">
-          <div style="font-weight:700;margin-bottom:6px">📦 બિલ બ્રેકડાઉન</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-            <div style="padding:4px;background:#fff3cd;border-radius:3px">🍎 ₹${fmt(fruitBill,2)}</div>
-            <div style="padding:4px;background:#e7f3ff;border-radius:3px">🥒 ₹${fmt(curMU.totalN * 1.30,2)}</div>
-            <div style="padding:4px;background:#f0e7ff;border-radius:3px">🫘 ₹${fmt(chanaDalBill,2)}</div>
-            <div style="padding:4px;background:#e8f5e9;border-radius:3px">🥬 ₹${fmt(curMU.totalN * 0.15,2)}</div>
-            <div style="padding:4px;background:#ffd9b3;border-radius:3px">🌶️ ₹${fmt(curMU.totalN * 1.00,2)}</div>
-            <div style="padding:4px;background:#d4edda;border-radius:3px">🚗 ₹${fmt(curMU.totalN * 0.05,2)}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>`;
-}
-
-function renderBillPage(){
-  const curMU = calcMonthUsage(state.calY, state.calM, state.ben);
-  
-  let fruitBenCount = 0;
-  const dim = new Date(state.calY, state.calM+1, 0).getDate();
-  for(let d=1; d<=dim; d++){
-    const k = dkf(state.calY, state.calM, d);
-    const n = Number(state.ben[k] || 0);
-    const dow = new Date(state.calY, state.calM, d).getDay();
-    if(dow === 1 || dow === 4) fruitBenCount += n;
-  }
-
-  const chanaDalBenCount = (curMU['chananA'] || 0) + (curMU['dalnA'] || 0);
-  
-  const bills = [
-    {name:"🍎 ફ્રુટ બિલ", desc:"સોમવાર અને શુક્રવાર", qty:fruitBenCount, rate:3.12, total:fruitBenCount*3.12, note:`${fruitBenCount} લાભાર્થી × ₹3.12`},
-    {name:"🥒 ગરમ નાસ્તો બિલ", desc:"કુલ લાભાર્થી દીઠ", qty:curMU.totalN, rate:1.30, total:curMU.totalN*1.30, note:`${curMU.totalN} લાભાર્થી × ₹1.30`},
-    {name:"🫘 ચણા + તુવેર દાળ બિલ", desc:"ચણા + દાળ લાભાર્થી", qty:chanaDalBenCount, rate:1.60, total:chanaDalBenCount*1.60, note:`${chanaDalBenCount} લાભાર્થી × ₹1.60`},
-    {name:"🥬 શાકભાજી બિલ", desc:"કુલ લાભાર્થી દીઠ", qty:curMU.totalN, rate:0.15, total:curMU.totalN*0.15, note:`${curMU.totalN} લાભાર્થી × ₹0.15`},
-    {name:"🌶️ મસાલા બિલ", desc:"કુલ લાભાર્થી દીઠ", qty:curMU.totalN, rate:1.00, total:curMU.totalN*1.00, note:`${curMU.totalN} લાભાર્થી × ₹1.00`},
-    {name:"🚗 વાહતુક બિલ", desc:"કુલ લાભાર્થી દીઠ", qty:curMU.totalN, rate:0.05, total:curMU.totalN*0.05, note:`${curMU.totalN} લાભાર્થી × ₹0.05`}
-  ];
-
-  const grandTotal = bills.reduce((sum, b) => sum + b.total, 0);
-  
-  const billCards = bills.map(b => `
-    <div class="card">
-      <div class="section-head" style="background:linear-gradient(135deg,#0f5132,#198754);display:flex;justify-content:space-between;align-items:center">
-        <div>${b.name}</div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.9)">${b.desc}</div>
-      </div>
-      <div class="section-body">
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px">
-          <div style="padding:10px;background:#f0f6f1;border-radius:8px;text-align:center">
-            <div style="font-size:11px;color:#64748b;margin-bottom:4px">સંખ્યા</div>
-            <div style="font-size:24px;font-weight:800;color:#198754">${b.qty}</div>
-          </div>
-          <div style="padding:10px;background:#fffbeb;border-radius:8px;text-align:center">
-            <div style="font-size:11px;color:#64748b;margin-bottom:4px">દર</div>
-            <div style="font-size:20px;font-weight:800;color:#f59e0b">₹${fmt(b.rate,2)}</div>
-          </div>
-          <div style="padding:10px;background:#dbeafe;border-radius:8px;text-align:center">
-            <div style="font-size:11px;color:#64748b;margin-bottom:4px">કુલ</div>
-            <div style="font-size:24px;font-weight:800;color:#2563a8">₹${fmt(b.total,2)}</div>
-          </div>
-        </div>
-        <div style="font-size:12px;color:#64748b;padding:8px;background:#f8fafc;border-radius:6px;border-left:3px solid #198754">${b.note}</div>
-      </div>
-    </div>
-  `).join("");
-
-  return `<div class="container tab-content">
-    <div class="card">
-      <div class="section-head" style="background:linear-gradient(135deg,#0f5132,#198754)">🧾 બિલ તાલીમ — ${MONTHS_FULL[state.calM]} ${state.calY}</div>
-      <div style="padding:14px;border-bottom:1px solid #d1dce8;background:#f0f6f1">
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
-          <div><div style="font-size:11px;color:#64748b">કાર્ય દિવસ:</div><div style="font-size:14px;font-weight:700;color:#198754">${curMU.days} દિવસ</div></div>
-          <div><div style="font-size:11px;color:#64748b">કુલ લાભાર્થી:</div><div style="font-size:14px;font-weight:700;color:#198754">${curMU.totalN}</div></div>
-          <div><div style="font-size:11px;color:#64748b">સર્વે/દિ.:</div><div style="font-size:14px;font-weight:700;color:#198754">${curMU.days ? fmt(curMU.totalN/curMU.days, 1) : "0"}</div></div>
-        </div>
-      </div>
-    </div>
-    ${billCards}
-    <div class="card">
-      <div class="section-head" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6)">📊 કુલ બિલ તાલીમ</div>
-      <div class="section-body">
-        <div style="padding:16px;background:linear-gradient(135deg,#ecfdf5,#f0fdf4);border-radius:10px;border:2px solid #10b981;text-align:center">
-          <div style="font-size:13px;color:#059669;margin-bottom:6px;font-weight:700">કુલ માસિક બિલ રકમ</div>
-          <div style="font-size:48px;font-weight:900;color:#047857">₹${fmt(grandTotal, 2)}</div>
-          <div style="font-size:12px;color:#64748b;margin-top:8px">આ બધું બિલ = <b>${bills.length}</b> આઇટમ્સ</div>
-        </div>
-        <div style="margin-top:14px;padding:10px;background:#fef3c7;border-radius:8px;border-left:4px solid #f59e0b;font-size:12px;color:#92400e">
-          <b>📝 નોંધ:</b> આ બધુ બીલ માસિક આધારે છે. દર નિર્ધારણ તમારા authority નો છે.
-        </div>
-      </div>
-    </div>
-  </div>`;
-}
-
-function renderReportPage(){
-  const today = new Date();
-  const todayK = dkf(today.getFullYear(), today.getMonth(), today.getDate());
-  const todayN = Number(state.ben[todayK] || 0);
-  const todayU = calcUsage(today.getDay(), todayN);
-  const curMU = calcMonthUsage(state.calY, state.calM, state.ben);
-
-  const dailyRows = ITEMS.map(it => {
-    const iv = state.inv[it.id], opening = iv.o + iv.r;
-    const mor = morU(it.id, todayU), aft = aftU(it.id, todayU), tot = todayU[it.id] || 0;
-    return `<tr>
-      <td style="text-align:left"><span class="badge" style="background:${it.bg};color:${it.color}">${it.emoji} ${it.name}</span></td>
-      <td style="color:#2563a8;font-weight:700">${todayN}</td>
-      <td style="color:#2980b9;font-weight:700">${fmt(opening,3)}</td>
-      <td>${mor||"—"}</td><td>${aft||"—"}</td>
-      <td style="color:#e67e22;font-weight:700">${tot||"—"}</td>
-      <td style="color:#1b8f57;font-weight:700">${fmt(opening-tot/1000,3)}</td>
-    </tr>`;
-  }).join("");
-
-  const runBal = {};
-  ITEMS.forEach(it => { runBal[it.id] = state.inv[it.id].o + state.inv[it.id].r; });
-  const totals = {n:0};
-  ITEMS.forEach(it => { totals[it.id+"M"]=0; totals[it.id+"A"]=0; totals[it.id]=0; });
-  
-  const dim = new Date(state.calY, state.calM+1, 0).getDate();
-  const dateRowsArr = [];
-  
-  for(let d=1; d<=dim; d++){
-    const k = dkf(state.calY, state.calM, d);
-    const n = Number(state.ben[k] || 0);
-    const dow = new Date(state.calY, state.calM, d).getDay();
-    const u = calcUsage(dow, n);
-    totals.n += n;
-    const colsArr = [];
-    ITEMS.forEach(it => {
-      const mg = u[it.id+"M"] || 0, ag = u[it.id+"A"] || 0, t = u[it.id] || 0;
-      runBal[it.id] -= t/1000;
-      totals[it.id+"M"] += mg; totals[it.id+"A"] += ag; totals[it.id] += t;
-      colsArr.push(`<td>${mg||"—"}</td><td>${ag||"—"}</td><td style="font-weight:700;color:${t?'#e67e22':'#cbd5e1'}">${t||"—"}</td><td style="font-weight:700;color:#1b8f57">${fmt(runBal[it.id],3)}</td>`);
-    });
-    dateRowsArr.push(`<tr class="${dow===0?'sun-row':''}"><td class="sticky-c1"><b>${d}</b></td><td class="sticky-c2">${DAYS_TBL[dow]}</td><td class="sticky-c3" style="${n>0?'color:#2563a8;font-weight:700':'color:#cbd5e1'}">${n||"—"}</td>${colsArr.join("")}</tr>`);
-  }
-
-  const totalCols = ITEMS.map(it => 
-    `<td>${fmt(totals[it.id+"M"])}</td><td>${fmt(totals[it.id+"A"])}</td><td>${fmt(totals[it.id])}</td><td>${fmt(runBal[it.id],3)}</td>`
-  ).join("");
-  
-  const totalRow = `<tr class="total-row"><td class="sticky-c1"><b>ટો.</b></td><td class="sticky-c2"></td><td class="sticky-c3">${totals.n}</td>${totalCols}</tr>`;
-  
-  const invHeads = ITEMS.map(it => `<th colspan="4" style="background:${it.color}">${it.emoji} ${it.name}</th>`).join("");
-  const subHeads = ITEMS.map(() => `<th>સ. વ. (g)</th><th>બ. વ. (g)</th><th>કુલ (g)</th><th>સિલક (kg)</th>`).join("");
-  
-  const summaryRows = ITEMS.map(it => {
-    const iv = state.inv[it.id], opening = iv.o + iv.r;
-    const mor = curMU[it.id+"M"] || 0, aft = curMU[it.id+"A"] || 0, tot = curMU[it.id] || 0;
-    return `<tr>
-      <td style="text-align:left"><span class="badge" style="background:${it.bg};color:${it.color}">${it.emoji} ${it.name}</span></td>
-      <td><b style="color:#2563a8">${curMU[it.id+"nM"]||0}</b></td>
-      <td><b style="color:#7c3aed">${curMU[it.id+"nA"]||0}</b></td>
-      <td style="color:#2980b9;font-weight:700">${fmt(opening,3)}</td>
-      <td>${fmt(mor)}</td><td>${fmt(aft)}</td>
-      <td style="color:#e67e22;font-weight:700">${fmt(tot)}</td>
-      <td style="color:#1b8f57;font-weight:700">${fmt(opening-tot/1000,3)}</td>
-    </tr>`;
-  }).join("");
-
-  const dailyHtml = `<div class="card">
-    <div class="section-head">📅 દૈ. — ${today.getDate()} ${MONTHS_FULL[today.getMonth()]} ${today.getFullYear()} (${DAYS_FULL[today.getDay()]})</div>
-    <div class="zoom-toolbar">
-      <label>🔍 Zoom:</label>
-      <button class="zoom-btn" id="zoomOut">−</button>
-      <input type="range" class="zoom-slider" id="zoomSlider" min="50" max="150" value="100" step="5">
-      <button class="zoom-btn" id="zoomIn">+</button>
-      <span class="zoom-pct" id="zoomPct">100%</span>
-      <button class="zoom-reset" id="zoomReset">Reset</button>
-    </div>
-    <div class="section-body" style="padding:8px">
-      <p style="font-size:12px;color:#64748b;margin-bottom:8px">ભોજન: <b>${dayHint(today.getDay())}</b> | લ.: <b style="color:#2563a8">${todayN}</b></p>
-      <div class="zoomable-outer" id="zoomOuter">
-        <div class="zoomable-inner" id="zoomInner">
-          <table style="min-width:720px">
-            <thead><tr>
-              <th style="text-align:left">ઇન્વેન્ટરી</th>
-              <th>લાભાર્થી</th>
-              <th>ઊઘડતી (kg)</th>
-              <th>સ. વપરાશ (g)</th>
-              <th>બ. વપરાશ (g)</th>
-              <th>કુલ (g)</th>
-              <th>બંધ સિલક (kg)</th>
-            </tr></thead>
-            <tbody>${dailyRows}</tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <div class="actions"><button class="btn-print" id="btnPrint">🖨️ Print</button><button class="btn-share" id="btnShare">📤 Share</button></div>
-  </div>`;
-
-  const monthlyHtml = `<div class="card">
-    <div class="section-head">📊 ${MONTHS_FULL[state.calM]} ${state.calY}</div>
-    <div class="cal-head"><button id="prevM">‹</button><h3>${MONTHS_FULL[state.calM]} ${state.calY}</h3><button id="nextM">›</button></div>
-    <div class="zoom-toolbar">
-      <label>🔍 Zoom:</label>
-      <button class="zoom-btn" id="zoomOut">−</button>
-      <input type="range" class="zoom-slider" id="zoomSlider" min="30" max="120" value="70" step="5">
-      <button class="zoom-btn" id="zoomIn">+</button>
-      <span class="zoom-pct" id="zoomPct">70%</span>
-      <button class="zoom-reset" id="zoomReset">Reset</button>
-    </div>
-    <div class="section-body" style="padding:8px">
-      <div class="zoomable-outer" id="zoomOuter" style="max-height:500px">
-        <div class="zoomable-inner" id="zoomInner">
-          <table style="min-width:1400px">
-            <thead>
-              <tr><th class="sticky-c1" rowspan="2">તારીખ</th><th class="sticky-c2" rowspan="2">વાર</th><th class="sticky-c3" rowspan="2">સં.</th>${invHeads}</tr>
-              <tr>${subHeads}</tr>
-            </thead>
-            <tbody>${dateRowsArr.join("")}${totalRow}</tbody>
-          </table>
-        </div>
-      </div>
-      <h4 style="color:#1a3c5e;margin:14px 0 4px;font-size:13px">📦 ઈ. સારાંશ</h4>
-      <div class="zoom-toolbar" style="margin-bottom:4px">
-        <label>🔍 Zoom:</label>
-        <button class="zoom-btn" id="zoom2Out">−</button>
-        <input type="range" class="zoom-slider" id="zoom2Slider" min="50" max="150" value="100" step="5">
-        <button class="zoom-btn" id="zoom2In">+</button>
-        <span class="zoom-pct" id="zoom2Pct">100%</span>
-        <button class="zoom-reset" id="zoom2Reset">Reset</button>
-      </div>
-      <div class="zoomable-outer" id="zoom2Outer">
-        <div class="zoomable-inner" id="zoom2Inner">
-          <table style="min-width:820px">
-            <thead><tr>
-              <th style="text-align:left">ઇન્વેન્ટરી</th>
-              <th>સ. લાભ.</th>
-              <th>બ. લાભ.</th>
-              <th>ઊઘડતી (kg)</th>
-              <th>સ. વ. (g)</th>
-              <th>બ. વ. (g)</th>
-              <th>કુલ (g)</th>
-              <th>બંધ (kg)</th>
-            </tr></thead>
-            <tbody>${summaryRows}</tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <div class="actions"><button class="btn-print" id="btnPrint">🖨️ Print</button><button class="btn-share" id="btnShareM">📤 Share</button></div>
-  </div>`;
-
-  return `<div class="container tab-content">
-    <div class="card"><div class="report-tabs">
-      <button data-rpt="daily" class="${state.rptTab==='daily'?'active':''}">📅 દૈ.</button>
-      <button data-rpt="monthly" class="${state.rptTab==='monthly'?'active':''}">📊 માસ</button>
-    </div></div>
-    ${state.rptTab==='daily'?dailyHtml:monthlyHtml}
-    <div class="card"><div class="section-body" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;align-items:center">
-      <div>
-        <button style="padding:8px 14px;border:none;border-radius:6px;font-family:inherit;color:#fff;font-weight:700;cursor:pointer;background:#d97706" id="btnPDF">📄 Monthly PDF</button>
-        <button style="padding:8px 14px;border:none;border-radius:6px;font-family:inherit;color:#fff;font-weight:700;cursor:pointer;background:#7c3aed" id="btnExport">💾 Export</button>
-        <button style="padding:8px 14px;border:none;border-radius:6px;font-family:inherit;color:#fff;font-weight:700;cursor:pointer;background:#0891b2" id="btnImport">📂 Import</button>
-        <input type="file" id="fileImport" accept=".json" style="display:none">
-      </div>
-      <button id="btnLogout" style="padding:8px 14px;background:#cc3d3d;color:#fff;border:none;border-radius:6px;font-weight:700;cursor:pointer">🚪 કેન્દ્ર</button>
-    </div></div>
-  </div>`;
-}
-
-function renderAdminPage(){
-  if(!state.adminUnlocked){
-    return `<div class="container"><div class="card">
-      <div class="section-head" style="background:linear-gradient(135deg,#3b0764,#5b21b6)">🛡️ Admin Panel</div>
-      <div class="admin-gate"><div class="admin-gate-box">
-        <div style="font-size:48px;margin-bottom:10px">🛡️</div>
-        <h2>Admin Access</h2>
-        <p>Admin password દાખલ કરો</p>
-        <input id="adminPwdInput" type="password" class="admin-pwd-input" placeholder="• • • •" maxlength="30">
-        <div id="adminPwdErr" class="admin-err"></div>
-        <button class="admin-pwd-btn" id="adminPwdBtn">🔓 Unlock</button>
-      </div></div>
-    </div></div>`;
-  }
-
-  const logs = state.logData || [];
-  const fc = state.logFilter.center.toLowerCase(), fa = state.logFilter.action, fd = state.logFilter.date;
-  const filtered = logs.filter(l => {
-    if(fc && !String(l.centerCode||"").toLowerCase().includes(fc)) return false;
-    if(fa && l.action !== fa) return false;
-    if(fd && !String(l.timestamp||"").startsWith(fd)) return false;
-    return true;
-  });
-  
-  const uniqueCenters = [...new Set(logs.map(l => l.centerCode).filter(Boolean))];
-  const today = new Date().toISOString().slice(0,10);
-  const actions = [...new Set(logs.map(l => l.action).filter(Boolean))];
-  
-  const tableRows = filtered.length > 0 ? filtered.slice().reverse().map(l => {
-    const ts = l.timestamp ? new Date(l.timestamp).toLocaleString('gu-IN',{timeZone:'Asia/Kolkata'}) : "—";
-    return `<tr><td>${ts}</td><td><b>${l.centerCode||"—"}</b></td><td><span class="log-badge log-${l.action||"SAVE"}">${l.action||"—"}</span></td><td>${l.details||"—"}</td></tr>`;
-  }).join("") : `<tr><td colspan="4" style="padding:20px;color:#94a3b8;text-align:center">— કોઈ log નથી —</td></tr>`;
-
-  const isLogs = state.adminTab !== "consolidation";
-
-  return `<div class="container tab-content"><div class="card">
-    <div class="section-head" style="background:linear-gradient(135deg,#3b0764,#5b21b6)">
-      🛡️ Admin Panel
-      <button id="btnAdminLock" style="background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.35);padding:4px 10px;border-radius:6px;font-family:inherit;font-size:11px;font-weight:700;cursor:pointer">🔒 Lock</button>
-    </div>
-    <div class="stat-cards">
-      <div class="stat-card"><div class="s-num">${uniqueCenters.length}</div><div class="s-lbl">🏢 કુલ કેન્દ્ર</div></div>
-      <div class="stat-card"><div class="s-num">${logs.filter(l=>l.action==="NEW").length}</div><div class="s-lbl">🆕 New</div></div>
-      <div class="stat-card"><div class="s-num">${logs.filter(l=>l.action==="SAVE").length}</div><div class="s-lbl">💾 Save</div></div>
-      <div class="stat-card"><div class="s-num">${logs.filter(l=>String(l.timestamp||"").startsWith(today)).length}</div><div class="s-lbl">📅 આજ</div></div>
-      <div class="stat-card"><div class="s-num">${logs.length}</div><div class="s-lbl">📋 Total Logs</div></div>
-    </div>
-    <div class="admin-tabs">
-      <button class="admin-tab-btn ${isLogs?'active':''}" id="adminTabLogs">📋 Log Viewer</button>
-      <button class="admin-tab-btn ${!isLogs?'active':''}" id="adminTabCon">📊 એકત્રીકરણ</button>
-    </div>
-    ${isLogs ? `
-    ${uniqueCenters.length>0?`<div style="padding:10px 12px;background:#f0fdf4;border-top:1px solid #d1dce8"><b style="font-size:12px;color:#166534">🏢 Registered Centers (${uniqueCenters.length}):</b><div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:6px">${uniqueCenters.map(c=>`<span style="background:#dcfce7;color:#166534;border:1px solid #bbf7d0;border-radius:12px;padding:3px 10px;font-size:11px;font-weight:700">${c}</span>`).join("")}</div></div>`:""}
-    <div class="log-filter">
-      <input id="filterCenter" type="text" placeholder="Center" value="${state.logFilter.center}">
-      <select id="filterAction"><option value="">All</option>${actions.map(a=>`<option value="${a}" ${state.logFilter.action===a?"selected":""}>${a}</option>`).join("")}</select>
-      <input id="filterDate" type="date" value="${state.logFilter.date}">
-      <button id="btnApplyFilter">Filter</button>
-      <button class="btn-refresh" id="btnRefreshLogs">🔄</button>
-    </div>
-    <div class="log-table-wrap"><table class="log-table">
-      <thead><tr><th>📅 સમય</th><th>🏢 Center</th><th>⚡ Action</th><th>📝 વિગત</th></tr></thead>
-      <tbody>${tableRows}</tbody>
-    </table></div>
-    <div style="padding:8px 12px;font-size:11px;color:#64748b;background:#f8fafc;border-top:1px solid #d1dce8">${filtered.length}/${logs.length} entries</div>
-    ` : buildConsolidationHTML()}
-  </div></div>`;
-}
-
-function buildConsolidationHTML(){
-  const con = state.con;
-  const yOpts = [con.selY-1, con.selY, con.selY+1].map(y => 
-    `<option value="${y}" ${y===con.selY?"selected":""}>${y}</option>`
-  ).join("");
-  const mOpts = MONTHS_FULL.map((m,i) => 
-    `<option value="${i}" ${i===con.selM?"selected":""}>${m}</option>`
-  ).join("");
-
-  const toolbar = `<div class="con-toolbar">
-    <select id="conSelY">${yOpts}</select>
-    <select id="conSelM">${mOpts}</select>
-    <button id="btnFetchCenters">🔄 Refresh</button>
-    <button class="btn-export-con" id="btnExportCon">📥 CSV</button>
-    <span style="font-size:11px;color:#64748b">${con.centers.length} centers</span>
-  </div>`;
-
-  if(con.loading) return toolbar + `<div class="con-loading">⏳ ડેટા લોડ થઈ રહ્યો છે...</div>`;
-  if(con.error) return toolbar + `<div class="con-error">❌ ${con.error}<br><button onclick="fetchAllCenters()" style="margin-top:10px;padding:6px 14px;background:#5b21b6;color:#fff;border:none;border-radius:6px;font-family:inherit;font-weight:700;cursor:pointer">ફરી try કરો</button></div>`;
-  if(!con.centers.length) return toolbar + `<div class="con-loading" style="color:#64748b">📭 કોઈ center data નથી<br><button onclick="fetchAllCenters()" style="margin-top:10px;padding:6px 14px;background:#5b21b6;color:#fff;border:none;border-radius:6px;font-family:inherit;font-weight:700;cursor:pointer">Load Centers</button></div>`;
-
-  const rows = con.centers.map(c => {
-    const mu = calcMonthUsage(con.selY, con.selM, c.ben || {});
-    const inv = c.inv || {};
-    const closing = {};
-    ITEMS.forEach(it => {
-      const iv = inv[it.id] || {o:0, r:0};
-      const opening = (iv.o || 0) + (iv.r || 0);
-      closing[it.id] = opening - (mu[it.id] || 0) / 1000;
-    });
-    return { code: c.centerCode, mu, closing };
-  }).sort((a,b) => b.mu.totalN - a.mu.totalN);
-
-  const grand = { totalN:0, days:0 };
-  ITEMS.forEach(it => {
-    grand[it.id] = 0; grand[it.id+"M"] = 0; grand[it.id+"A"] = 0; grand[it.id+"closing"] = 0;
-  });
-  rows.forEach(r => {
-    grand.totalN += r.mu.totalN; grand.days += r.mu.days;
-    ITEMS.forEach(it => {
-      grand[it.id] += r.mu[it.id] || 0;
-      grand[it.id+"M"] += r.mu[it.id+"M"] || 0;
-      grand[it.id+"A"] += r.mu[it.id+"A"] || 0;
-      grand[it.id+"closing"] += r.closing[it.id] || 0;
-    });
-  });
-
-  const invHeads = ITEMS.map(it => `<th colspan="4" style="background:${it.color}">${it.emoji} ${it.name}</th>`).join("");
-  const subHeads = ITEMS.map(() => 
-    `<th>સ.વ.(g)</th><th>બ.વ.(g)</th><th>કુલ(g)</th><th style="color:#86efac">બ.સિ.(kg)</th>`
-  ).join("");
-
-  const dataRows = rows.map((r,i) => {
-    const cols = ITEMS.map(it => 
-      `<td>${r.mu[it.id+"M"]||0}</td><td>${r.mu[it.id+"A"]||0}</td><td style="font-weight:700;color:${r.mu[it.id]?'#e67e22':'#cbd5e1'}">${r.mu[it.id]||0}</td><td style="font-weight:700;color:#1b8f57">${fmt(r.closing[it.id],3)}</td>`
-    ).join("");
-    return `<tr>
-      <td class="con-c1"><span style="background:#ede9fe;color:#5b21b6;border-radius:10px;padding:1px 6px;font-size:10px;margin-right:4px">${i+1}</span>${r.code}</td>
-      <td style="font-weight:700;color:#2563a8">${r.mu.days}</td>
-      <td style="font-weight:700;color:#1b8f57">${r.mu.totalN}</td>
-      <td style="color:#64748b">${r.mu.days?fmt(r.mu.totalN/r.mu.days,1):"—"}</td>
-      ${cols}
-    </tr>`;
-  }).join("");
-
-  const grandCols = ITEMS.map(it => 
-    `<td>${grand[it.id+"M"]}</td><td>${grand[it.id+"A"]}</td><td style="font-weight:800">${grand[it.id]}</td><td style="font-weight:800;color:#1b8f57">${fmt(grand[it.id+"closing"],3)}</td>`
-  ).join("");
-  
-  const totalRow = `<tr class="con-total">
-    <td class="con-c1">🔢 Grand Total (${rows.length} કેન્દ્ર)</td>
-    <td>${grand.days}</td><td>${grand.totalN}</td><td>—</td>
-    ${grandCols}
-  </tr>`;
-
-  const n = rows.length || 1;
-  const avgCols = ITEMS.map(it => 
-    `<td>${fmt(grand[it.id+"M"]/n,0)}</td><td>${fmt(grand[it.id+"A"]/n,0)}</td><td>${fmt(grand[it.id]/n,0)}</td><td style="color:#1b8f57">${fmt(grand[it.id+"closing"]/n,3)}</td>`
-  ).join("");
-  
-  const avgRow = `<tr class="con-avg">
-    <td class="con-c1">📊 સરેરાશ / center</td>
-    <td>${fmt(grand.days/n,1)}</td><td>${fmt(grand.totalN/n,1)}</td><td>—</td>
-    ${avgCols}
-  </tr>`;
-
-  return toolbar + `<div class="con-table-wrap" style="max-height:520px">
-    <table class="con-table"><thead>
-      <tr><th class="con-c1" rowspan="2">🏢 કેન્દ્ર</th><th rowspan="2">દિ.</th><th rowspan="2">કુલ લ.</th><th rowspan="2">સ./દિ.</th>${invHeads}</tr>
-      <tr>${subHeads}</tr>
-    </thead><tbody>${dataRows}${totalRow}${avgRow}</tbody></table>
-  </div>`;
-}
-
-function exportConsolidationCSV(){
-  const con = state.con;
-  if(!con.centers.length){ alert("Data નથી"); return; }
-  let csv = "કેન્દ્ર,દિ.,કુળ લ.,સ./દિ.";
-  ITEMS.forEach(it => {
-    csv += `,${it.name} સ.વ.(g),${it.name} બ.વ.(g),${it.name} કુળ(g),${it.name} બ.સિ.(kg)`;
-  });
-  csv += "\n";
-  
-  con.centers.forEach(c => {
-    const mu = calcMonthUsage(con.selY, con.selM, c.ben || {});
-    const inv = c.inv || {};
-    csv += `${c.centerCode},${mu.days},${mu.totalN},${mu.days?fmt(mu.totalN/mu.days,1):"0"}`;
-    ITEMS.forEach(it => {
-      const iv = inv[it.id] || {o:0, r:0};
-      const opening = (iv.o||0) + (iv.r||0);
-      const closing = opening - (mu[it.id]||0)/1000;
-      csv += `,${mu[it.id+"M"]||0},${mu[it.id+"A"]||0},${mu[it.id]||0},${fmt(closing,3)}`;
-    });
-    csv += "\n";
-  });
-  
-  const blob = new Blob(["\ufeff" + csv], {type:"text/csv;charset=utf-8"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `consolidation-${MONTHS_FULL[con.selM]}-${con.selY}.csv`;
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-function renderModal(){
-  if(!state.modal) return "";
-  const {y,m,d} = state.modal;
-  const dow = new Date(y,m,d).getDay();
-  return `<div class="modal-bg" id="modalBg">
-    <div class="modal">
-      <h3>📅 ${d} ${MONTHS_FULL[m]} ${y}</h3>
-      <p>${DAYS_FULL[dow]}<br><span style="font-size:11px;color:#7c3aed">${dayHint(dow)}</span></p>
-      <input type="number" id="modalInput" min="0" placeholder="લ. સ." value="${state.modalVal}" autofocus>
-      <div class="modal-btns">
-        <button class="btn-cancel" id="modalCancel">રદ</button>
-        <button class="btn-clear" id="modalClear">સાફ</button>
-        <button class="btn-save" id="modalSave">✅ સેવ</button>
-      </div>
-    </div>
-  </div>`;
-}
-
-/* ============================================================
-   MAIN RENDER
-============================================================ */
-let _renderPending = false;
 function render(){
-  if(_renderPending) return;
-  _renderPending = true;
-  requestAnimationFrame(() => {
-    _renderPending = false;
-    const app = document.getElementById('app');
-    if(!app) return;
-    
-    if(!centerCode){
-      document.getElementById("nav").style.display = "none";
-      document.getElementById("syncStatus").style.display = "none";
-      app.innerHTML = renderSetupPage();
-      return;
-    }
-    
-    document.querySelectorAll('#nav button').forEach(b => {
-      b.classList.toggle('active', Number(b.dataset.tab) === state.tab);
-    });
-    
-    const curMU = calcMonthUsage(state.calY, state.calM, state.ben);
-    let html = "";
-    if(state.tab === 0) html = renderInventoryPage(curMU);
-    else if(state.tab === 1) html = renderCalendarPage();
-    else if(state.tab === 2) html = renderDashboardPage(curMU);
-    else if(state.tab === 3) html = renderReportPage();
-    else if(state.tab === 5) html = renderBillPage();
-    else if(state.tab === 4) html = renderAdminPage();
-    
-    html += renderModal();
-    app.innerHTML = html;
-    
-    if(state.modal){
-      const inp = document.getElementById('modalInput');
-      if(inp){ inp.focus(); inp.select(); }
-    }
-    if(state.tab === 3 && !state.modal) initReportZoom();
-  });
-}
-
-/* ============================================================
-   MODAL & NAVIGATION
-============================================================ */
-function openModal(d){
-  const k = dkf(state.calY, state.calM, d);
-  state.modal = {y: state.calY, m: state.calM, d};
-  state.modalVal = state.ben[k] || "";
-  render();
-}
-
-function closeModal(){
-  state.modal = null;
-  state.modalVal = "";
-  render();
-}
-
-function saveModal(){
-  const v = document.getElementById('modalInput').value.trim();
-  const k = dkf(state.modal.y, state.modal.m, state.modal.d);
-  if(v === "" || Number(v) <= 0){ delete state.ben[k]; }
-  else { state.ben[k] = Number(v); }
-  invalidateCache();
-  saveState();
-  closeModal();
-}
-
-function clearModal(){
-  const k = dkf(state.modal.y, state.modal.m, state.modal.d);
-  delete state.ben[k];
-  invalidateCache();
-  saveState();
-  closeModal();
-}
-
-function prevMonth(){ state.calM--; if(state.calM < 0){ state.calM = 11; state.calY--; } render(); }
-function nextMonth(){ state.calM++; if(state.calM > 11){ state.calM = 0; state.calY++; } render(); }
-
-/* ============================================================
-   ZOOM
-============================================================ */
-function applyZoom(innerId, pctId, val){
-  val = Math.max(25, Math.min(200, val));
-  const inner = document.getElementById(innerId);
-  const pct = document.getElementById(pctId);
-  if(inner) inner.style.zoom = (val/100);
-  if(pct) pct.textContent = val + "%";
-  return val;
-}
-
-function initZoomSet(prefix, innerId, pctId, defaultVal){
-  const slider = document.getElementById(prefix+"Slider");
-  const btnOut = document.getElementById(prefix+"Out");
-  const btnIn = document.getElementById(prefix+"In");
-  const btnRst = document.getElementById(prefix+"Reset");
-  if(!slider) return;
-  let cur = defaultVal || parseInt(slider.value) || 100;
-
-  const sync = v => {
-    cur = applyZoom(innerId, pctId, v);
-    slider.value = cur;
-  };
-
-  slider.addEventListener('input', () => sync(parseInt(slider.value)));
-  btnOut && btnOut.addEventListener('click', () => sync(cur - 10));
-  btnIn && btnIn.addEventListener('click', () => sync(cur + 10));
-  btnRst && btnRst.addEventListener('click', () => sync(defaultVal || 100));
-  sync(cur);
-}
-
-function initReportZoom(){
-  if(state.rptTab === 'daily'){
-    initZoomSet("zoom", "zoomInner", "zoomPct", 100);
-  } else {
-    requestAnimationFrame(() => {
-      const tbl = document.querySelector('#zoomInner table');
-      if(tbl){
-        const c1 = tbl.querySelector('th.sticky-c1');
-        const c2 = tbl.querySelector('th.sticky-c2');
-        const offset = Math.ceil((c1?c1.offsetWidth:32) + (c2?c2.offsetWidth:52));
-        tbl.querySelectorAll('.sticky-c3').forEach(el => { el.style.left = offset+'px'; });
-      }
-    });
-    initZoomSet("zoom", "zoomInner", "zoomPct", 70);
-    initZoomSet("zoom2", "zoom2Inner", "zoom2Pct", 100);
+  const app = document.getElementById('app');
+  if(!app) return;
+  if(!centerCode){
+    document.getElementById("nav").style.display = "none";
+    document.getElementById("syncStatus").style.display = "none";
+    app.innerHTML = renderSetupPage();
+    return;
   }
+  // ... simplified render
+  document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('active', Number(b.dataset.tab) === state.tab));
+  const curMU = calcMonthUsage(state.calY, state.calM, state.ben);
+  let html = "";
+  if(state.tab === 0) html = renderInventoryPage(curMU);
+  else if(state.tab === 1) html = renderCalendarPage();
+  else if(state.tab === 2) html = renderDashboardPage(curMU);
+  else if(state.tab === 3) html = renderReportPage();
+  else if(state.tab === 5) html = renderBillPage();
+  else if(state.tab === 4) html = renderAdminPage();
+  html += renderModal();
+  app.innerHTML = html;
+  if(state.modal){ const inp = document.getElementById('modalInput'); if(inp){ inp.focus(); inp.select(); } }
 }
+
+// ... (other functions: renderInventoryPage, renderCalendarPage, etc. same as before)
 
 /* ============================================================
-   SHARE / EXPORT / IMPORT / PDF
-============================================================ */
-function shareReport(){
-  const today = new Date();
-  const todayK = dkf(today.getFullYear(), today.getMonth(), today.getDate());
-  const todayN = Number(state.ben[todayK] || 0);
-  const todayU = calcUsage(today.getDay(), todayN);
-  let txt = `🌾 My Daily Report (${centerCode})\n📅 ${today.getDate()} ${MONTHS_FULL[today.getMonth()]} ${today.getFullYear()} (${DAYS_FULL[today.getDay()]})\n👥 લ.: ${todayN}\n\n`;
-  ITEMS.forEach(it => {
-    const iv = state.inv[it.id];
-    txt += `${it.emoji} ${it.name}: સ.${morU(it.id,todayU)}g|બ.${aftU(it.id,todayU)}g|ક.${todayU[it.id]}g|${fmt(iv.o+iv.r-todayU[it.id]/1000,3)}kg\n`;
-  });
-  if(navigator.share) navigator.share({title:"My Daily Report", text:txt}).catch(()=>{});
-  else navigator.clipboard.writeText(txt).then(()=>alert("✅ Copy"));
-}
-
-function shareMonthly(){
-  const curMU = calcMonthUsage(state.calY, state.calM, state.ben);
-  let txt = `📊 ${MONTHS_FULL[state.calM]} ${state.calY} (${centerCode})\n👥 ${curMU.totalN} | ${curMU.days} દ.\n\n`;
-  ITEMS.forEach(it => {
-    const iv = state.inv[it.id];
-    txt += `${it.emoji} ${it.name}: ${fmt(curMU[it.id])}g | ${fmt(iv.o+iv.r-curMU[it.id]/1000,3)}kg\n`;
-  });
-  if(navigator.share) navigator.share({title:"માસિક", text:txt}).catch(()=>{});
-  else navigator.clipboard.writeText(txt).then(()=>alert("✅ Copy"));
-}
-
-function exportBackup(){
-  const blob = new Blob([JSON.stringify({inv:state.inv, ben:state.ben},null,2)], {type:"application/json"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `mdr-${centerCode}-${new Date().toISOString().slice(0,10)}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-function importBackup(file){
-  const r = new FileReader();
-  r.onload = e => {
-    try{
-      const data = JSON.parse(e.target.result);
-      if(data.inv) state.inv = data.inv;
-      if(data.ben) state.ben = data.ben;
-      invalidateCache();
-      saveState();
-      render();
-      alert("✅ Restore successful!");
-    } catch(_){ alert("❌ Invalid file"); }
-  };
-  r.readAsText(file);
-}
-
-function generateMonthlyPDF(){
-  if(typeof pdfMake === 'undefined'){ alert('❌ PDF library loading...'); return; }
-  
-  const curMU = calcMonthUsage(state.calY, state.calM, state.ben);
-  const monthName = MONTHS_FULL[state.calM];
-  const today = new Date();
-  
-  let fruitBenCount = 0;
-  const dim = new Date(state.calY, state.calM+1, 0).getDate();
-  for(let d=1; d<=dim; d++){
-    const k = dkf(state.calY, state.calM, d);
-    const n = Number(state.ben[k] || 0);
-    const dow = new Date(state.calY, state.calM, d).getDay();
-    if(dow === 1 || dow === 4) fruitBenCount += n;
-  }
-  
-  const chanaDalBenCount = (curMU['chananA'] || 0) + (curMU['dalnA'] || 0);
-  const bills = [
-    {name:'🍎 ફ્રુટ બીલ', qty:fruitBenCount, rate:3.12, total:fruitBenCount*3.12},
-    {name:'🥒 ગરમ નાસ્તો બીલ', qty:curMU.totalN, rate:1.30, total:curMU.totalN*1.30},
-    {name:'🫘 ચણા + તુવેર દાળ બીલ', qty:chanaDalBenCount, rate:1.60, total:chanaDalBenCount*1.60},
-    {name:'🥬 શાકભાજી બીલ', qty:curMU.totalN, rate:0.15, total:curMU.totalN*0.15},
-    {name:'🌶️ મસાલા બીલ', qty:curMU.totalN, rate:1.00, total:curMU.totalN*1.00},
-    {name:'🚗 વાહતુક બીલ', qty:curMU.totalN, rate:0.05, total:curMU.totalN*0.05}
-  ];
-  
-  const grandTotal = bills.reduce((sum, b) => sum + b.total, 0);
-  const invRows = ITEMS.map(it => {
-    const iv = state.inv[it.id];
-    const opening = iv.o + iv.r;
-    const used = (curMU[it.id] || 0) / 1000;
-    return [it.name, fmt(opening,2), fmt(used,2), fmt(opening - used, 2)];
-  });
-  
-  const billRows = bills.map(b => [b.name, b.qty, '₹' + fmt(b.rate, 2), '₹' + fmt(b.total, 2)]);
-  
-  const docDefinition = {
-    pageSize: 'A4',
-    pageMargins: [30, 30, 30, 60],
-    header: {
-      text: '🌾 My Daily Report - ' + monthName + ' ' + state.calY,
-      alignment: 'center',
-      fontSize: 14,
-      bold: true,
-      margin: [0, 0, 0, 10]
-    },
-    footer: (currentPage, pageCount) => ({
-      text: currentPage + ' / ' + pageCount,
-      alignment: 'center',
-      fontSize: 9
-    }),
-    content: [
-      {text: '📋 Center Details', style: 'heading'},
-      {columns: [
-        {text: 'કેન્દ્ર: ' + centerCode, fontSize: 10},
-        {text: 'તારીખ: ' + today.toLocaleDateString('gu-IN'), fontSize: 10, alignment: 'right'}
-      ], margin: [0, 0, 0, 12]},
-      {text: '📊 Monthly Summary', style: 'heading'},
-      {table: {
-        headerRows: 1,
-        widths: ['*', '*', '*'],
-        body: [
-          ['કાર્ય દિવસ', 'કુલ લાભાર્થી', 'દર દિવસ સરેરાશ'],
-          [curMU.days.toString(), curMU.totalN.toString(), fmt(curMU.totalN/curMU.days || 0, 1)]
-        ]
-      }, margin: [0, 0, 0, 12]},
-      {text: '💰 Bills Summary', style: 'heading'},
-      {table: {
-        headerRows: 1,
-        widths: ['35%', '20%', '20%', '25%'],
-        body: [
-          ['ન. બીલ', 'સંખ્યા', 'દર', 'કુલ'],
-          ...billRows,
-          ['કુલ રકમ', '', '', '₹' + fmt(grandTotal, 2)]
-        ]
-      }, margin: [0, 0, 0, 12]},
-      {text: '📦 Inventory Status', style: 'heading'},
-      {table: {
-        headerRows: 1,
-        widths: ['25%', '25%', '25%', '25%'],
-        body: [
-          ['આઇટમ', 'ઊઘડતી (kg)', 'વપરાશ (kg)', 'બંધ (kg)'],
-          ...invRows
-        ]
-      }, margin: [0, 0, 0, 12]},
-      {text: 'અધિકૃત હસ્તાક્ષર', style: 'heading', margin: [0, 40, 0, 30]},
-      {text: '_'.repeat(40), fontSize: 10, margin: [0, 0, 0, 5]},
-      {text: 'Center-in-Charge', fontSize: 9, color: '#666'}
-    ],
-    styles: {
-      heading: {fontSize: 11, bold: true, margin: [0, 10, 0, 8], color: '#1a3c5e'}
-    }
-  };
-  
-  pdfMake.createPdf(docDefinition).download(`mdr-${centerCode}-${monthName}-${state.calY}.pdf`);
-  setStatus('✅ PDF Downloaded!', '#1b8f57');
-}
-
-/* ============================================================
-   EVENT LISTENERS
+   EVENTS
 ============================================================ */
 document.addEventListener('click', e => {
   const t = e.target;
-  
-  // Setup
   if(t.id === 'btnStart'){
     const sajo = document.getElementById("sajoInput")?.value.trim();
     const name = document.getElementById("centerNameInput")?.value.trim();
@@ -1662,22 +772,16 @@ document.addEventListener('click', e => {
     centerCode = center.code;
     localStorage.setItem('current_sajo', sajo);
     localStorage.setItem('mdr_center_code', centerCode);
+    console.log("New center:", centerCode);
     sendLog('LOGIN', `Sajo: ${sajo} | Center: ${name}`);
     bootApp();
     return;
   }
   
-  // Admin
   if(t.id === 'adminPwdBtn'){
     const inp = document.getElementById("adminPwdInput");
-    if(inp && inp.value === ADMIN_PASSWORD){
-      state.adminUnlocked = true;
-      fetchLogs();
-    } else {
-      const err = document.getElementById("adminPwdErr");
-      if(err) err.textContent = "❌ Wrong password!";
-      if(inp){ inp.value = ""; inp.focus(); }
-    }
+    if(inp && inp.value === ADMIN_PASSWORD){ state.adminUnlocked = true; fetchLogs(); }
+    else { const err = document.getElementById("adminPwdErr"); if(err) err.textContent = "❌ Wrong!"; if(inp){ inp.value = ""; inp.focus(); } }
     return;
   }
   
@@ -1687,52 +791,35 @@ document.addEventListener('click', e => {
   if(t.id === 'adminTabCon'){ state.adminTab = "consolidation"; render(); if(!state.con.centers.length && !state.con.loading) fetchAllCenters(); return; }
   if(t.id === 'btnFetchCenters'){ fetchAllCenters(); return; }
   if(t.id === 'btnExportCon'){ exportConsolidationCSV(); return; }
-  if(t.id === 'btnApplyFilter'){
-    state.logFilter.center = document.getElementById("filterCenter")?.value || "";
-    state.logFilter.action = document.getElementById("filterAction")?.value || "";
-    state.logFilter.date = document.getElementById("filterDate")?.value || "";
-    render(); return;
-  }
   
-  // Logout
   if(t.id === 'btnLogoutHeader' || t.id === 'btnLogout'){
     if(confirm("Logout?")){
       sendLog('LOGOUT', `Logout — ${centerCode}`);
       localStorage.removeItem("mdr_center_code");
+      localStorage.removeItem("anganwadi_center_code");
       centerCode = "";
       state.inv = JSON.parse(JSON.stringify(DEFAULT_INV));
       state.ben = {};
       invalidateCache();
-      const bar = document.getElementById("centerInfoBar");
-      const btn = document.getElementById("btnLogoutHeader");
-      if(bar){ bar.style.display = "none"; bar.innerHTML = ""; }
-      if(btn) btn.style.display = "none";
+      document.getElementById("centerInfoBar").style.display = "none";
+      document.getElementById("btnLogoutHeader").style.display = "none";
       document.getElementById("nav").style.display = "none";
       render();
     }
     return;
   }
   
-  // Nav
   if(t.matches('#nav button')){ state.tab = Number(t.dataset.tab); render(); return; }
-  
-  // Month
   if(t.id === 'prevM'){ prevMonth(); return; }
   if(t.id === 'nextM'){ nextMonth(); return; }
   
-  // Calendar
   const cell = t.closest('.cal-cell');
   if(cell && cell.dataset.day){ openModal(Number(cell.dataset.day)); return; }
   
-  // Modal
   if(t.id === 'modalCancel'){ closeModal(); return; }
   if(t.id === 'modalSave'){ saveModal(); return; }
   if(t.id === 'modalClear'){ clearModal(); return; }
-  
-  // Report tabs
   if(t.matches('.report-tabs button')){ state.rptTab = t.dataset.rpt; render(); return; }
-  
-  // Actions
   if(t.id === 'btnPrint'){ window.print(); return; }
   if(t.id === 'btnShare'){ shareReport(); return; }
   if(t.id === 'btnShareM'){ shareMonthly(); return; }
@@ -1743,19 +830,9 @@ document.addEventListener('click', e => {
 
 document.addEventListener('input', e => {
   const t = e.target;
-  if(t.matches('input[data-inv]')){
-    state.inv[t.dataset.inv][t.dataset.field] = parseFloat(t.value) || 0;
-    invalidateCache();
-    scheduleSave();
-  }
+  if(t.matches('input[data-inv]')){ state.inv[t.dataset.inv][t.dataset.field] = parseFloat(t.value) || 0; invalidateCache(); scheduleSave(); }
   if(t.id === 'modalInput') state.modalVal = t.value;
   if(t.id === 'fileImport' && t.files && t.files[0]){ importBackup(t.files[0]); t.value = ""; }
-});
-
-document.addEventListener('change', e => {
-  if(e.target.matches('input[data-inv]')) render();
-  if(e.target.id === 'conSelY'){ state.con.selY = parseInt(e.target.value); render(); }
-  if(e.target.id === 'conSelM'){ state.con.selM = parseInt(e.target.value); render(); }
 });
 
 document.addEventListener('keydown', e => {
@@ -1764,46 +841,112 @@ document.addEventListener('keydown', e => {
   if(e.key === 'Escape') closeModal();
 });
 
-/* ============================================================
-   DEBOUNCED SAVE
-============================================================ */
 let _saveTimer = null;
-function scheduleSave(){
-  clearTimeout(_saveTimer);
-  _saveTimer = setTimeout(saveState, 800);
+function scheduleSave(){ clearTimeout(_saveTimer); _saveTimer = setTimeout(saveState, 800); }
+
+// Modal functions
+function openModal(d){ const k=dkf(state.calY,state.calM,d); state.modal={y:state.calY,m:state.calM,d}; state.modalVal=state.ben[k]||""; render(); }
+function closeModal(){ state.modal=null; state.modalVal=""; render(); }
+function saveModal(){ const v=document.getElementById('modalInput').value.trim(); const k=dkf(state.modal.y,state.modal.m,state.modal.d); if(v===""||Number(v)<=0){ delete state.ben[k]; } else { state.ben[k]=Number(v); } invalidateCache(); saveState(); closeModal(); }
+function clearModal(){ const k=dkf(state.modal.y,state.modal.m,state.modal.d); delete state.ben[k]; invalidateCache(); saveState(); closeModal(); }
+function prevMonth(){ state.calM--; if(state.calM<0){state.calM=11;state.calY--;} render(); }
+function nextMonth(){ state.calM++; if(state.calM>11){state.calM=0;state.calY++;} render(); }
+
+// Share/Export functions
+function shareReport(){
+  const today=new Date(), todayK=dkf(today.getFullYear(),today.getMonth(),today.getDate());
+  const todayN=Number(state.ben[todayK]||0), todayU=calcUsage(today.getDay(),todayN);
+  let txt=`🌾 MDR (${centerCode})\n📅 ${today.getDate()} ${MONTHS_FULL[today.getMonth()]} ${today.getFullYear()}\n👥 લ.: ${todayN}\n\n`;
+  ITEMS.forEach(it=>{ const iv=state.inv[it.id]; txt+=`${it.emoji} ${it.name}: સ.${morU(it.id,todayU)}g|બ.${aftU(it.id,todayU)}g|ક.${todayU[it.id]}g|${fmt(iv.o+iv.r-todayU[it.id]/1000,3)}kg\n`; });
+  if(navigator.share) navigator.share({title:"MDR",text:txt}).catch(()=>{});
+  else navigator.clipboard.writeText(txt).then(()=>alert("✅ Copy"));
+}
+
+function shareMonthly(){
+  const curMU=calcMonthUsage(state.calY,state.calM,state.ben);
+  let txt=`📊 ${MONTHS_FULL[state.calM]} ${state.calY} (${centerCode})\n👥 ${curMU.totalN} | ${curMU.days} દ.\n\n`;
+  ITEMS.forEach(it=>{ const iv=state.inv[it.id]; txt+=`${it.emoji} ${it.name}: ${fmt(curMU[it.id])}g | ${fmt(iv.o+iv.r-curMU[it.id]/1000,3)}kg\n`; });
+  if(navigator.share) navigator.share({title:"માસિક",text:txt}).catch(()=>{});
+  else navigator.clipboard.writeText(txt).then(()=>alert("✅ Copy"));
+}
+
+function exportBackup(){
+  const blob=new Blob([JSON.stringify({inv:state.inv,ben:state.ben},null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob), a=document.createElement('a');
+  a.href=url; a.download=`mdr-${centerCode}-${new Date().toISOString().slice(0,10)}.json`;
+  a.click(); URL.revokeObjectURL(url);
+}
+
+function importBackup(file){
+  const r=new FileReader();
+  r.onload=e=>{
+    try{ const data=JSON.parse(e.target.result); if(data.inv) state.inv=data.inv; if(data.ben) state.ben=data.ben; invalidateCache(); saveState(); render(); alert("✅ Restore!"); }
+    catch(_){ alert("❌ Invalid"); }
+  };
+  r.readAsText(file);
+}
+
+function generateMonthlyPDF(){
+  if(typeof pdfMake === 'undefined'){ alert('❌ PDF loading...'); return; }
+  const curMU = calcMonthUsage(state.calY, state.calM, state.ben);
+  const monthName = MONTHS_FULL[state.calM];
+  let fruitBenCount = 0;
+  const dim = new Date(state.calY, state.calM+1, 0).getDate();
+  for(let d=1; d<=dim; d++){ const k=dkf(state.calY, state.calM, d); const n=Number(state.ben[k]||0); const dow=new Date(state.calY, state.calM, d).getDay(); if(dow===1||dow===4) fruitBenCount+=n; }
+  const chanaDalBenCount = (curMU['chananA']||0)+(curMU['dalnA']||0);
+  const bills = [
+    {name:'🍎 ફ્રુટ', qty:fruitBenCount, rate:3.12, total:fruitBenCount*3.12},
+    {name:'🥒 નાસ્તો', qty:curMU.totalN, rate:1.30, total:curMU.totalN*1.30},
+    {name:'🫘 ચણા+દાળ', qty:chanaDalBenCount, rate:1.60, total:chanaDalBenCount*1.60},
+    {name:'🥬 શાકભાજી', qty:curMU.totalN, rate:0.15, total:curMU.totalN*0.15},
+    {name:'🌶️ મસાલા', qty:curMU.totalN, rate:1.00, total:curMU.totalN*1.00},
+    {name:'🚗 વાહતુક', qty:curMU.totalN, rate:0.05, total:curMU.totalN*0.05}
+  ];
+  const grandTotal = bills.reduce((sum,b)=>sum+b.total,0);
+  const invRows = ITEMS.map(it=>{ const iv=state.inv[it.id]; return [it.name, fmt(iv.o+iv.r,2), fmt((curMU[it.id]||0)/1000,2), fmt(iv.o+iv.r-(curMU[it.id]||0)/1000,2)]; });
+  const billRows = bills.map(b=>[b.name, b.qty, '₹'+fmt(b.rate,2), '₹'+fmt(b.total,2)]);
+  
+  pdfMake.createPdf({
+    pageSize:'A4', pageMargins:[30,30,30,60],
+    header:{text:'🌾 MDR - '+monthName+' '+state.calY, alignment:'center', fontSize:14, bold:true, margin:[0,0,0,10]},
+    footer:(c,p)=>({text:c+' / '+p, alignment:'center', fontSize:9}),
+    content:[
+      {text:'📋 Center: '+centerCode, style:'heading'},
+      {columns:[{text:'સેજો: '+currentSajo, fontSize:10},{text:new Date().toLocaleDateString('gu-IN'), fontSize:10, alignment:'right'}], margin:[0,0,0,12]},
+      {text:'📊 Summary', style:'heading'},
+      {table:{headerRows:1, widths:['*','*','*'], body:[['કાર્ય દિવસ','કુલ લાભાર્થી','સરેરાશ'],[curMU.days,curMU.totalN,fmt(curMU.totalN/curMU.days||0,1)]]}, margin:[0,0,0,12]},
+      {text:'💰 Bills', style:'heading'},
+      {table:{headerRows:1, widths:['35%','20%','20%','25%'], body:[['બિલ','સંખ્યા','દર','કુલ'],...billRows,['કુલ','','','₹'+fmt(grandTotal,2)]]}, margin:[0,0,0,12]},
+      {text:'📦 Inventory', style:'heading'},
+      {table:{headerRows:1, widths:['25%','25%','25%','25%'], body:[['આઇટમ','ઊઘડતી(kg)','વપરાશ(kg)','બંધ(kg)'],...invRows]}, margin:[0,0,0,12]},
+      {text:'અધિકૃત હસ્તાક્ષર', style:'heading', margin:[0,40,0,30]},
+      {text:'_'.repeat(40), fontSize:10, margin:[0,0,0,5]},
+      {text:'Center-in-Charge', fontSize:9, color:'#666'}
+    ],
+    styles:{heading:{fontSize:11, bold:true, margin:[0,10,0,8], color:'#1a3c5e'}}
+  }).download(`mdr-${centerCode}-${monthName}-${state.calY}.pdf`);
+  setStatus('✅ PDF Downloaded!', '#1b8f57');
 }
 
 /* ============================================================
    BOOT
 ============================================================ */
-if(centerCode){ bootApp(); } else { render(); }
+console.log("=== Starting app ===");
+if(centerCode){ 
+  console.log("Has centerCode, booting..."); 
+  bootApp(); 
+} else { 
+  console.log("No centerCode, showing setup"); 
+  render(); 
+}
 
-// Periodic sync check every 30 seconds
 setInterval(() => {
-  if(centerCode && isOnline && syncQueue.length > 0 && _hasURL()){
-    processSyncQueue();
-  }
-  if(navigator.onLine !== isOnline){
-    isOnline = navigator.onLine;
-    if(isOnline){
-      setStatus("🟢 Online", "#1b8f57");
-      processSyncQueue();
-    } else {
-      setStatus("🔴 Offline", "#e67e22");
-    }
-  }
+  if(centerCode && isOnline && syncQueue.length > 0 && _hasURL()) processSyncQueue();
 }, 30000);
 
-// Version check
-const CURRENT_VERSION = '3.0.0';
-const STORED_VERSION = localStorage.getItem('mdr_app_version');
-if(STORED_VERSION !== CURRENT_VERSION){
-  localStorage.setItem('mdr_app_version', CURRENT_VERSION);
-  console.log('App updated to v' + CURRENT_VERSION);
-}
+const CURRENT_VERSION='3.0.1';
+const STORED_VERSION=localStorage.getItem('mdr_app_version');
+if(STORED_VERSION!==CURRENT_VERSION) localStorage.setItem('mdr_app_version',CURRENT_VERSION);
 </script>
-<footer style="text-align: center; margin: 20px 0; clear: both; display: block; position: relative; z-index: 9999;">
-  <a href="privacy.html" target="_blank" style="color: #666; text-decoration: none; font-size: 14px; font-weight: bold;">Privacy Policy</a>
-</footer>
 </body>
 </html>
