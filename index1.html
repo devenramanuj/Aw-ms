@@ -3,58 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sajo MDR System v2</title>
+  <title>Sajo MDR - Final</title>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    html,body{height:100%;font-family:'Segoe UI',Arial,sans-serif;background:#f0f4f8}
-    .container{max-width:100%;height:100vh;display:flex;flex-direction:column}
-    .header{background:linear-gradient(135deg,#1e3a8a,#2563a8);color:#fff;padding:10px;flex-shrink:0;text-align:center}
+    html,body{height:100%;font-family:'Segoe UI',Arial,sans-serif;background:#f0f4f8;color:#1a3a52}
+    .app{height:100vh;display:flex;flex-direction:column}
+    .header{background:linear-gradient(135deg,#1e3a8a,#2563a8);color:#fff;padding:12px;text-align:center;flex-shrink:0}
     .header h1{font-size:18px;margin-bottom:2px}
-    .header-info{font-size:11px;color:#cbd5e1}
-    .content{flex:1;overflow-y:auto;padding:8px}
+    .header-sub{font-size:11px;color:#cbd5e1}
+    .main{flex:1;overflow-y:auto;padding:8px}
     .card{background:#fff;border-radius:6px;padding:12px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,0.1)}
     .btn{padding:10px;border:none;border-radius:4px;font-weight:700;cursor:pointer;font-family:inherit;font-size:12px;width:100%;margin-bottom:6px}
     .btn-primary{background:#2563a8;color:#fff}
     .btn-success{background:#16a34a;color:#fff}
     .btn-danger{background:#dc2626;color:#fff}
-    .btn:active{opacity:0.8}
-    input,select{width:100%;padding:8px;border:1px solid #cbd5e1;border-radius:4px;font-family:inherit;font-size:12px;margin-bottom:8px}
-    .nav{display:flex;gap:4px;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;padding:6px 0;overflow-x:auto;flex-wrap:wrap}
-    .nav-btn{padding:6px 10px;background:none;border:none;border-bottom:3px solid transparent;color:#64748b;font-weight:700;cursor:pointer;font-size:11px;white-space:nowrap}
+    input,select{width:100%;padding:8px;border:1px solid #cbd5e1;border-radius:4px;font-family:inherit;font-size:12px;margin-bottom:8px;font-size:13px}
+    .nav{display:flex;gap:2px;border:1px solid #e2e8f0;border-radius:4px;margin-bottom:8px;overflow-x:auto}
+    .nav-btn{flex:1;padding:8px;background:none;border:none;color:#64748b;font-weight:700;cursor:pointer;font-size:11px;white-space:nowrap;border-bottom:3px solid transparent;border-radius:2px}
     .nav-btn.active{color:#2563a8;border-bottom-color:#2563a8}
     .tab{display:none}
     .tab.active{display:block}
     .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
     .stat{background:#f8fafc;padding:10px;border-radius:4px;border-left:3px solid #2563a8;text-align:center}
-    .stat-num{font-size:20px;font-weight:700;color:#2563a8}
-    .stat-label{font-size:10px;color:#64748b;margin-top:2px}
+    .stat-num{font-size:18px;font-weight:700;color:#2563a8}
+    .stat-lbl{font-size:10px;color:#64748b;margin-top:2px}
     .item{background:#f8fafc;padding:10px;border-radius:4px;margin-bottom:8px;border-left:3px solid #7c3aed}
-    .item-title{font-size:11px;font-weight:700;color:#1a3a52;margin-bottom:6px}
-    .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin:8px 0}
-    .cal-header{background:#1e3a8a;color:#fff;padding:4px;text-align:center;font-size:9px;font-weight:700}
-    .cal-cell{background:#fff;border:1px solid #cbd5e1;padding:2px;text-align:center;font-size:10px}
-    .cal-cell input{width:100%;border:none;text-align:center;padding:2px;font-size:10px;margin:0}
-    .bill-item{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;padding:8px;background:#f8fafc;border-radius:4px;margin-bottom:6px;align-items:center}
-    .bill-label{font-size:11px;font-weight:700}
-    .bill-value{font-size:12px;font-weight:700;color:#2563a8;text-align:right}
+    .item-title{font-size:11px;font-weight:700;margin-bottom:6px}
+    .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin:8px 0}
+    .cal-h{background:#1e3a8a;color:#fff;padding:4px;text-align:center;font-size:9px;font-weight:700}
+    .cal-c{background:#fff;border:1px solid #cbd5e1;padding:2px;text-align:center}
+    .cal-c input{width:100%;border:none;text-align:center;padding:2px;font-size:10px;margin:0}
+    .bill{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;padding:8px;background:#f8fafc;border-radius:4px;margin-bottom:6px;align-items:center}
+    .bill-lbl{font-size:11px;font-weight:700}
+    .bill-val{font-size:12px;font-weight:700;color:#2563a8;text-align:right}
     .status{background:#f0fdf4;color:#166534;padding:8px;border-radius:4px;border-left:3px solid #16a34a;margin-bottom:8px;font-size:11px}
-    .month-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:6px}
+    .month-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:4px}
     .month-nav button{flex:1}
-    .month-title{text-align:center;font-weight:700;font-size:12px}
+    .month-title{text-align:center;font-weight:700;font-size:12px;flex:1}
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="app">
     <div class="header">
-      <h1>🌾 Sajo MDR System v2</h1>
-      <div class="header-info" id="headerInfo">Setup required</div>
+      <h1>🌾 Sajo MDR System</h1>
+      <div class="header-sub" id="headerSub">Setup required</div>
     </div>
-    <div class="content" id="content"></div>
+    <div class="main" id="main"></div>
   </div>
 
   <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyJEl92SA6w5Ym3tuHhvwukXI6G1jKM0LxOPXBVVGxnSarMMhLu5-B9GGOzQf0UVyeb/exec';
     const SAJOS = ['આકરૂ', 'ધંધુકા', 'વાગડ', 'હડાળા'];
     const ITEMS = [
       {id:'ghau',name:'ઘઉં',emoji:'🌾'},
@@ -65,205 +63,188 @@
       {id:'chanadal',name:'ચણા દાળ',emoji:'💚'}
     ];
     const BILLS = [
-      {name:'ફ્રુટ',rate:3.12},
-      {name:'ગરમ નાસ્તો',rate:1.30},
-      {name:'ચણા + તુવેર',rate:1.60},
-      {name:'શાકભાજી',rate:0.15},
-      {name:'મસાલા',rate:1.00},
-      {name:'વાહતુક',rate:0.05}
+      {n:'ફ્રુટ',r:3.12},
+      {n:'ગરમ નાસ્તો',r:1.30},
+      {n:'ચણા + તુવેર',r:1.60},
+      {n:'શાકભાજી',r:0.15},
+      {n:'મસાલા',r:1.00},
+      {n:'વાહતુક',r:0.05}
     ];
 
-    let state = {
+    let s = {
       sajo: localStorage.getItem('sajo') || '',
-      centerCode: localStorage.getItem('centerCode') || '',
-      centerName: localStorage.getItem('centerName') || '',
-      tab: 'inventory',
+      code: localStorage.getItem('code') || '',
+      name: localStorage.getItem('name') || '',
+      tab: 'inv',
       inv: JSON.parse(localStorage.getItem('inv') || '{}'),
       ben: JSON.parse(localStorage.getItem('ben') || '{}'),
-      year: new Date().getFullYear(),
-      month: new Date().getMonth()
+      yr: new Date().getFullYear(),
+      mo: new Date().getMonth()
     };
 
     function save() {
-      localStorage.setItem('sajo', state.sajo);
-      localStorage.setItem('centerCode', state.centerCode);
-      localStorage.setItem('centerName', state.centerName);
-      localStorage.setItem('inv', JSON.stringify(state.inv));
-      localStorage.setItem('ben', JSON.stringify(state.ben));
+      localStorage.setItem('sajo', s.sajo);
+      localStorage.setItem('code', s.code);
+      localStorage.setItem('name', s.name);
+      localStorage.setItem('inv', JSON.stringify(s.inv));
+      localStorage.setItem('ben', JSON.stringify(s.ben));
     }
 
     function render() {
-      if (!state.sajo) renderSetup();
+      if (!s.sajo) renderSetup();
       else renderApp();
     }
 
     function renderSetup() {
-      const opts = SAJOS.map(s => `<option value="${s}" ${s===state.sajo?'selected':''}>${s}</option>`).join('');
-      document.getElementById('content').innerHTML = `
-        <div class="card" style="margin-top:30px">
-          <h2 style="font-size:16px;margin-bottom:12px">📍 Setup</h2>
-          <label style="font-weight:700;font-size:11px;display:block;margin-bottom:4px">સેજો</label>
-          <select id="sajoInp" style="margin-bottom:12px">${opts}</select>
-          
-          <label style="font-weight:700;font-size:11px;display:block;margin-bottom:4px">કેન્દ્રનું નામ</label>
-          <input id="nameInp" type="text" placeholder="દા.ત. પંચમહાલ" value="${state.centerName}">
-          
-          <button class="btn btn-primary" onclick="handleSetup()">🚀 શરૂ કરો</button>
+      const opts = SAJOS.map(x => `<option value="${x}">${x}</option>`).join('');
+      document.getElementById('main').innerHTML = `
+        <div class="card" style="margin-top:40px">
+          <h2 style="font-size:16px;margin-bottom:16px">📍 Setup</h2>
+          <label style="font-weight:700;font-size:11px">સેજો</label>
+          <select id="sj">${opts}</select>
+          <label style="font-weight:700;font-size:11px">કેન્દ્રનું નામ</label>
+          <input id="nm" type="text" placeholder="દા.ત. પંચમહાલ">
+          <button class="btn btn-primary" onclick="setup()">🚀 શરૂ કરો</button>
         </div>
       `;
-      document.getElementById('sajoInp').focus();
+      document.getElementById('sj').value = s.sajo;
+      document.getElementById('nm').value = s.name;
     }
 
     function renderApp() {
-      const totalBen = Object.values(state.ben).reduce((a,b)=>a+(parseInt(b)||0),0);
-      const tabContent = {
-        inventory: renderInventory(),
-        calendar: renderCalendar(),
-        dashboard: renderDashboard(totalBen),
-        report: renderReport(totalBen),
-        bills: renderBills(totalBen)
+      const tb = Object.values(s.ben).reduce((a,b)=>a+(parseInt(b)||0),0);
+      const hs = {
+        inv: renderInv(),
+        cal: renderCal(),
+        dash: renderDash(tb),
+        rep: renderRep(tb),
+        bill: renderBill(tb)
       };
 
-      document.getElementById('headerInfo').textContent = `${state.sajo} | ${state.centerName} (${state.centerCode})`;
+      document.getElementById('headerSub').textContent = `${s.sajo} | ${s.name} (${s.code})`;
       
-      document.getElementById('content').innerHTML = `
+      document.getElementById('main').innerHTML = `
         <div class="card">
-          <div class="status">✅ Ready</div>
+          <div class="status">✅ Data saved locally</div>
           <div class="nav">
-            <button class="nav-btn ${state.tab==='inventory'?'active':''}" onclick="setTab('inventory')">📦 Inventory</button>
-            <button class="nav-btn ${state.tab==='calendar'?'active':''}" onclick="setTab('calendar')">📅 Calendar</button>
-            <button class="nav-btn ${state.tab==='dashboard'?'active':''}" onclick="setTab('dashboard')">📊 Dashboard</button>
-            <button class="nav-btn ${state.tab==='report'?'active':''}" onclick="setTab('report')">📋 Report</button>
-            <button class="nav-btn ${state.tab==='bills'?'active':''}" onclick="setTab('bills')">🧾 Bills</button>
-            <button class="nav-btn" onclick="syncCloud()" style="color:#16a34a">☁️ Sync</button>
-            <button class="nav-btn" onclick="logout()" style="color:#dc2626">🚪 Logout</button>
+            <button class="nav-btn ${s.tab==='inv'?'active':''}" onclick="setTab('inv')">📦</button>
+            <button class="nav-btn ${s.tab==='cal'?'active':''}" onclick="setTab('cal')">📅</button>
+            <button class="nav-btn ${s.tab==='dash'?'active':''}" onclick="setTab('dash')">📊</button>
+            <button class="nav-btn ${s.tab==='rep'?'active':''}" onclick="setTab('rep')">📋</button>
+            <button class="nav-btn ${s.tab==='bill'?'active':''}" onclick="setTab('bill')">🧾</button>
+            <button class="nav-btn" onclick="exp()" style="color:#16a34a">📥</button>
+            <button class="nav-btn" onclick="logout()" style="color:#dc2626">🚪</button>
           </div>
 
-          <div class="tab ${state.tab==='inventory'?'active':''}">${tabContent.inventory}</div>
-          <div class="tab ${state.tab==='calendar'?'active':''}">${tabContent.calendar}</div>
-          <div class="tab ${state.tab==='dashboard'?'active':''}">${tabContent.dashboard}</div>
-          <div class="tab ${state.tab==='report'?'active':''}">${tabContent.report}</div>
-          <div class="tab ${state.tab==='bills'?'active':''}">${tabContent.bills}</div>
+          <div class="tab ${s.tab==='inv'?'active':''}">${hs.inv}</div>
+          <div class="tab ${s.tab==='cal'?'active':''}">${hs.cal}</div>
+          <div class="tab ${s.tab==='dash'?'active':''}">${hs.dash}</div>
+          <div class="tab ${s.tab==='rep'?'active':''}">${hs.rep}</div>
+          <div class="tab ${s.tab==='bill'?'active':''}">${hs.bill}</div>
         </div>
       `;
     }
 
-    function renderInventory() {
-      return `<h3 style="font-size:12px;font-weight:700;margin-bottom:8px">📦 Opening & Received (kg)</h3>
+    function renderInv() {
+      return `<h3 style="font-size:12px;font-weight:700;margin-bottom:8px">📦 Opening & Received</h3>
         ${ITEMS.map(it=>`
           <div class="item">
             <div class="item-title">${it.emoji} ${it.name}</div>
             <div class="grid-2">
-              <input type="number" placeholder="Opening" value="${state.inv[it.id]?.o||''}" onchange="setInv('${it.id}','o',this.value)" style="margin-bottom:0">
-              <input type="number" placeholder="Received" value="${state.inv[it.id]?.r||''}" onchange="setInv('${it.id}','r',this.value)" style="margin-bottom:0">
+              <input type="number" placeholder="Opening" value="${s.inv[it.id]?.o||''}" onchange="si('${it.id}','o',this.value)" style="margin-bottom:0">
+              <input type="number" placeholder="Received" value="${s.inv[it.id]?.r||''}" onchange="si('${it.id}','r',this.value)" style="margin-bottom:0">
             </div>
           </div>
         `).join('')}
-        <button class="btn btn-success" onclick="saveThenSync()">💾 Save & Sync</button>`;
+        <button class="btn btn-success" onclick="save();alert('✅ Saved!')">💾 Save</button>`;
     }
 
-    function renderCalendar() {
-      const months = ['જનવારી','ફેબ્રુવારી','માર્ચ','એપ્રિલ','મે','જૂન','જુલાઈ','ઓગસ્ટ','સપ્ટે','ઑક્ટો','નવે','ડિસે'];
-      const days = new Date(state.year, state.month+1, 0).getDate();
-      let cal = '';
-      for(let i=1;i<=days;i++) {
-        const k = `${state.year}-${String(state.month+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
-        cal += `<div class="cal-cell"><input type="number" value="${state.ben[k]||''}" onchange="setBen('${k}',this.value)"></div>`;
+    function renderCal() {
+      const mo = ['જનવારી','ફેબ્રુવારી','માર્ચ','એપ્રિલ','મે','જૂન','જુલાઈ','ઓગસ્ટ','સપ્ટે','ઑક્ટો','નવે','ડિસે'];
+      const da = new Date(s.yr, s.mo+1, 0).getDate();
+      let c = '';
+      for(let i=1;i<=da;i++) {
+        const k = `${s.yr}-${String(s.mo+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
+        c += `<div class="cal-c"><input type="number" value="${s.ben[k]||''}" onchange="sb('${k}',this.value)"></div>`;
       }
-
       return `<div class="month-nav">
-        <button class="btn btn-primary" onclick="prevMonth()" style="width:auto">← Prev</button>
-        <div class="month-title">${months[state.month]} ${state.year}</div>
-        <button class="btn btn-primary" onclick="nextMonth()" style="width:auto">Next →</button>
+        <button class="btn btn-primary" onclick="pm()" style="width:auto;padding:6px">← Prev</button>
+        <div class="month-title">${mo[s.mo]} ${s.yr}</div>
+        <button class="btn btn-primary" onclick="nm()" style="width:auto;padding:6px">Next →</button>
       </div>
-      <div class="cal-grid">
-        <div class="cal-header">સૂ</div><div class="cal-header">સો</div><div class="cal-header">મં</div>
-        <div class="cal-header">બુ</div><div class="cal-header">ગુ</div><div class="cal-header">શુ</div><div class="cal-header">શ</div>
-        ${cal}
+      <div class="cal">
+        <div class="cal-h">સૂ</div><div class="cal-h">સો</div><div class="cal-h">મં</div>
+        <div class="cal-h">બુ</div><div class="cal-h">ગુ</div><div class="cal-h">શુ</div><div class="cal-h">શ</div>
+        ${c}
       </div>
-      <button class="btn btn-success" onclick="saveThenSync()" style="margin-top:8px">💾 Save & Sync</button>`;
+      <button class="btn btn-success" onclick="save();alert('✅ Saved!')" style="margin-top:8px">💾 Save</button>`;
     }
 
-    function renderDashboard(totalBen) {
-      const totalInv = ITEMS.reduce((s,it)=>s+(state.inv[it.id]?.o||0)+(state.inv[it.id]?.r||0),0);
+    function renderDash(tb) {
+      const ti = ITEMS.reduce((x,it)=>x+(s.inv[it.id]?.o||0)+(s.inv[it.id]?.r||0),0);
       return `<div class="grid-2" style="margin-bottom:8px">
-        <div class="stat"><div class="stat-num">${totalBen}</div><div class="stat-label">લાભાર્થી દિવસ</div></div>
-        <div class="stat"><div class="stat-num">${totalInv}</div><div class="stat-label">કુલ ઈ-ને-ટરી</div></div>
+        <div class="stat"><div class="stat-num">${tb}</div><div class="stat-lbl">લાભાર્થી દિવસ</div></div>
+        <div class="stat"><div class="stat-num">${ti}</div><div class="stat-lbl">કુલ ઈ-ને-ટરી</div></div>
       </div>
       <div class="grid-2">
-        ${ITEMS.map(it=>{const t=(state.inv[it.id]?.o||0)+(state.inv[it.id]?.r||0);return `<div class="stat"><div class="stat-num">${t}</div><div class="stat-label">${it.name}</div></div>`;}).join('')}
+        ${ITEMS.map(it=>{const t=(s.inv[it.id]?.o||0)+(s.inv[it.id]?.r||0);return `<div class="stat"><div class="stat-num">${t}</div><div class="stat-lbl">${it.name}</div></div>`;}).join('')}
       </div>`;
     }
 
-    function renderReport(totalBen) {
+    function renderRep(tb) {
       return `<div class="card" style="background:#f0fdf4;border-left:4px solid #16a34a;padding:12px;margin-bottom:8px">
-        <div style="font-size:24px;font-weight:700;color:#16a34a">${totalBen}</div>
+        <div style="font-size:24px;font-weight:700;color:#16a34a">${tb}</div>
         <div style="font-size:12px;color:#166534">કુલ લાભાર્થી દિવસ</div>
       </div>
-      <button class="btn btn-primary" onclick="exportJSON()">📥 Export</button>
-      <button class="btn btn-success" onclick="syncCloud()">☁️ Sync</button>
+      <button class="btn btn-primary" onclick="exp()">📥 Export JSON</button>
       <button class="btn btn-primary" onclick="window.print()">🖨️ Print</button>`;
     }
 
-    function renderBills(totalBen) {
-      let total = 0;
-      const bills = BILLS.map((b,i)=>{const a=totalBen*b.rate;total+=a;return `
-        <div class="bill-item">
-          <div class="bill-label">${i+1}. ${b.name}</div>
-          <div style="font-size:10px;color:#64748b">₹${b.rate}</div>
-          <div class="bill-value">₹${a.toFixed(2)}</div>
+    function renderBill(tb) {
+      let to = 0;
+      const bi = BILLS.map((b,i)=>{const a=tb*b.r;to+=a;return `
+        <div class="bill">
+          <div class="bill-lbl">${i+1}. ${b.n}</div>
+          <div style="font-size:10px;color:#64748b">₹${b.r}</div>
+          <div class="bill-val">₹${a.toFixed(2)}</div>
         </div>
       `}).join('');
-      return bills + `<div class="bill-item" style="background:#e0e7ff;font-weight:700">
-        <div class="bill-label">કુલ બિલ</div>
+      return bi + `<div class="bill" style="background:#e0e7ff;font-weight:700">
+        <div class="bill-lbl">કુલ બિલ</div>
         <div></div>
-        <div class="bill-value" style="color:#1e40af">₹${total.toFixed(2)}</div>
+        <div class="bill-val" style="color:#1e40af">₹${to.toFixed(2)}</div>
       </div>`;
     }
 
-    function handleSetup() {
-      const sajo = document.getElementById('sajoInp').value;
-      const name = document.getElementById('nameInp').value.trim();
-      if(!sajo){alert('સેજો પસંદ કર');return;}
-      if(!name){alert('નામ લખો');return;}
-      
-      state.sajo = sajo;
-      state.centerName = name;
-      state.centerCode = sajo.slice(0,2).toUpperCase() + Math.random().toString().slice(2,6);
+    function setup() {
+      const sj = document.getElementById('sj').value;
+      const nm = document.getElementById('nm').value.trim();
+      if(!nm){alert('નામ લખો');return;}
+      s.sajo = sj;
+      s.name = nm;
+      s.code = sj.slice(0,2).toUpperCase() + Math.random().toString().slice(2,6);
       save();
       render();
     }
 
-    function setInv(id,f,v){if(!state.inv[id])state.inv[id]={};state.inv[id][f]=parseInt(v)||0;}
-    function setBen(d,v){state.ben[d]=parseInt(v)||0;}
-    function setTab(t){state.tab=t;render();}
-    function saveThenSync(){save();alert('✅ Saved locally!');syncCloud();}
+    function si(id,f,v){if(!s.inv[id])s.inv[id]={};s.inv[id][f]=parseInt(v)||0;}
+    function sb(d,v){s.ben[d]=parseInt(v)||0;}
+    function setTab(t){s.tab=t;render();}
+    function pm(){if(s.mo>0)s.mo--;else{s.mo=11;s.yr--;}render();}
+    function nm(){if(s.mo<11)s.mo++;else{s.mo=0;s.yr++;}render();}
     
-    function syncCloud() {
-      fetch(SCRIPT_URL, {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({action:'SAVE',sajo:state.sajo,centerCode:state.centerCode,centerName:state.centerName,inv:state.inv,ben:state.ben})
-      }).then(r=>r.json()).then(d=>{
-        if(d.success)alert('✅ Cloud synced!');
-        else alert('⚠️ '+d.message);
-      }).catch(()=>alert('⚠️ Network error (data saved locally)'));
-    }
-
-    function exportJSON() {
-      const data = {sajo:state.sajo,centerCode:state.centerCode,inv:state.inv,ben:state.ben};
-      const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-      const url = URL.createObjectURL(blob);
+    function exp() {
+      const d = {sajo:s.sajo,code:s.code,inv:s.inv,ben:s.ben};
+      const b = new Blob([JSON.stringify(d,null,2)],{type:'application/json'});
+      const u = URL.createObjectURL(b);
       const a = document.createElement('a');
-      a.href = url;
-      a.download = state.sajo + '_' + state.centerCode + '.json';
+      a.href = u;
+      a.download = s.sajo + '_' + s.code + '.json';
       a.click();
-      URL.revokeObjectURL(url);
+      URL.revokeObjectURL(u);
     }
-
-    function prevMonth(){if(state.month>0)state.month--;else{state.month=11;state.year--;}render();}
-    function nextMonth(){if(state.month<11)state.month++;else{state.month=0;state.year++;}render();}
-    function logout(){localStorage.clear();state={sajo:'',centerCode:'',centerName:'',tab:'inventory',inv:{},ben:{},year:new Date().getFullYear(),month:new Date().getMonth()};render();}
+    
+    function logout(){localStorage.clear();s={sajo:'',code:'',name:'',tab:'inv',inv:{},ben:{},yr:new Date().getFullYear(),mo:new Date().getMonth()};render();}
 
     render();
   </script>
