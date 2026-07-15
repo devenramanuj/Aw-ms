@@ -2,7 +2,7 @@
 <html lang="gu">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta name="theme-color" content="#0f2442" />
 <meta name="description" content="My Daily Report - Anganwadi Food Tracking App" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -10,38 +10,29 @@
 <meta name="apple-mobile-web-app-title" content="My Daily Report" />
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%230f2442' width='192' height='192'/><text x='50%' y='50%' font-size='80' text-anchor='middle' dominant-baseline='middle' fill='%23fff' font-weight='bold'>🌾</text></svg>" />
 <link rel="manifest" href="data:application/manifest+json,{%22name%22:%22My%20Daily%20Report%22,%22short_name%22:%22MDR%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20192%20192%27%3E%3Crect%20fill=%27%230f2442%27%20width=%27192%27%20height=%27192%27/%3E%3Ctext%20x=%2750%25%27%20y=%2750%25%27%20font-size=%2780%27%20text-anchor=%27middle%27%20dominant-baseline=%27middle%27%20fill=%27%23fff%27%20font-weight=%27bold%27%3E🌾%3C/text%3E%3C/svg%3E%22,%22sizes%22:%22192x192%22,%22type%22:%22image/svg+xml%22,%22purpose%22:%22any%22}],%22start_url%22:%22/%22,%22scope%22:%22/%22,%22display%22:%22standalone%22,%22orientation%22:%22portrait-primary%22,%22theme_color%22:%22%230f2442%22,%22background_color%22:%22%23f0f4f8%22}" />
-<title>My Daily Report</title>
-<!-- ✅ FIX 1: font-display:swap + preload = no blocking -->
+<title>Sajo MDR System</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;700&display=swap">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;700&display=swap" rel="stylesheet"></noscript>
 <style>
-/* ✅ FIX 2: System font stack FIRST — UI shows instantly before Noto loads */
 *{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family:'Noto Sans Gujarati',system-ui,-apple-system,'Segoe UI',sans-serif;
-  background:#f0f4f8;color:#1a2535;line-height:1.4;
-  /* ✅ FIX 3: font-display hint via CSS */
-  font-display:swap
-}
-
-/* ✅ FIX 4: Critical above-fold styles inlined, rest loaded lazily */
+body{font-family:'Noto Sans Gujarati',system-ui,-apple-system,'Segoe UI',sans-serif;background:#f0f4f8;color:#1a2535;line-height:1.4;font-display:swap}
 .container{max-width:1200px;margin:0 auto;padding:10px}
-.header{background:linear-gradient(135deg,#0f2442,#1a3c5e);color:#fff;padding:5px 6px;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.3)}
-.header h1{font-size:12px;text-align:center;margin-bottom:1px;font-weight:700}
-.nav{display:flex;gap:0px;justify-content:center;flex-wrap:wrap;line-height:1}
-.nav button{background:transparent;color:#cfd8e3;border:none;padding:2px 4px;font-size:8px;font-family:inherit;cursor:pointer;border-bottom:1px solid transparent;font-weight:600;line-height:1;margin:0;min-height:auto}
+.header{background:linear-gradient(135deg,#0f2442,#1a3c5e);color:#fff;padding:8px 10px;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.header h1{font-size:14px;text-align:center;margin-bottom:4px;font-weight:700}
+.nav{display:flex;gap:2px;justify-content:center;flex-wrap:wrap;line-height:1}
+.nav button{background:transparent;color:#cfd8e3;border:none;padding:4px 6px;font-size:10px;font-family:inherit;cursor:pointer;border-bottom:2px solid transparent;font-weight:600;line-height:1;margin:0;min-height:auto}
 .nav button.active{color:#f39c12;border-bottom-color:#f39c12}
 .card{background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.08);margin-bottom:12px;border:1px solid #d1dce8;overflow:hidden}
 .section-head{background:linear-gradient(135deg,#1a3c5e,#2563a8);color:#fff;padding:10px 14px;font-weight:700;font-size:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .section-body{padding:12px}
-
-/* ✅ FIX 5: Skeleton loader for instant visual feedback */
 .skeleton{background:linear-gradient(90deg,#e2e8f0 25%,#f1f5f9 50%,#e2e8f0 75%);background-size:200% 100%;animation:shimmer 1.2s infinite;border-radius:8px;height:120px;margin:12px}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-
 .inv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
 .inv-card{border:1px solid #d1dce8;border-radius:10px;padding:10px;background:#fafcff}
 .inv-title{font-weight:700;font-size:13px;margin-bottom:6px;padding:4px 8px;border-radius:14px;display:inline-block}
@@ -83,8 +74,6 @@ table{border-collapse:separate;border-spacing:0;width:100%;font-size:11px}
 th{background:#1a3c5e;color:#fff;padding:8px 6px;text-align:center;border:1px solid rgba(255,255,255,.15);font-weight:700;font-size:11px;white-space:nowrap;position:sticky;top:0;z-index:2}
 td{padding:6px;text-align:center;border:1px solid #d1dce8;background:#fff;white-space:nowrap}
 tr:nth-child(even) td{background:#f8fafc}
-/* ── Sticky columns: તા. | વ. | સં. ── */
-/* c1=તારીખ 32px | c2=વાર fit | c3=સં. 32px */
 .sticky-c1{position:sticky;left:0;z-index:3;box-shadow:none;width:32px;min-width:32px;max-width:32px}
 .sticky-c2{position:sticky;left:32px;z-index:3;white-space:nowrap;width:auto;padding-left:6px;padding-right:6px}
 .sticky-c3{position:sticky;left:calc(32px + var(--c2w, 52px));z-index:3;width:32px;min-width:32px;max-width:32px;box-shadow:2px 0 4px rgba(0,0,0,.08)}
@@ -106,20 +95,15 @@ tr.sun-row td.sticky-c1,tr.sun-row td.sticky-c2,tr.sun-row td.sticky-c3{backgrou
 .btn-import{background:#0891b2}
 .badge{padding:3px 8px;border-radius:12px;font-size:10px;font-weight:700;display:inline-block}
 .footer{text-align:center;padding:12px;color:#64748b;font-size:11px}
-.logout-btn{background:rgba(204,61,61,.85);color:#fff;border:none;padding:3px 8px;border-radius:4px;font-family:inherit;font-size:10px;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .15s}
+.logout-btn{background:rgba(204,61,61,.85);color:#fff;border:none;padding:4px 8px;border-radius:4px;font-family:inherit;font-size:10px;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .15s}
 .logout-btn:hover{background:#cc3d3d}
-.header-center-info{font-size:9px;color:#a0b4c8;text-align:center;margin-bottom:2px}
-
-/* ✅ FIX 6: sync status — content-visibility for off-screen perf */
-.sync-status{text-align:center;padding:3px 6px;font-size:10px;font-weight:600;color:#1b8f57;background:#e8f5e9;transition:all .3s;cursor:pointer}
+.sync-status{text-align:center;padding:4px 8px;font-size:10px;font-weight:600;color:#1b8f57;background:#e8f5e9;transition:all .3s;cursor:pointer}
 .sync-status.syncing{color:#2563a8;background:#dbeafe}
 .sync-status.error{color:#cc3d3d;background:#fee2e2}
-
-/* Setup */
-.setup-box{max-width:400px;margin:50px auto;padding:20px;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1);border:1px solid #d1dce8;text-align:center}
+.setup-box{max-width:400px;margin:20px auto;padding:20px;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1);border:1px solid #d1dce8;text-align:center}
 .setup-box h2{color:#1a3c5e;margin-bottom:15px;font-size:18px}
-.setup-box input{width:100%;padding:10px;font-size:16px;text-align:center;border:2px solid #cbd5e1;border-radius:8px;margin-bottom:15px;font-family:inherit;font-weight:700}
-.setup-box button{background:#2563a8;color:#fff;border:none;padding:10px 20px;font-size:14px;font-weight:700;border-radius:8px;cursor:pointer;width:100%;font-family:inherit}
+.setup-box input,.setup-box select{width:100%;padding:12px;font-size:16px;text-align:center;border:2px solid #cbd5e1;border-radius:8px;margin-bottom:12px;font-family:inherit;font-weight:700}
+.setup-box button{background:#2563a8;color:#fff;border:none;padding:12px 20px;font-size:16px;font-weight:700;border-radius:8px;cursor:pointer;width:100%;font-family:inherit}
 .rule-chip{display:inline-block;background:#eef5fb;border:1px solid #bfd7f5;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:700;color:#1a3c5e;margin:2px}
 .admin-gate{display:flex;align-items:center;justify-content:center;padding:40px 16px}
 .admin-gate-box{text-align:center;max-width:280px;width:100%}
@@ -147,11 +131,7 @@ tr.sun-row td.sticky-c1,tr.sun-row td.sticky-c2,tr.sun-row td.sticky-c3{backgrou
 .stat-card{background:#f8fafc;border:1px solid #d1dce8;border-radius:8px;padding:10px;text-align:center}
 .stat-card .s-num{font-size:22px;font-weight:800;color:#5b21b6}
 .stat-card .s-lbl{font-size:11px;color:#64748b;margin-top:2px}
-
-/* ✅ FIX 7: content-visibility for off-screen tabs — big render boost */
 .tab-content{content-visibility:auto;contain-intrinsic-size:0 500px}
-
-/* ── REPORT ZOOM ── */
 .zoom-toolbar{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#f0f7ff;border-bottom:1px solid #d1dce8;flex-wrap:wrap}
 .zoom-toolbar label{font-size:12px;font-weight:700;color:#1a3c5e;white-space:nowrap}
 .zoom-slider{flex:1;min-width:100px;max-width:220px;accent-color:#2563a8;cursor:pointer;height:4px}
@@ -159,23 +139,11 @@ tr.sun-row td.sticky-c1,tr.sun-row td.sticky-c2,tr.sun-row td.sticky-c3{backgrou
 .zoom-btn{background:#2563a8;color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:14px;font-weight:700;cursor:pointer;line-height:1;flex-shrink:0}
 .zoom-btn:active{background:#1a3c5e}
 .zoom-reset{background:#e2e8f0;color:#475569;border:none;border-radius:6px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;flex-shrink:0}
-/* outer clip — scrollable container */
 .zoomable-outer{overflow:auto;-webkit-overflow-scrolling:touch;width:100%}
-/* ✅ CSS zoom (not transform) — sticky position works correctly inside zoom */
 .zoomable-inner{display:block;min-width:100%;zoom:1}
-
-@media print{
-  .header,.actions,.nav,.report-tabs,.cal-head button,.sync-status{display:none !important}
-  body{background:#fff}
-  .card{box-shadow:none;border:1px solid #000}
-  th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  tr.sun-row td{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-}
-/* ── Admin tabs ── */
 .admin-tabs{display:flex;gap:0;border-bottom:2px solid #d1dce8}
 .admin-tab-btn{flex:1;padding:10px;border:none;background:#f8fafc;color:#475569;font-family:inherit;font-weight:700;font-size:13px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px}
 .admin-tab-btn.active{background:#fff;color:#5b21b6;border-bottom-color:#5b21b6}
-/* ── Consolidation ── */
 .con-toolbar{display:flex;align-items:center;gap:8px;padding:10px 12px;background:#f8fafc;border-bottom:1px solid #d1dce8;flex-wrap:wrap}
 .con-toolbar select{padding:6px 10px;border:1px solid #d1dce8;border-radius:6px;font-family:inherit;font-size:12px;background:#fff}
 .con-toolbar button{padding:7px 14px;border:none;border-radius:6px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;color:#fff;background:#5b21b6}
@@ -194,40 +162,28 @@ tr.sun-row td.sticky-c1,tr.sun-row td.sticky-c2,tr.sun-row td.sticky-c3{backgrou
 .con-table tr.con-total td.con-c1{background:#fef3c7 !important;color:#92400e}
 .con-table tr.con-avg td{background:#f0fdf4 !important;font-weight:700;color:#166534}
 .con-table tr.con-avg td.con-c1{background:#f0fdf4 !important;color:#166534}
+@media print{
+  .header,.actions,.nav,.report-tabs,.cal-head button,.sync-status{display:none !important}
+  body{background:#fff}
+  .card{box-shadow:none;border:1px solid #000}
+  th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  tr.sun-row td{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
 @media (max-width:600px){
-  .header h1{font-size:11px}
-  .nav button{padding:2px 3px;font-size:7px}
+  .header h1{font-size:12px}
+  .nav button{padding:3px 4px;font-size:9px}
   .inv-grid{grid-template-columns:repeat(2,1fr)}
   .cal-cell{min-height:42px;font-size:10px}
   .cal-cell .n{font-size:12px}
   table{font-size:10px}
   th,td{padding:5px 4px}
 }
-
-/* ✅ Mobile Touch Optimization - EXCEPT nav buttons */
 @media (hover:none) and (pointer:coarse){
-  button:not(.nav button), input[type="button"], input[type="submit"]{
-    padding: 12px 16px !important;
-    font-size: 16px !important;
-    min-height: 44px;
-    min-width: 44px;
-    border-radius: 8px;
-  }
-  .cal-cell{
-    min-height: 48px;
-  }
-  .modal input{
-    padding: 14px !important;
-    font-size: 16px !important;
-    min-height: 44px;
-  }
-  /* Prevent zoom on double-tap */
-  input, button, select, textarea{
-    font-size: 16px;
-  }
+  button:not(.nav button), input[type="button"], input[type="submit"]{padding:12px 16px !important;font-size:16px !important;min-height:44px;min-width:44px;border-radius:8px}
+  .cal-cell{min-height:48px}
+  .modal input{padding:14px !important;font-size:16px !important;min-height:44px}
+  input, button, select, textarea{font-size:16px}
 }
-
-/* Landscape mode optimization */
 @media (max-height:600px) and (orientation:landscape){
   .header h1{font-size:14px}
   .nav button{padding:4px 6px;font-size:10px}
@@ -238,23 +194,14 @@ tr.sun-row td.sticky-c1,tr.sun-row td.sticky-c2,tr.sun-row td.sticky-c3{backgrou
   table{font-size:9px}
   th,td{padding:3px 2px}
 }
-
-/* Prevent accidental selection on touch */
-*{
-  -webkit-user-select: none;
-  -webkit-touch-callout: none;
-  -webkit-tap-highlight-color: transparent;
-}
-input, textarea, button, a{
-  -webkit-user-select: text;
-}
+*{-webkit-user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+input, textarea, button, a{-webkit-user-select:text}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.5.0/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.5.0/vfs_fonts.min.js"></script>
 </head>
 <body>
 
-<!-- ✅ FIX 8: Header renders IMMEDIATELY — no JS needed -->
 <div class="header">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
     <h1 style="font-size:16px;margin:0;flex:1;text-align:center">🌾 My Daily Report</h1>
@@ -272,11 +219,10 @@ input, textarea, button, a{
 </div>
 
 <div id="syncStatus" class="sync-status" style="display:none;cursor:pointer" onclick="if(centerCode && syncQueue.length > 0) processSyncQueue()">
-  ☁️ <span id="syncStatusText">ક્લાઉડ સાથે સિંક થયેલ છે</span> 🔄 
+  ☁️ <span id="syncStatusText">ક્લાઉડ સાથે સિંક થયેલ છે</span>
   <span id="queueCount" style="display:none;margin-left:6px;background:rgba(0,0,0,.2);padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700">📤 <span id="queueNum">0</span> pending</span>
 </div>
 
-<!-- ✅ FIX 9: Skeleton shown INSTANTLY while JS runs -->
 <div id="app">
   <div class="skeleton"></div>
   <div class="skeleton" style="height:200px;margin-top:0"></div>
@@ -286,22 +232,10 @@ input, textarea, button, a{
 
 <script>
 /* ============================================================
-   CONFIG
+   CONFIG - તમારો Google Apps Script URL અહીં paste કરો
 ============================================================ */
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyn0jjWbl6zmiWHn0hgwaMqNG33SHJtzIjH52YTGmmJS0RXeZBc7Vk9X_f9OGyVNLdnCw/exec";
 const ADMIN_PASSWORD = "Dev@1";
-
-console.log("🚀 Script loaded");
-console.log("URL:", APPS_SCRIPT_URL);
-console.log("URL includes script.google.com:", APPS_SCRIPT_URL.includes("script.google.com"));
-
-/* ============================================================
-   SIMPLE TEST - Run immediately
-============================================================ */
-// Test if we can reach Google
-fetch("https://script.google.com")
-  .then(() => console.log("✅ Can reach Google"))
-  .catch(() => console.log("❌ Cannot reach Google"));
 
 /* ============================================================
    CONSTANTS
@@ -323,14 +257,15 @@ const DEFAULT_INV = {ghau:{o:500,r:200},chokha:{o:300,r:100},tel:{o:50,r:20},cha
 const SAJO_CREDS = {'આકરૂ': {}, 'ધંધુકા': {}, 'વાગડ': {}, 'હડાળા': {}};
 
 /* ============================================================
-   STATE
+   STATE - Check both old and new localStorage keys
 ============================================================ */
+// Try new key first, then old key
 let currentSajo = localStorage.getItem('current_sajo') || 'આકરૂ';
-// ⚠️ IMPORTANT: Check both old and new keys
 let centerCode = localStorage.getItem("mdr_center_code") || localStorage.getItem("anganwadi_center_code") || "";
 
-console.log("Initial centerCode:", centerCode);
-console.log("Initial currentSajo:", currentSajo);
+console.log("=== BOOT DEBUG ===");
+console.log("centerCode from localStorage:", centerCode);
+console.log("currentSajo:", currentSajo);
 
 let state = {
   inv: JSON.parse(JSON.stringify(DEFAULT_INV)),
@@ -354,7 +289,7 @@ let syncQueue = [];
 let isSyncing = false;
 let isOnline = navigator.onLine;
 
-window.addEventListener('online', () => { isOnline = true; setStatus("🟢 Online", "#1b8f57"); processSyncQueue(); });
+window.addEventListener('online', () => { isOnline = true; setStatus("🟢 Online — Syncing...", "#1b8f57"); processSyncQueue(); });
 window.addEventListener('offline', () => { isOnline = false; setStatus("🔴 Offline", "#e67e22"); });
 
 function loadSyncQueue(){
@@ -391,17 +326,14 @@ async function processSyncQueue(){
 }
 
 /* ============================================================
-   CLOUD API - FIXED
+   CLOUD API
 ============================================================ */
 function _hasURL(){
-  const ok = APPS_SCRIPT_URL && !APPS_SCRIPT_URL.includes("YOUR_URL") && APPS_SCRIPT_URL.includes("script.google.com");
-  console.log("_hasURL:", ok);
-  return ok;
+  return APPS_SCRIPT_URL && !APPS_SCRIPT_URL.includes("YOUR_URL") && APPS_SCRIPT_URL.includes("script.google.com");
 }
 
 async function saveState(){
   if(!centerCode){ console.log("saveState: no centerCode"); return; }
-  
   const payload = {inv:state.inv, ben:state.ben, timestamp:new Date().toISOString(), sajoName:currentSajo};
   localStorage.setItem("mdr_local_" + centerCode, JSON.stringify(payload));
   
@@ -417,36 +349,29 @@ async function saveState(){
 }
 
 async function cloudSave(data, maxRetries = 3){
-  console.log("cloudSave called, retries:", maxRetries);
   for(let attempt = 1; attempt <= maxRetries; attempt++){
     try{
       setStatus(`⏳ Saving (${attempt}/${maxRetries})...`, "#2563a8");
       const ctrl = new AbortController();
       const tid = setTimeout(() => ctrl.abort(), 10000);
       
-      const body = JSON.stringify({
-        action: "SAVE",
-        centerCode: centerCode,
-        sajoName: currentSajo,
-        inv: data.inv,
-        ben: data.ben,
-        timestamp: data.timestamp
-      });
-      console.log("Sending:", body.substring(0, 200));
-      
       const res = await fetch(APPS_SCRIPT_URL, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
-        body: body,
+        body: JSON.stringify({
+          action: "SAVE",
+          centerCode: centerCode,
+          sajoName: currentSajo,
+          inv: data.inv,
+          ben: data.ben,
+          timestamp: data.timestamp
+        }),
         signal: ctrl.signal
       });
       clearTimeout(tid);
       
-      console.log("Response status:", res.status);
       if(!res.ok) throw new Error(`HTTP ${res.status}`);
-      
       const result = await res.json();
-      console.log("Response:", result);
       
       if(result.success === true || result.status === "ok"){
         setStatus(`✅ Saved ${new Date().toLocaleTimeString('gu-IN')}`, "#1b8f57");
@@ -464,10 +389,7 @@ async function cloudSave(data, maxRetries = 3){
 }
 
 async function syncCloud(){
-  console.log("syncCloud called");
-  if(!_hasURL()){ console.log("No valid URL"); setStatus("⚠️ URL missing", "#e67e22"); return; }
-  if(!centerCode){ console.log("No centerCode"); return; }
-  
+  if(!_hasURL() || !centerCode) return;
   setStatus("⏳ Loading...", "#2563a8");
   try{
     const url = new URL(APPS_SCRIPT_URL);
@@ -475,29 +397,20 @@ async function syncCloud(){
     url.searchParams.set("centerCode", centerCode);
     url.searchParams.set("sajoName", currentSajo);
     
-    console.log("Fetching:", url.toString().substring(0, 100));
-    
     const ctrl = new AbortController();
     const tid = setTimeout(() => ctrl.abort(), 12000);
     const res = await fetch(url.toString(), {signal: ctrl.signal});
     clearTimeout(tid);
     
-    console.log("Load response status:", res.status);
     if(!res.ok) throw new Error(`HTTP ${res.status}`);
-    
     const data = await res.json();
-    console.log("Load response:", data);
     
     if(data.status === "error") throw new Error(data.msg || "Server error");
-    
     if(data.status === "new_user"){
       setStatus(`🆕 New: ${centerCode}`, "#2563a8");
-      console.log("New user - no existing data");
       return;
     }
-    
     if(data.inv || data.ben){
-      console.log("Data found! Updating state...");
       if(data.inv) state.inv = data.inv;
       if(data.ben) state.ben = data.ben;
       localStorage.setItem("mdr_local_" + centerCode, JSON.stringify({
@@ -509,7 +422,6 @@ async function syncCloud(){
     } else {
       setStatus("☁️ No data", "#2563a8");
     }
-    
   } catch(err){
     console.error("syncCloud error:", err);
     const msg = err.name === "AbortError" ? "Timeout" : err.message;
@@ -529,7 +441,7 @@ async function sendLog(action, details){
 }
 
 async function fetchLogs(){
-  if(!_hasURL()){ setStatus("⚠️ URL missing", "#e67e22"); return; }
+  if(!_hasURL()) return;
   setStatus("⏳ Loading logs...", "#2563a8");
   try{
     const res = await fetch(APPS_SCRIPT_URL, {
@@ -541,22 +453,20 @@ async function fetchLogs(){
     state.logData = data.logs || [];
     setStatus(`✅ ${state.logData.length} logs`, "#1b8f57");
   } catch(err){
-    console.error("fetchLogs error:", err);
     setStatus("❌ Log failed", "#cc3d3d");
   }
   render();
 }
 
 async function fetchAllCenters(){
-  if(!_hasURL()){ setStatus("⚠️ URL missing", "#e67e22"); return; }
+  if(!_hasURL()) return;
   state.con.loading = true; state.con.error = ""; render();
   setStatus("⏳ Loading centers...", "#2563a8");
   try{
     const res = await fetch(APPS_SCRIPT_URL, {
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({action:"GET_ALL_CENTERS", sajoName:currentSajo}),
-      signal: (new AbortController()).signal
+      body: JSON.stringify({action:"GET_ALL_CENTERS", sajoName:currentSajo})
     });
     const data = await res.json();
     if(data.status === "ok"){
@@ -609,13 +519,26 @@ function showHeaderInfo(){
 }
 
 /* ============================================================
-   BOOT
+   BOOT - FIXED: Always call proper init
 ============================================================ */
 function bootApp(){
   console.log("bootApp called, centerCode:", centerCode);
-  if(!centerCode){ console.log("No centerCode, showing setup"); render(); return; }
+  if(!centerCode){ 
+    console.log("No centerCode, showing setup"); 
+    // Hide nav when no center
+    const nav = document.getElementById("nav");
+    const sync = document.getElementById("syncStatus");
+    const bar = document.getElementById("centerInfoBar");
+    const btn = document.getElementById("btnLogoutHeader");
+    if(nav) nav.style.display = "none";
+    if(sync) sync.style.display = "none";
+    if(bar) bar.style.display = "none";
+    if(btn) btn.style.display = "none";
+    render(); 
+    return; 
+  }
   
-  // Load local
+  // Load local data
   const raw = localStorage.getItem("mdr_local_" + centerCode) || localStorage.getItem("mdr_offline_" + centerCode);
   if(raw){
     try{
@@ -631,12 +554,9 @@ function bootApp(){
   showHeaderInfo();
   render();
   
-  // Cloud sync
   if(isOnline && _hasURL()){
     console.log("Starting cloud sync...");
     setTimeout(() => syncCloud(), 500);
-  } else {
-    console.log("Skipping cloud sync - offline or no URL");
   }
 }
 
@@ -697,7 +617,7 @@ function invalidateCache(){ _muCache = null; _muCacheKey = ""; }
 const fmt = (n,d=0) => (n==null||isNaN(n)) ? "0" : Number(n).toFixed(d);
 
 /* ============================================================
-   RENDER (simplified for brevity)
+   RENDER PAGES
 ============================================================ */
 function renderSetupPage(){
   const sajoOptions = Object.keys(SAJO_CREDS).map(s => `<option value="${s}" ${s===currentSajo?'selected':''}>${s}</option>`).join('');
@@ -705,248 +625,265 @@ function renderSetupPage(){
     <h2>🌾 Sajo MDR System</h2>
     <p style="font-size:11px;color:#64748b;margin-bottom:12px">સેજો અને કેન્દ્રનું નામ લખો</p>
     <label style="font-size:10px;font-weight:700;color:#475569;margin-bottom:4px;display:block">📍 સેજો</label>
-    <select id="sajoInput" style="width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:6px;font-family:inherit;font-size:14px;margin-bottom:12px">${sajoOptions}</select>
+    <select id="sajoInput" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:6px;font-family:inherit;font-size:16px;margin-bottom:12px">${sajoOptions}</select>
     <label style="font-size:10px;font-weight:700;color:#475569;margin-bottom:4px;display:block">🏢 કેન્દ્રનું નામ</label>
-    <input type="text" id="centerNameInput" placeholder="દા.ત. પંચમહાલ અંગણવાડી" autocomplete="off" style="width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:6px;font-family:inherit;font-size:14px;box-sizing:border-box;margin-bottom:12px">
-    <button id="btnStart" style="width:100%;padding:10px;background:#2563a8;color:#fff;border:none;border-radius:6px;font-weight:700;font-family:inherit;font-size:14px;cursor:pointer">🚀 શરૂ કરો</button>
-    <div style="margin-top:12px;padding:10px;background:#fef3c7;border-radius:6px;font-size:11px;color:#92400e">
-      <b>Debug info:</b><br>
-      URL valid: ${_hasURL() ? '✅' : '❌'}<br>
-      Online: ${navigator.onLine ? '✅' : '❌'}<br>
-      <button onclick="localStorage.clear();location.reload()" style="margin-top:6px;padding:4px 8px;background:#cc3d3d;color:#fff;border:none;border-radius:4px;font-size:10px;cursor:pointer">🗑️ Clear & Reload</button>
+    <input type="text" id="centerNameInput" placeholder="દા.ત. પંચમહાલ અંગણવાડી" autocomplete="off" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:6px;font-family:inherit;font-size:16px;box-sizing:border-box;margin-bottom:12px">
+    <button id="btnStart" style="width:100%;padding:12px;background:#2563a8;color:#fff;border:none;border-radius:6px;font-weight:700;font-family:inherit;font-size:16px;cursor:pointer">🚀 શરૂ કરો</button>
+  </div>`;
+}
+
+function renderInventoryPage(curMU){
+  const cards = ITEMS.map(it => {
+    const iv = state.inv[it.id];
+    const opening = iv.o + iv.r;
+    const used = (curMU[it.id] || 0) / 1000;
+    const closing = opening - used;
+    return `<div class="inv-card">
+      <div class="inv-title" style="background:${it.bg};color:${it.color}">${it.emoji} ${it.name}</div>
+      <div class="inv-row"><label>ઊઘડતી (kg):</label><input type="number" step="0.001" data-inv="${it.id}" data-field="o" value="${iv.o}"></div>
+      <div class="inv-row"><label>આવક (kg):</label><input type="number" step="0.001" data-inv="${it.id}" data-field="r" value="${iv.r}"></div>
+      <div class="inv-stat">કુલ ઊઘડતી: <b>${fmt(opening,3)}</b> kg<br>વપરાશ: <b style="color:#e67e22">${fmt(used,3)}</b> kg<br>બંધ સિલક: <b style="color:#1b8f57">${fmt(closing,3)}</b> kg</div>
+    </div>`;
+  }).join("");
+  
+  return `<div class="container tab-content">
+    <div class="card">
+      <div class="section-head">📦 ઈન્વેન્ટરી (${MONTHS_FULL[state.calM]} ${state.calY})
+        <span style="font-size:11px;background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:8px">કોડ: ${centerCode}</span>
+      </div>
+      <div class="section-body"><div class="inv-grid">${cards}</div></div>
+    </div>
+    <div class="card">
+      <div class="section-head" style="font-size:12px">📋 ભોજન નિયમ</div>
+      <div class="section-body" style="font-size:11px;line-height:2">
+        <b>સવાર:</b> ઘઉં 30g (સો/બુ/ગુ/શુ/શ) | ચોખા 30g (ફક્ત મંગ) | તેલ 5g<br>
+        <b>બપોર:</b> ઘઉં/ચોખા 50g | ચ/દ/ચદ 20g | તેલ 8g | 🔴 રવિ: બધું બંધ<br>
+        <span class="rule-chip">સો: ઘઉ80+દા20+તે13</span>
+        <span class="rule-chip">મં: ચો30+ઘઉ50+ચ20+તે13</span>
+        <span class="rule-chip">બુ: ઘઉ30+ચો50+દા20+તે13</span>
+        <span class="rule-chip">ગુ: ઘઉ30+ચો50+ચ20+તે13</span>
+        <span class="rule-chip">શુ: ઘઉ80+ચ20+તે13</span>
+        <span class="rule-chip">શ: ઘઉ30+ચો50+ચદ20+તે13</span>
+      </div>
     </div>
   </div>`;
 }
 
-// ... (rest of render functions same as before)
-
-function render(){
-  const app = document.getElementById('app');
-  if(!app) return;
-  if(!centerCode){
-    document.getElementById("nav").style.display = "none";
-    document.getElementById("syncStatus").style.display = "none";
-    app.innerHTML = renderSetupPage();
-    return;
-  }
-  // ... simplified render
-  document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('active', Number(b.dataset.tab) === state.tab));
-  const curMU = calcMonthUsage(state.calY, state.calM, state.ben);
-  let html = "";
-  if(state.tab === 0) html = renderInventoryPage(curMU);
-  else if(state.tab === 1) html = renderCalendarPage();
-  else if(state.tab === 2) html = renderDashboardPage(curMU);
-  else if(state.tab === 3) html = renderReportPage();
-  else if(state.tab === 5) html = renderBillPage();
-  else if(state.tab === 4) html = renderAdminPage();
-  html += renderModal();
-  app.innerHTML = html;
-  if(state.modal){ const inp = document.getElementById('modalInput'); if(inp){ inp.focus(); inp.select(); } }
-}
-
-// ... (other functions: renderInventoryPage, renderCalendarPage, etc. same as before)
-
-/* ============================================================
-   EVENTS
-============================================================ */
-document.addEventListener('click', e => {
-  const t = e.target;
-  if(t.id === 'btnStart'){
-    const sajo = document.getElementById("sajoInput")?.value.trim();
-    const name = document.getElementById("centerNameInput")?.value.trim();
-    if(!sajo){ alert("⚠️ સેજો પસંદ કરો"); return; }
-    if(!name){ alert("⚠️ કેન્દ્રનું નામ લખો"); return; }
-    
-    const key = 'mdr_sajo_' + sajo + '_centers';
-    const centers = JSON.parse(localStorage.getItem(key) || '[]');
-    let center = centers.find(c => c.name === name);
-    
-    if(!center){
-      const code = sajo.slice(0,2).toUpperCase() + '-' + String(centers.length + 1).padStart(3, '0');
-      center = {name, code, createdAt: new Date().toISOString()};
-      centers.push(center);
-      localStorage.setItem(key, JSON.stringify(centers));
-    }
-    
-    currentSajo = sajo;
-    centerCode = center.code;
-    localStorage.setItem('current_sajo', sajo);
-    localStorage.setItem('mdr_center_code', centerCode);
-    console.log("New center:", centerCode);
-    sendLog('LOGIN', `Sajo: ${sajo} | Center: ${name}`);
-    bootApp();
-    return;
+function renderCalendarPage(){
+  const y = state.calY, m = state.calM;
+  const first = new Date(y,m,1).getDay();
+  const dim = new Date(y,m+1,0).getDate();
+  const today = new Date();
+  let cells = "", monthN = 0, monthD = 0;
+  
+  for(let i=0; i<first; i++) cells += `<div class="cal-cell empty"></div>`;
+  for(let d=1; d<=dim; d++){
+    const k = dkf(y,m,d);
+    const n = Number(state.ben[k] || 0);
+    const dow = new Date(y,m,d).getDay();
+    const isToday = (d===today.getDate() && m===today.getMonth() && y===today.getFullYear());
+    if(n>0){ monthN += n; monthD++; }
+    cells += `<div class="cal-cell ${dow===0?'sunday':''} ${isToday?'today':''}" data-day="${d}">
+      <div class="d">${d}</div>
+      <div class="n ${n===0?'zero':''}">${n>0?n:'—'}</div>
+    </div>`;
   }
   
-  if(t.id === 'adminPwdBtn'){
-    const inp = document.getElementById("adminPwdInput");
-    if(inp && inp.value === ADMIN_PASSWORD){ state.adminUnlocked = true; fetchLogs(); }
-    else { const err = document.getElementById("adminPwdErr"); if(err) err.textContent = "❌ Wrong!"; if(inp){ inp.value = ""; inp.focus(); } }
-    return;
-  }
+  const heads = DAYS_SHORT.map((d,i) => `<div class="cal-day-head ${i===0?'sun':''}">${d}</div>`).join("");
   
-  if(t.id === 'btnAdminLock'){ state.adminUnlocked = false; render(); return; }
-  if(t.id === 'btnRefreshLogs'){ fetchLogs(); return; }
-  if(t.id === 'adminTabLogs'){ state.adminTab = "logs"; render(); return; }
-  if(t.id === 'adminTabCon'){ state.adminTab = "consolidation"; render(); if(!state.con.centers.length && !state.con.loading) fetchAllCenters(); return; }
-  if(t.id === 'btnFetchCenters'){ fetchAllCenters(); return; }
-  if(t.id === 'btnExportCon'){ exportConsolidationCSV(); return; }
-  
-  if(t.id === 'btnLogoutHeader' || t.id === 'btnLogout'){
-    if(confirm("Logout?")){
-      sendLog('LOGOUT', `Logout — ${centerCode}`);
-      localStorage.removeItem("mdr_center_code");
-      localStorage.removeItem("anganwadi_center_code");
-      centerCode = "";
-      state.inv = JSON.parse(JSON.stringify(DEFAULT_INV));
-      state.ben = {};
-      invalidateCache();
-      document.getElementById("centerInfoBar").style.display = "none";
-      document.getElementById("btnLogoutHeader").style.display = "none";
-      document.getElementById("nav").style.display = "none";
-      render();
-    }
-    return;
-  }
-  
-  if(t.matches('#nav button')){ state.tab = Number(t.dataset.tab); render(); return; }
-  if(t.id === 'prevM'){ prevMonth(); return; }
-  if(t.id === 'nextM'){ nextMonth(); return; }
-  
-  const cell = t.closest('.cal-cell');
-  if(cell && cell.dataset.day){ openModal(Number(cell.dataset.day)); return; }
-  
-  if(t.id === 'modalCancel'){ closeModal(); return; }
-  if(t.id === 'modalSave'){ saveModal(); return; }
-  if(t.id === 'modalClear'){ clearModal(); return; }
-  if(t.matches('.report-tabs button')){ state.rptTab = t.dataset.rpt; render(); return; }
-  if(t.id === 'btnPrint'){ window.print(); return; }
-  if(t.id === 'btnShare'){ shareReport(); return; }
-  if(t.id === 'btnShareM'){ shareMonthly(); return; }
-  if(t.id === 'btnPDF'){ generateMonthlyPDF(); return; }
-  if(t.id === 'btnExport'){ exportBackup(); return; }
-  if(t.id === 'btnImport'){ document.getElementById('fileImport').click(); return; }
-});
-
-document.addEventListener('input', e => {
-  const t = e.target;
-  if(t.matches('input[data-inv]')){ state.inv[t.dataset.inv][t.dataset.field] = parseFloat(t.value) || 0; invalidateCache(); scheduleSave(); }
-  if(t.id === 'modalInput') state.modalVal = t.value;
-  if(t.id === 'fileImport' && t.files && t.files[0]){ importBackup(t.files[0]); t.value = ""; }
-});
-
-document.addEventListener('keydown', e => {
-  if(!state.modal) return;
-  if(e.key === 'Enter'){ e.preventDefault(); saveModal(); }
-  if(e.key === 'Escape') closeModal();
-});
-
-let _saveTimer = null;
-function scheduleSave(){ clearTimeout(_saveTimer); _saveTimer = setTimeout(saveState, 800); }
-
-// Modal functions
-function openModal(d){ const k=dkf(state.calY,state.calM,d); state.modal={y:state.calY,m:state.calM,d}; state.modalVal=state.ben[k]||""; render(); }
-function closeModal(){ state.modal=null; state.modalVal=""; render(); }
-function saveModal(){ const v=document.getElementById('modalInput').value.trim(); const k=dkf(state.modal.y,state.modal.m,state.modal.d); if(v===""||Number(v)<=0){ delete state.ben[k]; } else { state.ben[k]=Number(v); } invalidateCache(); saveState(); closeModal(); }
-function clearModal(){ const k=dkf(state.modal.y,state.modal.m,state.modal.d); delete state.ben[k]; invalidateCache(); saveState(); closeModal(); }
-function prevMonth(){ state.calM--; if(state.calM<0){state.calM=11;state.calY--;} render(); }
-function nextMonth(){ state.calM++; if(state.calM>11){state.calM=0;state.calY++;} render(); }
-
-// Share/Export functions
-function shareReport(){
-  const today=new Date(), todayK=dkf(today.getFullYear(),today.getMonth(),today.getDate());
-  const todayN=Number(state.ben[todayK]||0), todayU=calcUsage(today.getDay(),todayN);
-  let txt=`🌾 MDR (${centerCode})\n📅 ${today.getDate()} ${MONTHS_FULL[today.getMonth()]} ${today.getFullYear()}\n👥 લ.: ${todayN}\n\n`;
-  ITEMS.forEach(it=>{ const iv=state.inv[it.id]; txt+=`${it.emoji} ${it.name}: સ.${morU(it.id,todayU)}g|બ.${aftU(it.id,todayU)}g|ક.${todayU[it.id]}g|${fmt(iv.o+iv.r-todayU[it.id]/1000,3)}kg\n`; });
-  if(navigator.share) navigator.share({title:"MDR",text:txt}).catch(()=>{});
-  else navigator.clipboard.writeText(txt).then(()=>alert("✅ Copy"));
+  return `<div class="container tab-content">
+    <div class="card">
+      <div class="section-head">📅 કેલેન્ડર</div>
+      <div class="cal-head">
+        <button id="prevM">‹</button>
+        <h3>${MONTHS_FULL[m]} ${y}</h3>
+        <button id="nextM">›</button>
+      </div>
+      <div class="cal-grid">${heads}${cells}</div>
+      <div class="cal-totals">
+        <div>કુલ દિવસ<b>${monthD}</b></div>
+        <div>કુલ લાભાર્થી<b>${monthN}</b></div>
+        <div>સરેરાશ/દિ.<b>${monthD?fmt(monthN/monthD,1):0}</b></div>
+      </div>
+    </div>
+  </div>`;
 }
 
-function shareMonthly(){
-  const curMU=calcMonthUsage(state.calY,state.calM,state.ben);
-  let txt=`📊 ${MONTHS_FULL[state.calM]} ${state.calY} (${centerCode})\n👥 ${curMU.totalN} | ${curMU.days} દ.\n\n`;
-  ITEMS.forEach(it=>{ const iv=state.inv[it.id]; txt+=`${it.emoji} ${it.name}: ${fmt(curMU[it.id])}g | ${fmt(iv.o+iv.r-curMU[it.id]/1000,3)}kg\n`; });
-  if(navigator.share) navigator.share({title:"માસિક",text:txt}).catch(()=>{});
-  else navigator.clipboard.writeText(txt).then(()=>alert("✅ Copy"));
-}
-
-function exportBackup(){
-  const blob=new Blob([JSON.stringify({inv:state.inv,ben:state.ben},null,2)],{type:"application/json"});
-  const url=URL.createObjectURL(blob), a=document.createElement('a');
-  a.href=url; a.download=`mdr-${centerCode}-${new Date().toISOString().slice(0,10)}.json`;
-  a.click(); URL.revokeObjectURL(url);
-}
-
-function importBackup(file){
-  const r=new FileReader();
-  r.onload=e=>{
-    try{ const data=JSON.parse(e.target.result); if(data.inv) state.inv=data.inv; if(data.ben) state.ben=data.ben; invalidateCache(); saveState(); render(); alert("✅ Restore!"); }
-    catch(_){ alert("❌ Invalid"); }
-  };
-  r.readAsText(file);
-}
-
-function generateMonthlyPDF(){
-  if(typeof pdfMake === 'undefined'){ alert('❌ PDF loading...'); return; }
-  const curMU = calcMonthUsage(state.calY, state.calM, state.ben);
-  const monthName = MONTHS_FULL[state.calM];
+function renderDashboardPage(curMU){
   let fruitBenCount = 0;
   const dim = new Date(state.calY, state.calM+1, 0).getDate();
-  for(let d=1; d<=dim; d++){ const k=dkf(state.calY, state.calM, d); const n=Number(state.ben[k]||0); const dow=new Date(state.calY, state.calM, d).getDay(); if(dow===1||dow===4) fruitBenCount+=n; }
-  const chanaDalBenCount = (curMU['chananA']||0)+(curMU['dalnA']||0);
-  const bills = [
-    {name:'🍎 ફ્રુટ', qty:fruitBenCount, rate:3.12, total:fruitBenCount*3.12},
-    {name:'🥒 નાસ્તો', qty:curMU.totalN, rate:1.30, total:curMU.totalN*1.30},
-    {name:'🫘 ચણા+દાળ', qty:chanaDalBenCount, rate:1.60, total:chanaDalBenCount*1.60},
-    {name:'🥬 શાકભાજી', qty:curMU.totalN, rate:0.15, total:curMU.totalN*0.15},
-    {name:'🌶️ મસાલા', qty:curMU.totalN, rate:1.00, total:curMU.totalN*1.00},
-    {name:'🚗 વાહતુક', qty:curMU.totalN, rate:0.05, total:curMU.totalN*0.05}
-  ];
-  const grandTotal = bills.reduce((sum,b)=>sum+b.total,0);
-  const invRows = ITEMS.map(it=>{ const iv=state.inv[it.id]; return [it.name, fmt(iv.o+iv.r,2), fmt((curMU[it.id]||0)/1000,2), fmt(iv.o+iv.r-(curMU[it.id]||0)/1000,2)]; });
-  const billRows = bills.map(b=>[b.name, b.qty, '₹'+fmt(b.rate,2), '₹'+fmt(b.total,2)]);
+  for(let d=1; d<=dim; d++){
+    const k = dkf(state.calY, state.calM, d);
+    const n = Number(state.ben[k] || 0);
+    const dow = new Date(state.calY, state.calM, d).getDay();
+    if(dow === 1 || dow === 4) fruitBenCount += n;
+  }
+  const chanaDalBenCount = (curMU['chananA'] || 0) + (curMU['dalnA'] || 0);
+  const fruitBill = fruitBenCount * 3.12;
+  const chanaDalBill = chanaDalBenCount * 1.60;
+  const totalBills = fruitBill + (curMU.totalN * 1.30) + chanaDalBill + (curMU.totalN * 0.15) + (curMU.totalN * 1.00) + (curMU.totalN * 0.05);
+  const attendance = curMU.days > 0 ? Math.round((curMU.totalN / (curMU.days * 25)) * 100) : 0;
   
-  pdfMake.createPdf({
-    pageSize:'A4', pageMargins:[30,30,30,60],
-    header:{text:'🌾 MDR - '+monthName+' '+state.calY, alignment:'center', fontSize:14, bold:true, margin:[0,0,0,10]},
-    footer:(c,p)=>({text:c+' / '+p, alignment:'center', fontSize:9}),
-    content:[
-      {text:'📋 Center: '+centerCode, style:'heading'},
-      {columns:[{text:'સેજો: '+currentSajo, fontSize:10},{text:new Date().toLocaleDateString('gu-IN'), fontSize:10, alignment:'right'}], margin:[0,0,0,12]},
-      {text:'📊 Summary', style:'heading'},
-      {table:{headerRows:1, widths:['*','*','*'], body:[['કાર્ય દિવસ','કુલ લાભાર્થી','સરેરાશ'],[curMU.days,curMU.totalN,fmt(curMU.totalN/curMU.days||0,1)]]}, margin:[0,0,0,12]},
-      {text:'💰 Bills', style:'heading'},
-      {table:{headerRows:1, widths:['35%','20%','20%','25%'], body:[['બિલ','સંખ્યા','દર','કુલ'],...billRows,['કુલ','','','₹'+fmt(grandTotal,2)]]}, margin:[0,0,0,12]},
-      {text:'📦 Inventory', style:'heading'},
-      {table:{headerRows:1, widths:['25%','25%','25%','25%'], body:[['આઇટમ','ઊઘડતી(kg)','વપરાશ(kg)','બંધ(kg)'],...invRows]}, margin:[0,0,0,12]},
-      {text:'અધિકૃત હસ્તાક્ષર', style:'heading', margin:[0,40,0,30]},
-      {text:'_'.repeat(40), fontSize:10, margin:[0,0,0,5]},
-      {text:'Center-in-Charge', fontSize:9, color:'#666'}
-    ],
-    styles:{heading:{fontSize:11, bold:true, margin:[0,10,0,8], color:'#1a3c5e'}}
-  }).download(`mdr-${centerCode}-${monthName}-${state.calY}.pdf`);
-  setStatus('✅ PDF Downloaded!', '#1b8f57');
+  return `<div class="container tab-content">
+    <div class="card">
+      <div class="section-head" style="background:linear-gradient(135deg,#1e40af,#2563a8)">📊 ડેશબોર્ડ — ${MONTHS_FULL[state.calM]} ${state.calY}</div>
+      <div style="padding:12px">
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px">
+          <div style="padding:12px;background:linear-gradient(135deg,#e0f2fe,#cffafe);border-radius:8px;border-left:4px solid #0284c7">
+            <div style="font-size:10px;color:#0369a1;font-weight:700">🗓️ કાર્ય દિવસ</div>
+            <div style="font-size:24px;font-weight:900;color:#0c4a6e;margin-top:2px">${curMU.days}</div>
+          </div>
+          <div style="padding:12px;background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:8px;border-left:4px solid #f59e0b">
+            <div style="font-size:10px;color:#b45309;font-weight:700">👥 કુલ લાભાર્થી</div>
+            <div style="font-size:24px;font-weight:900;color:#78350f;margin-top:2px">${curMU.totalN}</div>
+          </div>
+          <div style="padding:12px;background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-radius:8px;border-left:4px solid #3b82f6">
+            <div style="font-size:10px;color:#1e40af;font-weight:700">📈 સર્વે/દિ.</div>
+            <div style="font-size:24px;font-weight:900;color:#0c2340;margin-top:2px">${curMU.days ? fmt(curMU.totalN/curMU.days, 1) : '0'}</div>
+          </div>
+          <div style="padding:12px;background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border-radius:8px;border-left:4px solid #4caf50">
+            <div style="font-size:10px;color:#1b5e20;font-weight:700">✅ હાજરી %</div>
+            <div style="font-size:24px;font-weight:900;color:#003d00;margin-top:2px">${attendance}%</div>
+          </div>
+        </div>
+        <div style="padding:12px;background:linear-gradient(135deg,#fef2f2,#fee2e2);border-radius:8px;border:2px solid #ef4444;margin-bottom:12px">
+          <div style="font-size:11px;color:#991b1b;font-weight:700">💰 કુલ બિલ રકમ</div>
+          <div style="font-size:28px;font-weight:900;color:#7f1d1d;margin-top:4px">₹${fmt(totalBills, 2)}</div>
+        </div>
+        <div style="padding:10px;background:#f8fafc;border-radius:8px;border:1px solid #cbd5e1;font-size:9px">
+          <div style="font-weight:700;margin-bottom:6px">📦 બિલ બ્રેકડાઉન</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+            <div style="padding:4px;background:#fff3cd;border-radius:3px">🍎 ₹${fmt(fruitBill,2)}</div>
+            <div style="padding:4px;background:#e7f3ff;border-radius:3px">🥒 ₹${fmt(curMU.totalN * 1.30,2)}</div>
+            <div style="padding:4px;background:#f0e7ff;border-radius:3px">🫘 ₹${fmt(chanaDalBill,2)}</div>
+            <div style="padding:4px;background:#e8f5e9;border-radius:3px">🥬 ₹${fmt(curMU.totalN * 0.15,2)}</div>
+            <div style="padding:4px;background:#ffd9b3;border-radius:3px">🌶️ ₹${fmt(curMU.totalN * 1.00,2)}</div>
+            <div style="padding:4px;background:#d4edda;border-radius:3px">🚗 ₹${fmt(curMU.totalN * 0.05,2)}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
 }
 
-/* ============================================================
-   BOOT
-============================================================ */
-console.log("=== Starting app ===");
-if(centerCode){ 
-  console.log("Has centerCode, booting..."); 
-  bootApp(); 
-} else { 
-  console.log("No centerCode, showing setup"); 
-  render(); 
+function renderBillPage(){
+  const curMU = calcMonthUsage(state.calY, state.calM, state.ben);
+  let fruitBenCount = 0;
+  const dim = new Date(state.calY, state.calM+1, 0).getDate();
+  for(let d=1; d<=dim; d++){
+    const k = dkf(state.calY, state.calM, d);
+    const n = Number(state.ben[k] || 0);
+    const dow = new Date(state.calY, state.calM, d).getDay();
+    if(dow === 1 || dow === 4) fruitBenCount += n;
+  }
+  const chanaDalBenCount = (curMU['chananA'] || 0) + (curMU['dalnA'] || 0);
+  
+  const bills = [
+    {name:"🍎 ફ્રુટ બિલ", desc:"સોમવાર અને શુક્રવાર", qty:fruitBenCount, rate:3.12, total:fruitBenCount*3.12, note:`${fruitBenCount} લાભાર્થી × ₹3.12`},
+    {name:"🥒 ગરમ નાસ્તો બિલ", desc:"કુલ લાભાર્થી દીઠ", qty:curMU.totalN, rate:1.30, total:curMU.totalN*1.30, note:`${curMU.totalN} લાભાર્થી × ₹1.30`},
+    {name:"🫘 ચણા + તુવેર દાળ બિલ", desc:"ચણા + દાળ લાભાર્થી", qty:chanaDalBenCount, rate:1.60, total:chanaDalBenCount*1.60, note:`${chanaDalBenCount} લાભાર્થી × ₹1.60`},
+    {name:"🥬 શાકભાજી બિલ", desc:"કુલ લાભાર્થી દીઠ", qty:curMU.totalN, rate:0.15, total:curMU.totalN*0.15, note:`${curMU.totalN} લાભાર્થી × ₹0.15`},
+    {name:"🌶️ મસાલા બિલ", desc:"કુલ લાભાર્થી દીઠ", qty:curMU.totalN, rate:1.00, total:curMU.totalN*1.00, note:`${curMU.totalN} લાભાર્થી × ₹1.00`},
+    {name:"🚗 વાહતુક બિલ", desc:"કુલ લાભાર્થી દીઠ", qty:curMU.totalN, rate:0.05, total:curMU.totalN*0.05, note:`${curMU.totalN} લાભાર્થી × ₹0.05`}
+  ];
+  const grandTotal = bills.reduce((sum, b) => sum + b.total, 0);
+  
+  const billCards = bills.map(b => `
+    <div class="card">
+      <div class="section-head" style="background:linear-gradient(135deg,#0f5132,#198754);display:flex;justify-content:space-between;align-items:center">
+        <div>${b.name}</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.9)">${b.desc}</div>
+      </div>
+      <div class="section-body">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px">
+          <div style="padding:10px;background:#f0f6f1;border-radius:8px;text-align:center">
+            <div style="font-size:11px;color:#64748b;margin-bottom:4px">સંખ્યા</div>
+            <div style="font-size:24px;font-weight:800;color:#198754">${b.qty}</div>
+          </div>
+          <div style="padding:10px;background:#fffbeb;border-radius:8px;text-align:center">
+            <div style="font-size:11px;color:#64748b;margin-bottom:4px">દર</div>
+            <div style="font-size:20px;font-weight:800;color:#f59e0b">₹${fmt(b.rate,2)}</div>
+          </div>
+          <div style="padding:10px;background:#dbeafe;border-radius:8px;text-align:center">
+            <div style="font-size:11px;color:#64748b;margin-bottom:4px">કુલ</div>
+            <div style="font-size:24px;font-weight:800;color:#2563a8">₹${fmt(b.total,2)}</div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:#64748b;padding:8px;background:#f8fafc;border-radius:6px;border-left:3px solid #198754">${b.note}</div>
+      </div>
+    </div>
+  `).join("");
+
+  return `<div class="container tab-content">
+    <div class="card">
+      <div class="section-head" style="background:linear-gradient(135deg,#0f5132,#198754)">🧾 બિલ તાલીમ — ${MONTHS_FULL[state.calM]} ${state.calY}</div>
+      <div style="padding:14px;border-bottom:1px solid #d1dce8;background:#f0f6f1">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+          <div><div style="font-size:11px;color:#64748b">કાર્ય દિવસ:</div><div style="font-size:14px;font-weight:700;color:#198754">${curMU.days} દિવસ</div></div>
+          <div><div style="font-size:11px;color:#64748b">કુલ લાભાર્થી:</div><div style="font-size:14px;font-weight:700;color:#198754">${curMU.totalN}</div></div>
+          <div><div style="font-size:11px;color:#64748b">સર્વે/દિ.:</div><div style="font-size:14px;font-weight:700;color:#198754">${curMU.days ? fmt(curMU.totalN/curMU.days, 1) : "0"}</div></div>
+        </div>
+      </div>
+    </div>
+    ${billCards}
+    <div class="card">
+      <div class="section-head" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6)">📊 કુલ બિલ તાલીમ</div>
+      <div class="section-body">
+        <div style="padding:16px;background:linear-gradient(135deg,#ecfdf5,#f0fdf4);border-radius:10px;border:2px solid #10b981;text-align:center">
+          <div style="font-size:13px;color:#059669;margin-bottom:6px;font-weight:700">કુલ માસિક બિલ રકમ</div>
+          <div style="font-size:48px;font-weight:900;color:#047857">₹${fmt(grandTotal, 2)}</div>
+          <div style="font-size:12px;color:#64748b;margin-top:8px">આ બધું બિલ = <b>${bills.length}</b> આઇટમ્સ</div>
+        </div>
+        <div style="margin-top:14px;padding:10px;background:#fef3c7;border-radius:8px;border-left:4px solid #f59e0b;font-size:12px;color:#92400e">
+          <b>📝 નોંધ:</b> આ બધુ બીલ માસિક આધારે છે. દર નિર્ધારણ તમારા authority નો છે.
+        </div>
+      </div>
+    </div>
+  </div>`;
 }
 
-setInterval(() => {
-  if(centerCode && isOnline && syncQueue.length > 0 && _hasURL()) processSyncQueue();
-}, 30000);
+function renderReportPage(){
+  const today = new Date();
+  const todayK = dkf(today.getFullYear(), today.getMonth(), today.getDate());
+  const todayN = Number(state.ben[todayK] || 0);
+  const todayU = calcUsage(today.getDay(), todayN);
+  const curMU = calcMonthUsage(state.calY, state.calM, state.ben);
 
-const CURRENT_VERSION='3.0.1';
-const STORED_VERSION=localStorage.getItem('mdr_app_version');
-if(STORED_VERSION!==CURRENT_VERSION) localStorage.setItem('mdr_app_version',CURRENT_VERSION);
-</script>
-</body>
-</html>
+  const dailyRows = ITEMS.map(it => {
+    const iv = state.inv[it.id], opening = iv.o + iv.r;
+    const mor = morU(it.id, todayU), aft = aftU(it.id, todayU), tot = todayU[it.id] || 0;
+    return `<tr>
+      <td style="text-align:left"><span class="badge" style="background:${it.bg};color:${it.color}">${it.emoji} ${it.name}</span></td>
+      <td style="color:#2563a8;font-weight:700">${todayN}</td>
+      <td style="color:#2980b9;font-weight:700">${fmt(opening,3)}</td>
+      <td>${mor||"—"}</td><td>${aft||"—"}</td>
+      <td style="color:#e67e22;font-weight:700">${tot||"—"}</td>
+      <td style="color:#1b8f57;font-weight:700">${fmt(opening-tot/1000,3)}</td>
+    </tr>`;
+  }).join("");
+
+  const runBal = {};
+  ITEMS.forEach(it => { runBal[it.id] = state.inv[it.id].o + state.inv[it.id].r; });
+  const totals = {n:0};
+  ITEMS.forEach(it => { totals[it.id+"M"]=0; totals[it.id+"A"]=0; totals[it.id]=0; });
+  
+  const dim = new Date(state.calY, state.calM+1, 0).getDate();
+  const dateRowsArr = [];
+  
+  for(let d=1; d<=dim; d++){
+    const k = dkf(state.calY, state.calM, d);
+    const n = Number(state.ben[k] || 0);
+    const dow = new Date(state.calY, state.calM, d).getDay();
+    const u = calcUsage(dow, n);
+    totals.n += n;
+    const colsArr = [];
+    ITEMS.forEach(it => {
+      const mg = u[it.id+"M"] || 0, ag = u[it.id+"A"] || 0, t = u[it.id] || 0;
+      runBal[it.id] -= t/1000;
+      totals[it.id+"M"] += mg; totals[it.id+"A"] += ag; totals[it.id] += t;
+      colsArr.push(`<td>${mg||"—"}</td><td>${ag||"—"}</td><td style="font-weight:700;color:${t?'#e67e22':'#cbd5e1'}">${t||"—"}</td><td style="font-weight:700;color:#1b8f57">${fmt(runBal[it.id],3)}</td>`);
+    });
+    dateRowsArr.push(`<tr class="${dow===0?'sun-row':''}"><td class="sticky-c1"><b>${d}</b></td><td class="sticky-c2">${DAYS_TBL[dow]}</td><td class="sticky-c3" style="${n>0?'color:#2563a8;font-weight:700':'color:#cbd5e1'}">${n||"—"}</td>${colsArr.join("")}</tr>`);
+  }
+
+  const totalCols = ITEMS.map(it => `<td>${fmt(totals[it
