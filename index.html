@@ -399,19 +399,25 @@ async function cloudSaveWithRetry(data, retries = 3){
       
       const res = await fetch(APPS_SCRIPT_URL, {
         method: "POST",
-        headers: {"Content-Type": "text/plain"},
-        body: JSON.stringify({centerCode, data: {inv: data.inv, ben: data.ben}}),
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          action: "SAVE",
+          centerCode: centerCode,
+          sajoName: currentSajo,
+          inv: data.inv,
+          ben: data.ben
+        }),
         signal: ctrl.signal
       });
       clearTimeout(tid);
       
       const result = await res.json();
-      if(result.status === "ok"){
+      if(result.success){
         setStatus(`✅ Cloud saved — ${new Date().toLocaleTimeString('gu-IN')}`, "#1b8f57");
-        sendLog("SAVE", `ક્લાઉડ સેવ succesful`);
+        sendLog("SAVE", `ક્લાઉડ સેવ successful`);
         return true;
       } else {
-        throw new Error(result.msg || "Save failed");
+        throw new Error(result.message || "Save failed");
       }
     } catch(e){
       console.log(`Attempt ${attempt} failed:`, e.message);
@@ -628,11 +634,20 @@ async function sendLog(action, details){
 async function fetchLogs(){
   setStatus("⏳ Logs...","#2563a8");
   try{
-    const res  = await fetch(`${APPS_SCRIPT_URL}?action=getLogs`);
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        action: "GET_CENTERS",
+        centerCode: centerCode,
+        sajoName: currentSajo
+      })
+    });
     const data = await res.json();
-    state.logData = data.logs || [];
-    setStatus(`✅ ${state.logData.length} log entries`);
-  }catch(_){
+    state.logData = data.data || [];
+    setStatus(`✅ ${state.logData.length} centers`);
+  } catch(err) {
+    console.error('Log fetch error:', err);
     state.logData = [];
     setStatus("❌ Log fetch નિષ્ફળ","#cc3d3d");
   }
