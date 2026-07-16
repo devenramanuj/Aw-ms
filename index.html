@@ -9,6 +9,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="My Daily Report" />
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%230f2442' width='192' height='192'/><text x='50%' y='50%' font-size='80' text-anchor='middle' dominant-baseline='middle' fill='%23fff' font-weight='bold'>🌾</text></svg>" />
+<link rel="manifest" href="data:application/manifest+json,{%22name%22:%22My%20Daily%20Report%22,%22short_name%22:%22MDR%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20192%20192%27%3E%3Crect%20fill=%27%230f2442%27%20width=%27192%27%20height=%27192%27/%3E%3Ctext%20x=%2750%25%27%20y=%2750%25%27%20font-size=%2780%27%20text-anchor=%27middle%27%20dominant-baseline=%27middle%27%20fill=%27%23fff%27%20font-weight=%27bold%27%3E🌾%3C/text%3E%3C/svg%3E%22,%22sizes%22:%22192x192%22,%22type%22:%22image/svg+xml%22,%22purpose%22:%22any%22}],%22start_url%22:%22/%22,%22scope%22:%22/%22,%22display%22:%22standalone%22,%22orientation%22:%22portrait-primary%22,%22theme_color%22:%22%230f2442%22,%22background_color%22:%22%23f0f4f8%22}" />
 <title>Sajo MDR System</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <meta http-equiv="Pragma" content="no-cache" />
@@ -642,7 +643,7 @@ async function fetchAllCenters(){
   state.con.loading = false; render();
 }
 
-/* ── Consolidation table ── */
+/* ── Consolidation table (Sajo Wise) ── */
 function buildConsolidationHTML(){
   const con = state.con;
 
@@ -1796,7 +1797,7 @@ window.addEventListener('appinstalled', () => {
   deferredPrompt = null;
 });
 
-const CURRENT_VERSION='2.5.2';
+const CURRENT_VERSION='2.5.3';
 const STORED_VERSION=localStorage.getItem('app_version');
 if(STORED_VERSION!==CURRENT_VERSION){
   console.log('✅ App updated to v'+CURRENT_VERSION+' - clearing cache...');
