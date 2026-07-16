@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="gu">
 <head>
@@ -10,24 +11,22 @@
 <meta name="apple-mobile-web-app-title" content="My Daily Report" />
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%230f2442' width='192' height='192'/><text x='50%' y='50%' font-size='80' text-anchor='middle' dominant-baseline='middle' fill='%23fff' font-weight='bold'>🌾</text></svg>" />
 <link rel="manifest" href="data:application/manifest+json,{%22name%22:%22My%20Daily%20Report%22,%22short_name%22:%22MDR%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20192%20192%27%3E%3Crect%20fill=%27%230f2442%27%20width=%27192%27%20height=%27192%27/%3E%3Ctext%20x=%2750%25%27%20y=%2750%25%27%20font-size=%2780%27%20text-anchor=%27middle%27%20dominant-baseline=%27middle%27%20fill=%27%23fff%27%20font-weight=%27bold%27%3E🌾%3C/text%3E%3C/svg%3E%22,%22sizes%22:%22192x192%22,%22type%22:%22image/svg+xml%22,%22purpose%22:%22any%22}],%22start_url%22:%22/%22,%22scope%22:%22/%22,%22display%22:%22standalone%22,%22orientation%22:%22portrait-primary%22,%22theme_color%22:%22%230f2442%22,%22background_color%22:%22%23f0f4f8%22}" />
-<title>My Daily Report</title>
-<!-- ✅ FIX 1: font-display:swap + preload = no blocking -->
+<title>Sajo MDR System</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;700&display=swap">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;700&display=swap" rel="stylesheet"></noscript>
 <style>
-/* ✅ FIX 2: System font stack FIRST — UI shows instantly before Noto loads */
 *{box-sizing:border-box;margin:0;padding:0}
 body{
   font-family:'Noto Sans Gujarati',system-ui,-apple-system,'Segoe UI',sans-serif;
   background:#f0f4f8;color:#1a2535;line-height:1.4;
-  /* ✅ FIX 3: font-display hint via CSS */
   font-display:swap
 }
-
-/* ✅ FIX 4: Critical above-fold styles inlined, rest loaded lazily */
 .container{max-width:1200px;margin:0 auto;padding:10px}
 .header{background:linear-gradient(135deg,#0f2442,#1a3c5e);color:#fff;padding:5px 6px;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.3)}
 .header h1{font-size:12px;text-align:center;margin-bottom:1px;font-weight:700}
@@ -37,11 +36,8 @@ body{
 .card{background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.08);margin-bottom:12px;border:1px solid #d1dce8;overflow:hidden}
 .section-head{background:linear-gradient(135deg,#1a3c5e,#2563a8);color:#fff;padding:10px 14px;font-weight:700;font-size:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .section-body{padding:12px}
-
-/* ✅ FIX 5: Skeleton loader for instant visual feedback */
 .skeleton{background:linear-gradient(90deg,#e2e8f0 25%,#f1f5f9 50%,#e2e8f0 75%);background-size:200% 100%;animation:shimmer 1.2s infinite;border-radius:8px;height:120px;margin:12px}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-
 .inv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
 .inv-card{border:1px solid #d1dce8;border-radius:10px;padding:10px;background:#fafcff}
 .inv-title{font-weight:700;font-size:13px;margin-bottom:6px;padding:4px 8px;border-radius:14px;display:inline-block}
@@ -83,8 +79,6 @@ table{border-collapse:separate;border-spacing:0;width:100%;font-size:11px}
 th{background:#1a3c5e;color:#fff;padding:8px 6px;text-align:center;border:1px solid rgba(255,255,255,.15);font-weight:700;font-size:11px;white-space:nowrap;position:sticky;top:0;z-index:2}
 td{padding:6px;text-align:center;border:1px solid #d1dce8;background:#fff;white-space:nowrap}
 tr:nth-child(even) td{background:#f8fafc}
-/* ── Sticky columns: તા. | વ. | સં. ── */
-/* c1=તારીખ 32px | c2=વાર fit | c3=સં. 32px */
 .sticky-c1{position:sticky;left:0;z-index:3;box-shadow:none;width:32px;min-width:32px;max-width:32px}
 .sticky-c2{position:sticky;left:32px;z-index:3;white-space:nowrap;width:auto;padding-left:6px;padding-right:6px}
 .sticky-c3{position:sticky;left:calc(32px + var(--c2w, 52px));z-index:3;width:32px;min-width:32px;max-width:32px;box-shadow:2px 0 4px rgba(0,0,0,.08)}
@@ -109,13 +103,9 @@ tr.sun-row td.sticky-c1,tr.sun-row td.sticky-c2,tr.sun-row td.sticky-c3{backgrou
 .logout-btn{background:rgba(204,61,61,.85);color:#fff;border:none;padding:3px 8px;border-radius:4px;font-family:inherit;font-size:10px;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .15s}
 .logout-btn:hover{background:#cc3d3d}
 .header-center-info{font-size:9px;color:#a0b4c8;text-align:center;margin-bottom:2px}
-
-/* ✅ FIX 6: sync status — content-visibility for off-screen perf */
 .sync-status{text-align:center;padding:3px 6px;font-size:10px;font-weight:600;color:#1b8f57;background:#e8f5e9;transition:all .3s;cursor:pointer}
 .sync-status.syncing{color:#2563a8;background:#dbeafe}
 .sync-status.error{color:#cc3d3d;background:#fee2e2}
-
-/* Setup */
 .setup-box{max-width:400px;margin:50px auto;padding:20px;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1);border:1px solid #d1dce8;text-align:center}
 .setup-box h2{color:#1a3c5e;margin-bottom:15px;font-size:18px}
 .setup-box input{width:100%;padding:10px;font-size:16px;text-align:center;border:2px solid #cbd5e1;border-radius:8px;margin-bottom:15px;font-family:inherit;font-weight:700}
@@ -147,11 +137,7 @@ tr.sun-row td.sticky-c1,tr.sun-row td.sticky-c2,tr.sun-row td.sticky-c3{backgrou
 .stat-card{background:#f8fafc;border:1px solid #d1dce8;border-radius:8px;padding:10px;text-align:center}
 .stat-card .s-num{font-size:22px;font-weight:800;color:#5b21b6}
 .stat-card .s-lbl{font-size:11px;color:#64748b;margin-top:2px}
-
-/* ✅ FIX 7: content-visibility for off-screen tabs — big render boost */
 .tab-content{content-visibility:auto;contain-intrinsic-size:0 500px}
-
-/* ── REPORT ZOOM ── */
 .zoom-toolbar{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#f0f7ff;border-bottom:1px solid #d1dce8;flex-wrap:wrap}
 .zoom-toolbar label{font-size:12px;font-weight:700;color:#1a3c5e;white-space:nowrap}
 .zoom-slider{flex:1;min-width:100px;max-width:220px;accent-color:#2563a8;cursor:pointer;height:4px}
@@ -159,11 +145,8 @@ tr.sun-row td.sticky-c1,tr.sun-row td.sticky-c2,tr.sun-row td.sticky-c3{backgrou
 .zoom-btn{background:#2563a8;color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:14px;font-weight:700;cursor:pointer;line-height:1;flex-shrink:0}
 .zoom-btn:active{background:#1a3c5e}
 .zoom-reset{background:#e2e8f0;color:#475569;border:none;border-radius:6px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;flex-shrink:0}
-/* outer clip — scrollable container */
 .zoomable-outer{overflow:auto;-webkit-overflow-scrolling:touch;width:100%}
-/* ✅ CSS zoom (not transform) — sticky position works correctly inside zoom */
 .zoomable-inner{display:block;min-width:100%;zoom:1}
-
 @media print{
   .header,.actions,.nav,.report-tabs,.cal-head button,.sync-status{display:none !important}
   body{background:#fff}
@@ -171,11 +154,9 @@ tr.sun-row td.sticky-c1,tr.sun-row td.sticky-c2,tr.sun-row td.sticky-c3{backgrou
   th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   tr.sun-row td{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
-/* ── Admin tabs ── */
 .admin-tabs{display:flex;gap:0;border-bottom:2px solid #d1dce8}
 .admin-tab-btn{flex:1;padding:10px;border:none;background:#f8fafc;color:#475569;font-family:inherit;font-weight:700;font-size:13px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px}
 .admin-tab-btn.active{background:#fff;color:#5b21b6;border-bottom-color:#5b21b6}
-/* ── Consolidation ── */
 .con-toolbar{display:flex;align-items:center;gap:8px;padding:10px 12px;background:#f8fafc;border-bottom:1px solid #d1dce8;flex-wrap:wrap}
 .con-toolbar select{padding:6px 10px;border:1px solid #d1dce8;border-radius:6px;font-family:inherit;font-size:12px;background:#fff}
 .con-toolbar button{padding:7px 14px;border:none;border-radius:6px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;color:#fff;background:#5b21b6}
@@ -203,8 +184,6 @@ tr.sun-row td.sticky-c1,tr.sun-row td.sticky-c2,tr.sun-row td.sticky-c3{backgrou
   table{font-size:10px}
   th,td{padding:5px 4px}
 }
-
-/* ✅ Mobile Touch Optimization - EXCEPT nav buttons */
 @media (hover:none) and (pointer:coarse){
   button:not(.nav button), input[type="button"], input[type="submit"]{
     padding: 12px 16px !important;
@@ -221,13 +200,10 @@ tr.sun-row td.sticky-c1,tr.sun-row td.sticky-c2,tr.sun-row td.sticky-c3{backgrou
     font-size: 16px !important;
     min-height: 44px;
   }
-  /* Prevent zoom on double-tap */
   input, button, select, textarea{
     font-size: 16px;
   }
 }
-
-/* Landscape mode optimization */
 @media (max-height:600px) and (orientation:landscape){
   .header h1{font-size:14px}
   .nav button{padding:4px 6px;font-size:10px}
@@ -238,8 +214,6 @@ tr.sun-row td.sticky-c1,tr.sun-row td.sticky-c2,tr.sun-row td.sticky-c3{backgrou
   table{font-size:9px}
   th,td{padding:3px 2px}
 }
-
-/* Prevent accidental selection on touch */
 *{
   -webkit-user-select: none;
   -webkit-touch-callout: none;
@@ -254,7 +228,6 @@ input, textarea, button, a{
 </head>
 <body>
 
-<!-- ✅ FIX 8: Header renders IMMEDIATELY — no JS needed -->
 <div class="header">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
     <h1 style="font-size:16px;margin:0;flex:1;text-align:center">🌾 My Daily Report</h1>
@@ -276,7 +249,6 @@ input, textarea, button, a{
   <span id="queueCount" style="display:none;margin-left:6px;background:rgba(0,0,0,.2);padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700">📤 <span id="queueNum">0</span> pending</span>
 </div>
 
-<!-- ✅ FIX 9: Skeleton shown INSTANTLY while JS runs -->
 <div id="app">
   <div class="skeleton"></div>
   <div class="skeleton" style="height:200px;margin-top:0"></div>
@@ -288,11 +260,11 @@ input, textarea, button, a{
 /* ============================================================
    CONFIG
 ============================================================ */
-const APPS_SCRIPT_URL = "";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzQcMw-ylPsKqJE9bLYxRrpcbKmPlpcwZLID9PlYBdFzjmiN8vfHWm-MGP6PXXZ_hJLRg/exec";
 const ADMIN_PASSWORD  = "Dev@1";
 
 /* ============================================================
-   CONSTANTS  (frozen objects = faster property lookup)
+   CONSTANTS
 ============================================================ */
 const ITEMS = Object.freeze([
   {id:"ghau",    name:"ઘઉં",     emoji:"🌾", bg:"#fff3cd", color:"#856404"},
@@ -311,6 +283,31 @@ const DEFAULT_INV = {ghau:{o:500,r:200},chokha:{o:300,r:100},tel:{o:50,r:20},cha
 /* ============================================================
    STATE
 ============================================================ */
+const SAJO_CREDS = {
+  'આકરૂ': {},
+  'ધંધુકા': {},
+  'વાગડ': {},
+  'હડાળા': {}
+};
+
+/* -- સેજા wise consolidation માટે helpers --
+   કેન્દ્ર કોડ બનતી વખતે sajo.slice(0,2) prefix વપરાય છે (દા.ત. "આકરૂ" -> "આક-001"),
+   એ જ prefix logic વાપરીને, cloud માંથી આવેલ કેન્દ્રનું centerCode પરથી તે કયા સેજા
+   સાથે login થયેલ છે તે નક્કી કરી શકાય. જો backend future માં c.sajoName મોકલે
+   તો એ પણ પ્રાધાન્ય (priority) સાથે વપરાશે. */
+const SAJO_LIST = Object.keys(SAJO_CREDS);
+function sajoPrefix(sajo){ return String(sajo||"").slice(0,2).toUpperCase(); }
+const PREFIX_TO_SAJO = {};
+SAJO_LIST.forEach(s => { PREFIX_TO_SAJO[sajoPrefix(s)] = s; });
+function getCenterSajo(c){
+  if(!c) return "અન્ય";
+  if(c.sajoName && SAJO_LIST.includes(c.sajoName)) return c.sajoName;
+  const code = String(c.centerCode || "");
+  const prefix = code.split("-")[0];
+  return PREFIX_TO_SAJO[prefix] || "અન્ય";
+}
+
+let currentSajo = localStorage.getItem('current_sajo') || 'આકરૂ';
 let centerCode = localStorage.getItem("anganwadi_center_code") || "";
 let state = {
   inv: JSON.parse(JSON.stringify(DEFAULT_INV)),
@@ -322,17 +319,16 @@ let state = {
   adminUnlocked:false, logData:[], logFilter:{center:"",action:"",date:""},
   adminTab:"logs",
   con:{ loading:false, error:"", centers:[],
-        selY:new Date().getFullYear(), selM:new Date().getMonth(), sajoFilter: 'All Centers' }
+        selY:new Date().getFullYear(), selM:new Date().getMonth(), selSajo:"all" }
 };
 
 /* ============================================================
-   OFFLINE-FIRST SYNC QUEUE — Network-aware save strategy
+   OFFLINE-FIRST SYNC QUEUE
 ============================================================ */
 let syncQueue = [];
 let isSyncing = false;
 let isOnline = navigator.onLine;
 
-// Monitor network status
 window.addEventListener('online', () => {
   isOnline = true;
   setStatus("🟢 Network OK — Syncing...", "#1b8f57");
@@ -343,29 +339,6 @@ window.addEventListener('offline', () => {
   isOnline = false;
   setStatus("🔴 Offline — Local save માત્ર", "#e67e22");
 });
-
-async function saveState(){
-  if(!centerCode) return;
-  
-  // 1️⃣ ALWAYS save to local first (instant)
-  const dataToSave = {inv:state.inv, ben:state.ben, timestamp: new Date().toISOString()};
-  localStorage.setItem("mdr_offline_" + centerCode, JSON.stringify(dataToSave));
-  
-  // 2️⃣ If no cloud URL configured
-  if(!_hasURL){ 
-    setStatus("💾 Local save OK (Cloud config missing)", "#e67e22"); 
-    return; 
-  }
-  
-  // 3️⃣ If ONLINE → try cloud save immediately
-  if(isOnline){
-    await cloudSaveWithRetry(dataToSave);
-  } else {
-    // 4️⃣ If OFFLINE → queue the save
-    addToSyncQueue(dataToSave);
-    setStatus("📤 Queued (Network નાહી) — Offline save OK", "#f59e0b");
-  }
-}
 
 function addToSyncQueue(data){
   syncQueue.push({
@@ -387,11 +360,11 @@ async function cloudSaveWithRetry(data, retries = 3){
       
       const res = await fetch(APPS_SCRIPT_URL, {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
+        headers: {"Content-Type": "text/plain;charset=utf-8"},
         body: JSON.stringify({
           action: "SAVE",
           centerCode: centerCode,
-          sajoName: null,
+          sajoName: currentSajo,
           inv: data.inv,
           ben: data.ben
         }),
@@ -400,22 +373,20 @@ async function cloudSaveWithRetry(data, retries = 3){
       clearTimeout(tid);
       
       const result = await res.json();
-      if(result.success){
+      if(result.success || result.status === "ok"){
         setStatus(`✅ Cloud saved — ${new Date().toLocaleTimeString('gu-IN')}`, "#1b8f57");
         sendLog("SAVE", `ક્લાઉડ સેવ successful`);
         return true;
       } else {
-        throw new Error(result.message || "Save failed");
+        throw new Error(result.message || result.msg || "Save failed");
       }
     } catch(e){
       console.log(`Attempt ${attempt} failed:`, e.message);
       if(attempt === retries){
-        // All retries failed - add to queue
         addToSyncQueue(data);
         setStatus(`📤 Queued for sync (${syncQueue.length} pending)`, "#f59e0b");
         return false;
       }
-      // Wait before retry
       await new Promise(r => setTimeout(r, 1000 * attempt));
     }
   }
@@ -439,12 +410,10 @@ async function processSyncQueue(){
       } else {
         failedCount++;
       }
-      // Delay between requests
       await new Promise(r => setTimeout(r, 500));
     }
   }
   
-  // Save updated queue
   if(syncQueue.length > 0){
     localStorage.setItem("sync_queue_" + centerCode, JSON.stringify(syncQueue));
   } else {
@@ -456,9 +425,9 @@ async function processSyncQueue(){
   if(successCount > 0){
     setStatus(`✅ ${successCount} synced | ${failedCount} pending`, "#1b8f57");
   }
+  updateSyncStatus();
 }
 
-// Load sync queue on boot
 function loadSyncQueue(){
   const raw = localStorage.getItem("sync_queue_" + centerCode);
   if(raw){
@@ -471,7 +440,6 @@ function loadSyncQueue(){
   }
 }
 
-// ✅ FIX 10: Debounce saves — avoid save on every keystroke
 let _saveTimer = null;
 function scheduleSave(){ 
   clearTimeout(_saveTimer); 
@@ -489,7 +457,7 @@ function updateSyncStatus(){
   if(syncQueue.length > 0){
     if(qCountEl) qCountEl.style.display = "inline-block";
     if(qNumEl) qNumEl.textContent = syncQueue.length;
-    if(statusText) statusText.textContent = "Syncing...";
+    if(statusText) statusText.textContent = "Syncing pending...";
   } else {
     if(qCountEl) qCountEl.style.display = "none";
     if(statusText) statusText.textContent = "ક્લાઉડ સાથે સિંક થયેલ છે";
@@ -508,11 +476,10 @@ function setStatus(msg, color="#1b8f57"){
 }
 
 /* ============================================================
-   CLOUD  — load & save
+   CLOUD — load & save (Fixed & Single Source of Truth)
 ============================================================ */
 const _hasURL = APPS_SCRIPT_URL && !APPS_SCRIPT_URL.includes("YOUR_URL");
 
-/* ✅ FIX 11: Load local FIRST (instant), cloud in background */
 function bootApp(){
   if(!centerCode){ render(); return; }
   loadLocalFallback();           // Instant — no network wait
@@ -522,8 +489,12 @@ function bootApp(){
   render();
   // Cloud sync quietly in background after 200ms
   setTimeout(()=>{
-    if(isOnline) processSyncQueue();
-    else syncCloud();
+    if(isOnline) {
+      processSyncQueue(); 
+      syncCloud();        
+    } else {
+      setStatus("🔴 Offline — Local save માત્ર", "#e67e22");
+    }
   }, 200);
 }
 
@@ -537,16 +508,21 @@ function loadLocalFallback(){
   }catch(_){}
 }
 
+// ક્લાઉડમાંથી ડેટા લાવવા માટે
 async function syncCloud(){
   if(!_hasURL){ setStatus("⚠️ Apps Script URL સેટ નથી — Offline mode","#e67e22"); return; }
+  if(!isOnline) { setStatus("🔴 Offline — Local માત્ર", "#e67e22"); return; }
+  
   setStatus("⏳ Background sync...","#2563a8");
   try{
     const ctrl = new AbortController();
     const tid  = setTimeout(()=>ctrl.abort(), 12000);
     const res  = await fetch(`${APPS_SCRIPT_URL}?centerCode=${encodeURIComponent(centerCode)}`,{signal:ctrl.signal});
     clearTimeout(tid);
+    
     if(!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
+    
     if(data && data.status !== "new_user" && data.status !== "error"){
       if(data.inv) state.inv = data.inv;
       if(data.ben) state.ben = data.ben;
@@ -561,40 +537,69 @@ async function syncCloud(){
     }
   }catch(e){
     const msg = e.name === "AbortError" ? "Timeout (12s)" : e.message;
-    setStatus(`⚠️ Offline mode | ${msg}`, "#e67e22");
+    setStatus(`⚠️ Sync fail | ${msg}`, "#e67e22");
   }
 }
 
-// Alias for manual refresh tap
-async function loadCloudData(){ await syncCloud(); }
-
+// ક્લાઉડમાં ડેટા સેવ કરવા માટે (Single saveState function)
 async function saveState(){
   if(!centerCode) return;
-  localStorage.setItem("mdr_offline_" + centerCode, JSON.stringify({inv:state.inv, ben:state.ben}));
-  if(!_hasURL){ setStatus("💾 Local save OK","#e67e22"); return; }
+  
+  // 1. લોકલ સેવ હંમેશા થાય
+  const dataToSave = {inv: state.inv, ben: state.ben, timestamp: new Date().toISOString()};
+  localStorage.setItem("mdr_offline_" + centerCode, JSON.stringify(dataToSave));
+  
+  // 2. જો ક્લાઉડ URL ના હોય
+  if(!_hasURL){ 
+    setStatus("💾 Local save OK (Cloud config missing)", "#e67e22"); 
+    return; 
+  }
+  
+  // 3. જો ઓફલાઈન હોય તો ક્યુમાં એડ કરો
+  if(!isOnline){
+    addToSyncQueue(dataToSave);
+    setStatus("📤 Queued (Offline) — Local save OK", "#f59e0b");
+    return;
+  }
+
+  // 4. જો ઑનલાઈન હોય તો ક્લાઉડમાં સીધો સેવ કરો
   setStatus("⏳ ક્લાઉડ save...","#2563a8");
   try{
     const ctrl = new AbortController();
     const tid  = setTimeout(()=>ctrl.abort(), 12000);
+    
     const res  = await fetch(APPS_SCRIPT_URL,{
       method:"POST",
-      headers:{"Content-Type":"text/plain"},
-      body:JSON.stringify({centerCode, data:{inv:state.inv, ben:state.ben}}),
+      headers:{"Content-Type":"text/plain;charset=utf-8"},
+      body:JSON.stringify({
+        action: "SAVE",
+        centerCode: centerCode,
+        sajoName: currentSajo,
+        inv: state.inv, 
+        ben: state.ben
+      }),
       signal: ctrl.signal
     });
+    
     clearTimeout(tid);
     const result = await res.json();
-    if(result.status === "ok"){
-      setStatus(`✅ Cloud + Local — સેવ! (${centerCode})`);
+    
+    if(result.success || result.status === "ok"){
+      setStatus(`✅ Cloud saved — ${new Date().toLocaleTimeString('gu-IN')}`);
       sendLog("SAVE", `ડેટા save — ${centerCode}`);
     } else {
-      setStatus(`⚠️ Cloud error: ${result.msg||"?"} | Local OK`,"#e67e22");
+      addToSyncQueue(dataToSave);
+      setStatus(`⚠️ Cloud error: ${result.message||result.msg||"?"} | Queued`,"#f59e0b");
     }
   }catch(e){
     const msg = e.name === "AbortError" ? "Timeout" : e.message;
-    setStatus(`⚠️ Cloud fail: ${msg} | Local backup OK`,"#e67e22");
+    addToSyncQueue(dataToSave);
+    setStatus(`⚠️ Cloud fail: ${msg} | Queued (${syncQueue.length})`,"#f59e0b");
   }
 }
+
+// Manual refresh માટે
+async function loadCloudData(){ await syncCloud(); }
 
 /* ============================================================
    HELPERS
@@ -606,7 +611,7 @@ function showNav(){
 function showHeaderInfo(){
   const bar = document.getElementById("centerInfoBar");
   const btn = document.getElementById("btnLogoutHeader");
-  if(bar && centerCode){ bar.style.display="block"; bar.innerHTML=`🏢 કेન्द्ર: <b style="color:#f39c12">${centerCode}</b>`; }
+  if(bar && centerCode){ bar.style.display="block"; bar.innerHTML=`🏢 કેન્દ્ર: <b style="color:#f39c12">${centerCode}</b>`; }
   if(btn) btn.style.display = "block";
 }
 
@@ -614,7 +619,7 @@ async function sendLog(action, details){
   if(!_hasURL || !centerCode) return;
   try{
     await fetch(APPS_SCRIPT_URL,{
-      method:"POST",headers:{"Content-Type":"text/plain"},
+      method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},
       body:JSON.stringify({action:"LOG",centerCode,logAction:action,logDetails:details,timestamp:new Date().toISOString()})
     });
   }catch(_){}
@@ -624,11 +629,11 @@ async function fetchLogs(){
   try{
     const res = await fetch(APPS_SCRIPT_URL, {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: {"Content-Type": "text/plain;charset=utf-8"},
       body: JSON.stringify({
         action: "GET_CENTERS",
         centerCode: centerCode,
-        sajoName: null
+        sajoName: currentSajo
       })
     });
     const data = await res.json();
@@ -664,38 +669,24 @@ async function fetchAllCenters(){
   state.con.loading = false; render();
 }
 
-/* ── Load centers from localStorage by Sajo ── */
-function loadSajoWiseCenters(){
-  const key = 'sajo_' + currentSajo + '_centers';
-  const localCenters = JSON.parse(localStorage.getItem(key) || '[]');
-  
-  // Convert local format to consolidation format
-  state.con.centers = localCenters.map(c => ({
-    centerCode: c.code,
-    centerName: c.name,
-    sajo: currentSajo,
-    inv: JSON.parse(localStorage.getItem('mdr_offline_' + c.code) || '{}').inv || {},
-    ben: JSON.parse(localStorage.getItem('mdr_offline_' + c.code) || '{}').ben || {}
-  }));
-  
-  setStatus(`✅ ${state.con.centers.length} centers (${currentSajo})`);
-  state.con.loading = false;
-  render();
-}
-
-/* ── Consolidation table ── */
+/* ── Consolidation table (સેજા wise filter સાથે) ── */
 function buildConsolidationHTML(){
   const con = state.con;
+
+  const filteredCenters = con.selSajo === "all"
+    ? con.centers
+    : con.centers.filter(c => getCenterSajo(c) === con.selSajo);
+
+  const sajoOpts = "<option value='all'" + (con.selSajo==='all'?" selected":"") + ">\uD83C\uDF10 ઓવરઓલ (બધા સેજા)</option>"
+    + SAJO_LIST.map(s =>
+        "<option value='" + s + "'" + (s===con.selSajo?" selected":"") + ">" + s + "</option>"
+      ).join("");
 
   const yOpts = [con.selY-1, con.selY, con.selY+1].map(y =>
     "<option value='" + y + "'" + (y===con.selY?" selected":"") + ">" + y + "</option>"
   ).join("");
   const mOpts = MONTHS_FULL.map((m,i) =>
     "<option value='" + i + "'" + (i===con.selM?" selected":"") + ">" + m + "</option>"
-  ).join("");
-  
-  const sajoOpts = ["All Centers", ...Object.keys(SAJO_CREDS)].map(s =>
-    "<option value='" + s + "'" + (s === (state.con.sajoFilter || 'All Centers') ? " selected" : "") + ">" + s + "</option>"
   ).join("");
 
   const toolbar = "<div class='con-toolbar'>"
@@ -704,7 +695,7 @@ function buildConsolidationHTML(){
     + "<select id='conSelM'>" + mOpts + "</select>"
     + "<button id='btnFetchCenters'>\uD83D\uDD04 Refresh</button>"
     + "<button class='btn-export-con' id='btnExportCon'>\uD83D\uDCE5 CSV</button>"
-    + "<span style='font-size:11px;color:#64748b'>" + con.centers.length + " centers</span>"
+    + "<span style='font-size:11px;color:#64748b'>" + filteredCenters.length + " / " + con.centers.length + " centers</span>"
     + "</div>";
 
   if(con.loading) return toolbar
@@ -718,21 +709,21 @@ function buildConsolidationHTML(){
     + "<div class='con-loading' style='color:#64748b'>\uD83D\uDCED \u0A95\u0ACB\u0A88 center data \u0AA8\u0AA5\u0AC0"
     + "<br><button onclick='fetchAllCenters()' style='margin-top:10px;padding:6px 14px;background:#5b21b6;color:#fff;border:none;border-radius:6px;font-family:inherit;font-weight:700;cursor:pointer'>Load Centers</button></div>";
 
-  // ── rows: mu + closing balance per item ──
-  const rows = con.centers.map(c => {
+  if(!filteredCenters.length) return toolbar
+    + "<div class='con-loading' style='color:#64748b'>\uD83D\uDCED આ સેજા (" + con.selSajo + ") માટે કોઈ કેન્દ્ર data નથી</div>";
+
+  const rows = filteredCenters.map(c => {
     const mu  = calcMonthUsage(con.selY, con.selM, c.ben || {});
     const inv = c.inv || {};
-    // closing balance per item (kg)
     const closing = {};
     ITEMS.forEach(it => {
       const iv      = inv[it.id] || {o:0, r:0};
       const opening = (iv.o || 0) + (iv.r || 0);
       closing[it.id] = opening - (mu[it.id] || 0) / 1000;
     });
-    return { code: c.centerCode, mu, closing };
+    return { code: c.centerCode, sajo: getCenterSajo(c), mu, closing };
   }).sort((a,b) => b.mu.totalN - a.mu.totalN);
 
-  // ── grand totals ──
   const grand = { totalN:0, days:0 };
   ITEMS.forEach(it => {
     grand[it.id]          = 0;
@@ -751,7 +742,6 @@ function buildConsolidationHTML(){
     });
   });
 
-  // ── table headers: colspan 4 (સ.વ. | બ.વ. | કુલ | બ.સિ.) ──
   const invHeads = ITEMS.map(it =>
     "<th colspan='4' style='background:" + it.color + "'>" + it.emoji + " " + it.name + "</th>"
   ).join("");
@@ -760,7 +750,6 @@ function buildConsolidationHTML(){
     + "<th style='color:#86efac'>\u0AAC.\u0AB8\u0ABF.(kg)</th>"
   ).join("");
 
-  // ── data rows ──
   const dataRows = rows.map((r,i) => {
     const cols = ITEMS.map(it =>
       "<td>" + (r.mu[it.id+"M"]||0) + "</td>"
@@ -769,17 +758,19 @@ function buildConsolidationHTML(){
         + (r.mu[it.id]||0) + "</td>"
       + "<td style='font-weight:700;color:#1b8f57'>" + fmt(r.closing[it.id],3) + "</td>"
     ).join("");
+    const sajoBadge = con.selSajo === "all"
+      ? " <span style='background:#ede9fe;color:#5b21b6;border-radius:8px;padding:1px 5px;font-size:9px;margin-left:4px;font-weight:700'>" + r.sajo + "</span>"
+      : "";
     return "<tr>"
       + "<td class='con-c1'>"
       + "<span style='background:#ede9fe;color:#5b21b6;border-radius:10px;padding:1px 6px;font-size:10px;margin-right:4px'>" + (i+1) + "</span>"
-      + r.code + "</td>"
+      + r.code + sajoBadge + "</td>"
       + "<td style='font-weight:700;color:#2563a8'>" + r.mu.days + "</td>"
       + "<td style='font-weight:700;color:#1b8f57'>" + r.mu.totalN + "</td>"
       + "<td style='color:#64748b'>" + (r.mu.days ? fmt(r.mu.totalN/r.mu.days,1) : "\u2014") + "</td>"
       + cols + "</tr>";
   }).join("");
 
-  // ── grand total row ──
   const n = rows.length || 1;
   const grandCols = ITEMS.map(it =>
     "<td>" + grand[it.id+"M"] + "</td>"
@@ -787,12 +778,12 @@ function buildConsolidationHTML(){
     + "<td style='font-weight:800'>" + grand[it.id] + "</td>"
     + "<td style='font-weight:800;color:#1b8f57'>" + fmt(grand[it.id+"closing"],3) + "</td>"
   ).join("");
+  const totalLabel = con.selSajo === "all" ? ("Grand Total") : ("Total — " + con.selSajo);
   const totalRow = "<tr class='con-total'>"
-    + "<td class='con-c1'>\uD83D\uDD22 Grand Total (" + rows.length + " \u0A95\u0AC7\u0AA8\u0ACD\u0AA6\u0ACD\u0AB0)</td>"
+    + "<td class='con-c1'>\uD83D\uDD22 " + totalLabel + " (" + rows.length + " \u0A95\u0AC7\u0AA8\u0ACD\u0AA6\u0ACD\u0AB0)</td>"
     + "<td>" + grand.days + "</td><td>" + grand.totalN + "</td><td>\u2014</td>"
     + grandCols + "</tr>";
 
-  // ── average row ──
   const avgCols = ITEMS.map(it =>
     "<td>" + fmt(grand[it.id+"M"]/n,0) + "</td>"
     + "<td>" + fmt(grand[it.id+"A"]/n,0) + "</td>"
@@ -818,16 +809,19 @@ function buildConsolidationHTML(){
 }
 function exportConsolidationCSV(){
   const con = state.con;
-  if(!con.centers.length){ alert("Data નથી"); return; }
-  let csv = "કેન્દ્ર,દિ.,કુળ લ.,સ./દિ.";
+  const filteredCenters = con.selSajo === "all"
+    ? con.centers
+    : con.centers.filter(c => getCenterSajo(c) === con.selSajo);
+  if(!filteredCenters.length){ alert("Data નથી"); return; }
+  let csv = "સેજો,કેન્દ્ર,દિ.,કુળ લ.,સ./દિ.";
   ITEMS.forEach(it => {
     csv += "," + it.name + " સ.વ.(g)," + it.name + " બ.વ.(g)," + it.name + " કુળ(g)," + it.name + " બ.સિ.(kg)";
   });
   csv += "\n";
-  con.centers.forEach(c => {
+  filteredCenters.forEach(c => {
     const mu  = calcMonthUsage(con.selY, con.selM, c.ben || {});
     const inv = c.inv || {};
-    csv += c.centerCode + "," + mu.days + "," + mu.totalN + "," + (mu.days ? fmt(mu.totalN/mu.days,1) : "0");
+    csv += getCenterSajo(c) + "," + c.centerCode + "," + mu.days + "," + mu.totalN + "," + (mu.days ? fmt(mu.totalN/mu.days,1) : "0");
     ITEMS.forEach(it => {
       const iv      = inv[it.id] || {o:0, r:0};
       const opening = (iv.o||0) + (iv.r||0);
@@ -840,11 +834,10 @@ function exportConsolidationCSV(){
   const url  = URL.createObjectURL(blob);
   const a    = document.createElement("a");
   a.href     = url;
-  a.download = "consolidation-" + MONTHS_FULL[con.selM] + "-" + con.selY + ".csv";
+  a.download = "consolidation-" + (con.selSajo==="all"?"overall":con.selSajo) + "-" + MONTHS_FULL[con.selM] + "-" + con.selY + ".csv";
   a.click();
   URL.revokeObjectURL(url);
 }
-
 
 /* ============================================================
    USAGE RULES
@@ -855,12 +848,10 @@ function calcUsage(dow, n){
   ITEMS.forEach(it=>{ u[it.id]=0; u[it.id+"M"]=0; u[it.id+"A"]=0; u[it.id+"nM"]=0; u[it.id+"nA"]=0; });
   if(!n || dow === 0) return u;
 
-  // Morning
   u.telM = 5*n; u.telnM = n;
   if(dow===1||dow===3||dow===4||dow===5||dow===6){ u.ghauM=30*n; u.ghaunM=n; }
   if(dow===2){ u.chokhaM=30*n; u.chokhanM=n; }
 
-  // Afternoon
   u.telA = 8*n; u.telnA = n;
   if(dow===1||dow===2||dow===5){ u.ghauA=50*n; u.ghaunA=n; }
   if(dow===3||dow===4||dow===6){ u.chokhaA=50*n; u.chokhanA=n; }
@@ -880,7 +871,6 @@ function dayHint(d){
 }
 const dkf = (y,m,d) => `${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
 
-/* ✅ FIX 12: calcMonthUsage cached — avoid recompute on every render */
 let _muCache = null, _muCacheKey = "";
 function calcMonthUsage(y,m,ben){
   const key = `${y}-${m}-${JSON.stringify(ben)}`;
@@ -905,35 +895,21 @@ const fmt = (n,d=0) => (n==null||isNaN(n)) ? "0" : Number(n).toFixed(d);
 /* ============================================================
    RENDER — PAGES
 ============================================================ */
-function restoreData(){
-  const allKeys = Object.keys(localStorage);
-  
-  // Find all Aw05 variants (case insensitive)
-  const aw05Keys = allKeys.filter(k => 
-    (k.includes('Aw05') || k.includes('AW05') || k.includes('aw05') || k.includes('Aw 05')) && 
-    k.includes('offline')
-  );
-  
-  if(aw05Keys.length === 0){
-    alert("❌ ડેટા મિલ્યો નહીં");
-    return;
-  }
-  
-  // Copy all variants to standard key
-  const sourceKey = aw05Keys[0];
-  const data = localStorage.getItem(sourceKey);
-  
-  localStorage.setItem('mdr_offline_Aw05', data);
-  alert("✅ ડેટા પુનર્સ્થાપિત થયો!\nાર હવે 'Aw05' લખીને શરૂ કરો");
-}
-
 function renderSetupPage(){
+  const sajoOptions = Object.keys(SAJO_CREDS).map(s => `<option value="${s}" ${s === currentSajo ? 'selected' : ''}>${s}</option>`).join('');
   return `<div class="setup-box">
-    <h2>🏢 આંગણવાડી કેન્દ્ર લોગિન</h2>
-    <p style="font-size:13px;color:#64748b;margin-bottom:15px">તમારો ડેટા અલગ રાખવા માટે કેન્દ્રનો કોડ નાખો.</p>
-    <input type="text" id="centerCodeInput" placeholder="દા.ત. Aw05" value="${centerCode}" autocomplete="off">
-    <button id="btnSubmitSetup">એપ શરૂ કરો ➔</button>
-    <button id="btnRestoreData" style="width:100%;padding:8px;background:#f39c12;color:#fff;border:none;border-radius:6px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;margin-top:8px">📥 ડેટા પુનર્સ્થાપિત કરો</button>
+    <h2>🌾 Sajo MDR System</h2>
+    <p style="font-size:11px;color:#64748b;margin-bottom:12px">સેજો અને કેન્દ્રનું નામ લખો</p>
+    
+    <label style="font-size:10px;font-weight:700;color:#475569;margin-bottom:4px;display:block">📍 સેજો</label>
+    <select id="sajoInput" style="width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:6px;font-family:inherit;font-size:11px;margin-bottom:12px">
+      ${sajoOptions}
+    </select>
+    
+    <label style="font-size:10px;font-weight:700;color:#475569;margin-bottom:4px;display:block">🏢 કેન્દ્રનું નામ</label>
+    <input type="text" id="centerNameInput" placeholder="દા.ત. પંચમહાલ અંગણવાડી" autocomplete="off" style="width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:6px;font-family:inherit;font-size:11px;box-sizing:border-box;margin-bottom:12px">
+    
+    <button id="btnStart" style="width:100%;padding:10px;background:#2563a8;color:#fff;border:none;border-radius:6px;font-weight:700;font-family:inherit;font-size:11px;cursor:pointer">🚀 શરૂ કરો</button>
   </div>`;
 }
 
@@ -1112,7 +1088,6 @@ function renderMonthlyPage(curMU){
 function renderBillPage(){
   const curMU = calcMonthUsage(state.calY, state.calM, state.ben);
   
-  // બિલ કેલ્ક્યુલેશન
   let fruitBenCount = 0;
   const dim = new Date(state.calY, state.calM+1, 0).getDate();
   for(let d=1; d<=dim; d++){
@@ -1125,54 +1100,12 @@ function renderBillPage(){
   }
 
   const bills = [
-    {
-      name: "🍎 ફ્રુટ બિલ",
-      desc: "સોમવાર અને શુક્રવાર",
-      qty: fruitBenCount,
-      rate: 3.12,
-      total: fruitBenCount * 3.12,
-      note: `${fruitBenCount} લાભાર્થી × ₹3.12`
-    },
-    {
-      name: "🥒 ગરમ નાસ્તો બિલ",
-      desc: "કુલ લાભાર્થી દીઠ",
-      qty: curMU.totalN,
-      rate: 1.30,
-      total: curMU.totalN * 1.30,
-      note: `${curMU.totalN} લાભાર્થી × ₹1.30`
-    },
-    {
-      name: "🫘 ચણા અને તુવેર દાળ બિલ",
-      desc: "ચણા + દાળ લાભાર્થી",
-      qty: (curMU['chananA'] || 0) + (curMU['dalnA'] || 0),
-      rate: 1.60,
-      total: ((curMU['chananA'] || 0) + (curMU['dalnA'] || 0)) * 1.60,
-      note: `${(curMU['chananA'] || 0) + (curMU['dalnA'] || 0)} લાભાર્થી × ₹1.60`
-    },
-    {
-      name: "🥬 શાકભાજી બિલ",
-      desc: "કુલ લાભાર્થી દીઠ",
-      qty: curMU.totalN,
-      rate: 0.15,
-      total: curMU.totalN * 0.15,
-      note: `${curMU.totalN} લાભાર્થી × ₹0.15`
-    },
-    {
-      name: "🌶️ મસાલા બિલ",
-      desc: "કુલ લાભાર્થી દીઠ",
-      qty: curMU.totalN,
-      rate: 1.00,
-      total: curMU.totalN * 1.00,
-      note: `${curMU.totalN} લાભાર્થી × ₹1.00`
-    },
-    {
-      name: "🚗 વાહતુક બિલ",
-      desc: "કુલ લાભાર્થી દીઠ",
-      qty: curMU.totalN,
-      rate: 0.05,
-      total: curMU.totalN * 0.05,
-      note: `${curMU.totalN} લાભાર્થી × ₹0.05`
-    }
+    { name: "🍎 ફ્રુટ બિલ", desc: "સોમવાર અને શુક્રવાર", qty: fruitBenCount, rate: 3.12, total: fruitBenCount * 3.12, note: `${fruitBenCount} લાભાર્થી × ₹3.12` },
+    { name: "🥒 ગરમ નાસ્તો બિલ", desc: "કુલ લાભાર્થી દીઠ", qty: curMU.totalN, rate: 1.30, total: curMU.totalN * 1.30, note: `${curMU.totalN} લાભાર્થી × ₹1.30` },
+    { name: "🫘 ચણા અને તુવેર દાળ બિલ", desc: "ચણા + દાળ લાભાર્થી", qty: (curMU['chananA'] || 0) + (curMU['dalnA'] || 0), rate: 1.60, total: ((curMU['chananA'] || 0) + (curMU['dalnA'] || 0)) * 1.60, note: `${(curMU['chananA'] || 0) + (curMU['dalnA'] || 0)} લાભાર્થી × ₹1.60` },
+    { name: "🥬 શાકભાજી બિલ", desc: "કુલ લાભાર્થી દીઠ", qty: curMU.totalN, rate: 0.15, total: curMU.totalN * 0.15, note: `${curMU.totalN} લાભાર્થી × ₹0.15` },
+    { name: "🌶️ મસાલા બિલ", desc: "કુલ લાભાર્થી દીઠ", qty: curMU.totalN, rate: 1.00, total: curMU.totalN * 1.00, note: `${curMU.totalN} લાભાર્થી × ₹1.00` },
+    { name: "🚗 વાહતુક બિલ", desc: "કુલ લાભાર્થી દીઠ", qty: curMU.totalN, rate: 0.05, total: curMU.totalN * 0.05, note: `${curMU.totalN} લાભાર્થી × ₹0.05` }
   ];
 
   const billCards = bills.map(b => `
@@ -1264,13 +1197,11 @@ function renderReportPage(){
     </tr>`;
   }).join("");
 
-  // Monthly date-wise
   const runBal={};
   ITEMS.forEach(it=>{ runBal[it.id]=state.inv[it.id].o+state.inv[it.id].r; });
   const totals={n:0};
   ITEMS.forEach(it=>{ totals[it.id+"M"]=0;totals[it.id+"A"]=0;totals[it.id]=0; });
   const dim=new Date(state.calY,state.calM+1,0).getDate();
-  // ✅ FIX 13: Build table rows with array join — faster than string concat
   const dateRowsArr = [];
   for(let d=1;d<=dim;d++){
     const k=dkf(state.calY,state.calM,d);
@@ -1342,8 +1273,6 @@ function renderReportPage(){
   const monthlyHtml=`<div class="card">
     <div class="section-head">📊 ${MONTHS_FULL[state.calM]} ${state.calY}</div>
     <div class="cal-head"><button id="prevM">‹</button><h3>${MONTHS_FULL[state.calM]} ${state.calY}</h3><button id="nextM">›</button></div>
-
-    <!-- Zoom toolbar — માત્ર table zoom -->
     <div class="zoom-toolbar">
       <label>🔍 Zoom:</label>
       <button class="zoom-btn" id="zoomOut">−</button>
@@ -1352,9 +1281,7 @@ function renderReportPage(){
       <span class="zoom-pct" id="zoomPct">70%</span>
       <button class="zoom-reset" id="zoomReset">Reset</button>
     </div>
-
     <div class="section-body" style="padding:8px">
-      <!-- તારીખવાર big table — zoomable -->
       <div class="zoomable-outer" id="zoomOuter" style="max-height:500px">
         <div class="zoomable-inner" id="zoomInner">
           <table style="min-width:1400px">
@@ -1366,8 +1293,6 @@ function renderReportPage(){
           </table>
         </div>
       </div>
-
-      <!-- Summary table — separate zoom -->
       <h4 style="color:#1a3c5e;margin:14px 0 4px;font-size:13px">📦 ઈ. સારાંશ</h4>
       <div class="zoom-toolbar" style="margin-bottom:4px">
         <label>🔍 Zoom:</label>
@@ -1409,7 +1334,7 @@ function renderReportPage(){
         <button style="padding:8px 14px;border:none;border-radius:6px;font-family:inherit;color:#fff;font-weight:700;cursor:pointer;background:#d97706" id="btnPDF">📄 Monthly PDF</button>
         <button style="padding:8px 14px;border:none;border-radius:6px;font-family:inherit;color:#fff;font-weight:700;cursor:pointer;background:#7c3aed" id="btnExport">💾 Export</button>
         <button style="padding:8px 14px;border:none;border-radius:6px;font-family:inherit;color:#fff;font-weight:700;cursor:pointer;background:#0891b2" id="btnImport">📂 Import</button>
-        <input type="file" id="fileImport" accept=".json, application/json" style="display:none">
+        <input type="file" id="fileImport" accept=".json" style="display:none">
       </div>
       <button id="btnLogout" style="padding:8px 14px;background:#cc3d3d;color:#fff;border:none;border-radius:6px;font-weight:700;cursor:pointer">🚪 કેન્દ્ર</button>
     </div></div>
@@ -1454,8 +1379,6 @@ function renderAdminPage(){
       🛡️ Admin Panel
       <button id="btnAdminLock" style="background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.35);padding:4px 10px;border-radius:6px;font-family:inherit;font-size:11px;font-weight:700;cursor:pointer">🔒 Lock</button>
     </div>
-
-    <!-- Stats -->
     <div class="stat-cards">
       <div class="stat-card"><div class="s-num">${uniqueCenters.length}</div><div class="s-lbl">🏢 કુલ કેન્દ્ર</div></div>
       <div class="stat-card"><div class="s-num">${logs.filter(l=>l.action==="NEW").length}</div><div class="s-lbl">🆕 New</div></div>
@@ -1463,14 +1386,10 @@ function renderAdminPage(){
       <div class="stat-card"><div class="s-num">${logs.filter(l=>String(l.timestamp||"").startsWith(today)).length}</div><div class="s-lbl">📅 આજ</div></div>
       <div class="stat-card"><div class="s-num">${logs.length}</div><div class="s-lbl">📋 Total Logs</div></div>
     </div>
-
-    <!-- Admin Tabs -->
     <div class="admin-tabs">
       <button class="admin-tab-btn ${isLogs?'active':''}" id="adminTabLogs">📋 Log Viewer</button>
       <button class="admin-tab-btn ${!isLogs?'active':''}" id="adminTabCon">📊 એકત્રીકરણ</button>
     </div>
-
-    <!-- Log Viewer Tab -->
     ${isLogs ? `
     ${uniqueCenters.length>0?`<div style="padding:10px 12px;background:#f0fdf4;border-top:1px solid #d1dce8"><b style="font-size:12px;color:#166534">🏢 Registered Centers (${uniqueCenters.length}):</b><div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:6px">${uniqueCenters.map(c=>`<span style="background:#dcfce7;color:#166534;border:1px solid #bbf7d0;border-radius:12px;padding:3px 10px;font-size:11px;font-weight:700">${c}</span>`).join("")}</div></div>`:""}
     <div class="log-filter">
@@ -1486,10 +1405,8 @@ function renderAdminPage(){
     </table></div>
     <div style="padding:8px 12px;font-size:11px;color:#64748b;background:#f8fafc;border-top:1px solid #d1dce8">${filtered.length}/${logs.length} entries</div>
     ` : `
-    <!-- Consolidation Tab -->
     ${buildConsolidationHTML()}
     `}
-
   </div></div>`;
 }
 
@@ -1512,7 +1429,7 @@ function renderModal(){
 }
 
 /* ============================================================
-   MAIN RENDER  — ✅ FIX 14: requestAnimationFrame = no jank
+   MAIN RENDER
 ============================================================ */
 let _renderPending = false;
 function render(){
@@ -1545,7 +1462,6 @@ function render(){
       const inp=document.getElementById('modalInput');
       if(inp){ inp.focus(); inp.select(); }
     }
-    // Report zoom init — after DOM is ready
     if(state.tab === 3 && !state.modal) initReportZoom();
   });
 }
@@ -1568,84 +1484,6 @@ function nextMonth(){ state.calM++; if(state.calM>11){state.calM=0;state.calY++;
 /* ============================================================
    SHARE / EXPORT / IMPORT
 ============================================================ */
-function generateReportPDF(){
-  if(typeof pdfMake === 'undefined'){
-    alert('❌ PDF loading... try again');
-    return;
-  }
-  
-  const today = new Date();
-  const todayK = dkf(today.getFullYear(), today.getMonth(), today.getDate());
-  const todayN = Number(state.ben[todayK] || 0);
-  const todayU = calcUsage(today.getDay(), todayN);
-  const curMU = calcMonthUsage(state.calY, state.calM, state.ben);
-  
-  // Daily report
-  const dailyTable = ITEMS.map(it => {
-    const iv = state.inv[it.id], opening = iv.o + iv.r;
-    const mor = morU(it.id, todayU), aft = aftU(it.id, todayU), tot = todayU[it.id] || 0;
-    return [it.name, todayN.toString(), fmt(opening,2), (mor||'—'), (aft||'—'), (tot||'—'), fmt(opening - tot/1000, 2)];
-  });
-  
-  // Monthly summary
-  const monthlyTable = ITEMS.map(it => {
-    const iv = state.inv[it.id], opening = iv.o + iv.r;
-    const mor = curMU[it.id + 'M'] || 0, aft = curMU[it.id + 'A'] || 0, tot = curMU[it.id] || 0;
-    return [it.name, fmt(mor), fmt(aft), fmt(opening), fmt(tot), fmt(opening - tot/1000, 2)];
-  });
-  
-  const docDef = {
-    pageSize: 'A4',
-    pageMargins: [20, 20, 20, 40],
-    header: {
-      text: '🌾 My Daily Report - ' + centerCode,
-      alignment: 'center',
-      fontSize: 12,
-      bold: true,
-      margin: [0, 0, 0, 8]
-    },
-    footer: (currentPage, pageCount) => ({
-      text: currentPage + ' / ' + pageCount,
-      alignment: 'center',
-      fontSize: 8
-    }),
-    content: [
-      {text: '📅 આજે - ' + today.getDate() + ' ' + MONTHS_FULL[today.getMonth()] + ' ' + today.getFullYear(), style: 'heading'},
-      {
-        table: {
-          headerRows: 1,
-          widths: ['20%', '10%', '12%', '10%', '10%', '10%', '13%'],
-          body: [
-            ['આઇટમ', 'લાભા.', 'ઊઘ. (kg)', 'સ. (g)', 'બ. (g)', 'કુલ (g)', 'સિલક (kg)'],
-            ...dailyTable
-          ]
-        },
-        margin: [0, 0, 0, 16]
-      },
-      
-      {text: '📊 ' + MONTHS_FULL[state.calM] + ' ' + state.calY + ' - સારાંશ', style: 'heading'},
-      {
-        table: {
-          headerRows: 1,
-          widths: ['20%', '12%', '12%', '13%', '13%', '15%'],
-          body: [
-            ['આઇટમ', 'સ. વ. (g)', 'બ. વ. (g)', 'ઊઘ. (kg)', 'કુલ (g)', 'સિલક (kg)'],
-            ...monthlyTable
-          ]
-        },
-        margin: [0, 0, 0, 0]
-      }
-    ],
-    
-    styles: {
-      heading: {fontSize: 10, bold: true, margin: [0, 10, 0, 8], color: '#1a3c5e'}
-    }
-  };
-  
-  pdfMake.createPdf(docDef).download(`mdr-report-${centerCode}-${today.toISOString().slice(0,10)}.pdf`);
-  setStatus('✅ PDF Downloaded!', '#1b8f57');
-}
-
 function shareReport(){
   const today=new Date(), todayK=dkf(today.getFullYear(),today.getMonth(),today.getDate());
   const todayN=Number(state.ben[todayK]||0), todayU=calcUsage(today.getDay(),todayN);
@@ -1678,7 +1516,6 @@ function generateMonthlyPDF(){
   const monthName = MONTHS_FULL[state.calM];
   const today = new Date();
   
-  // Bills calculation
   let fruitBenCount = 0;
   const dim = new Date(state.calY, state.calM+1, 0).getDate();
   for(let d=1; d<=dim; d++){
@@ -1700,19 +1537,13 @@ function generateMonthlyPDF(){
   ];
   
   const grandTotal = bills.reduce((sum, b) => sum + b.total, 0);
-  
-  // Inventory data
   const invRows = ITEMS.map(it => {
     const iv = state.inv[it.id];
     const opening = iv.o + iv.r;
     const used = (curMU[it.id] || 0) / 1000;
     return [it.name, fmt(opening,2), fmt(used,2), fmt(opening - used, 2)];
   });
-  
-  // Bill rows for PDF
   const billRows = bills.map(b => [b.name, b.qty, '₹' + fmt(b.rate, 2), '₹' + fmt(b.total, 2)]);
-  
-  // Meal summary - first 5 days as sample
   const mealRows = [];
   for(let d=1; d<=Math.min(5, dim); d++){
     const k = dkf(state.calY, state.calM, d);
@@ -1746,7 +1577,6 @@ function generateMonthlyPDF(){
         ],
         margin: [0, 0, 0, 12]
       },
-      
       {text: '📊 Monthly Summary', style: 'heading'},
       {
         table: {
@@ -1759,7 +1589,6 @@ function generateMonthlyPDF(){
         },
         margin: [0, 0, 0, 12]
       },
-      
       {text: '💰 Bills Summary', style: 'heading'},
       {
         table: {
@@ -1773,7 +1602,6 @@ function generateMonthlyPDF(){
         },
         margin: [0, 0, 0, 12]
       },
-      
       {text: '📦 Inventory Status', style: 'heading'},
       {
         table: {
@@ -1786,7 +1614,6 @@ function generateMonthlyPDF(){
         },
         margin: [0, 0, 0, 12]
       },
-      
       {text: '📅 Sample Meal Record', style: 'heading'},
       {
         table: {
@@ -1800,12 +1627,10 @@ function generateMonthlyPDF(){
         },
         margin: [0, 0, 0, 20]
       },
-      
       {text: 'અધિકૃત હસ્તાક્ષર', style: 'heading', margin: [0, 40, 0, 30]},
       {text: '_'.repeat(40), fontSize: 10, margin: [0, 0, 0, 5]},
       {text: 'Center-in-Charge', fontSize: 9, color: '#666'}
     ],
-    
     styles: {
       heading: {fontSize: 11, bold: true, margin: [0, 10, 0, 8], color: '#1a3c5e'}
     }
@@ -1814,69 +1639,33 @@ function generateMonthlyPDF(){
   pdfMake.createPdf(docDefinition).download(`mdr-${centerCode}-${monthName}-${state.calY}.pdf`);
   setStatus('✅ PDF Downloaded!', '#1b8f57');
 }
+
 function importBackup(file){
   const r=new FileReader();
   r.onload=e=>{
     try{
-      const text = e.target.result;
-      
-      // Try to parse JSON
-      let data;
-      try{
-        data = JSON.parse(text);
-      } catch(parseErr){
-        throw new Error('JSON parse failed: ' + parseErr.message);
-      }
-      
-      // Validate structure
-      if(!data.inv && !data.ben){
-        throw new Error('File must have "inv" or "ben" properties');
-      }
-      
-      // Import inventory
-      if(data.inv && typeof data.inv === 'object'){
-        state.inv = data.inv;
-      }
-      
-      // Import beneficiaries
-      if(data.ben && typeof data.ben === 'object'){
-        state.ben = data.ben;
-      }
-      
-      // Force save to localStorage
-      if(centerCode){
-        const dataToSave = {inv:state.inv, ben:state.ben, timestamp: new Date().toISOString()};
-        localStorage.setItem("mdr_offline_" + centerCode, JSON.stringify(dataToSave));
-      }
-      
-      invalidateCache(); 
-      render();
-      alert("✅ ડેટા import થયો!");
-    }catch(err){ 
-      console.error('Import error:', err);
-      alert("❌ Import failed:\n" + err.message); 
-    }
+      const data=JSON.parse(e.target.result);
+      if(data.inv) state.inv=data.inv;
+      if(data.ben) state.ben=data.ben;
+      invalidateCache(); saveState(); render();
+      alert("✅ Restore!");
+    }catch(_){ alert("❌ ખોટી file"); }
   };
-  r.onerror=()=>{ alert("❌ File read failed"); };
   r.readAsText(file);
 }
 
 /* ============================================================
    ZOOM HELPERS
-   — applyZoom(innerId, pctId, val) : sets CSS transform + label
-   — initZoom(wrapperId)            : attach after render
 ============================================================ */
 function applyZoom(innerId, pctId, val){
   val = Math.max(25, Math.min(200, val));
   const inner = document.getElementById(innerId);
   const pct   = document.getElementById(pctId);
-  // ✅ CSS zoom — sticky position works correctly (transform breaks sticky)
   if(inner) inner.style.zoom = (val/100);
   if(pct)   pct.textContent  = val + "%";
   return val;
 }
 
-// Wire a zoom toolbar set (slider + +/- buttons + reset)
 function initZoomSet(prefix, innerId, pctId, defaultVal){
   const slider  = document.getElementById(prefix+"Slider");
   const btnOut  = document.getElementById(prefix+"Out");
@@ -1895,7 +1684,6 @@ function initZoomSet(prefix, innerId, pctId, defaultVal){
   btnIn  && btnIn.addEventListener('click',  () => sync(cur + 10));
   btnRst && btnRst.addEventListener('click', () => sync(defaultVal || 100));
 
-  // Touch pinch-to-zoom on the outer container
   const outer = document.getElementById(innerId)?.parentElement;
   if(outer){
     let startDist = 0, startZoom = cur;
@@ -1913,16 +1701,13 @@ function initZoomSet(prefix, innerId, pctId, defaultVal){
       }
     },{passive:true});
   }
-
-  sync(cur); // apply default
+  sync(cur);
 }
 
-// Called after render whenever report tab is shown
 function initReportZoom(){
   if(state.rptTab === 'daily'){
     initZoomSet("zoom", "zoomInner", "zoomPct", 100);
   } else {
-    // sticky-c3 left = c1.width + c2.width (measured after paint)
     requestAnimationFrame(()=>{
       const tbl = document.querySelector('#zoomInner table');
       if(tbl){
@@ -1938,21 +1723,32 @@ function initReportZoom(){
 }
 
 /* ============================================================
-   EVENT DELEGATION  — single listener, fast
+   EVENT DELEGATION
 ============================================================ */
 document.addEventListener('click', e=>{
   const t=e.target;
-  // Setup
-  if(t.id==='btnSubmitSetup'){
-    const val=document.getElementById("centerCodeInput").value.trim();
-    if(!val){alert("⚠️ Code!");return;}
-    centerCode=val;
-    localStorage.setItem("anganwadi_center_code",centerCode);
-    sendLog('LOGIN',`Login — ${centerCode}`);
+  if(t.id==='btnStart'){
+    const sajo = document.getElementById("sajoInput").value.trim();
+    const name = document.getElementById("centerNameInput").value.trim();
+    if(!sajo){ alert("⚠️ સેજો પસંદ કર"); return; }
+    if(!name){ alert("⚠️ કેન્દ્રનું નામ લખો"); return; }
+    const key = 'sajo_' + sajo + '_centers';
+    const centers = JSON.parse(localStorage.getItem(key) || '[]');
+    let center = centers.find(c => c.name === name);
+    if(!center){
+      const code = sajo.slice(0,2).toUpperCase() + '-' + String(centers.length + 1).padStart(3, '0');
+      center = {name, code, createdAt: new Date().toISOString()};
+      centers.push(center);
+      localStorage.setItem(key, JSON.stringify(centers));
+    }
+    currentSajo = sajo;
+    centerCode = center.code;
+    localStorage.setItem('current_sajo', sajo);
+    localStorage.setItem('anganwadi_center_code', centerCode);
+    sendLog('LOGIN', `Sajo: ${sajo} | Center: ${name}`);
     bootApp();
     return;
   }
-  // Admin
   if(t.id==='adminPwdBtn'){
     const inp=document.getElementById("adminPwdInput");
     if(inp&&inp.value===ADMIN_PASSWORD){ state.adminUnlocked=true; fetchLogs(); }
@@ -1961,27 +1757,13 @@ document.addEventListener('click', e=>{
   }
   if(t.id==='btnAdminLock'){ state.adminUnlocked=false; render(); return; }
   if(t.id==='btnRefreshLogs'){ fetchLogs(); return; }
-  // Admin tabs
   if(t.id==='adminTabLogs'){ state.adminTab="logs"; render(); return; }
   if(t.id==='adminTabCon'){
-    state.adminTab="consolidation"; 
-    if(!state.con.centers.length && !state.con.loading){
-      state.con.sajoFilter = currentSajo;
-      loadSajoWiseCenters();
-    } else {
-      render();
-    }
+    state.adminTab="consolidation"; render();
+    if(!state.con.centers.length && !state.con.loading) fetchAllCenters();
     return;
   }
-  // Consolidation
-  if(t.id==='btnFetchCenters'){ 
-    if(state.con.sajoFilter === 'All Centers'){
-      fetchAllCenters();
-    } else {
-      loadSajoWiseCenters();
-    }
-    return; 
-  }
+  if(t.id==='btnFetchCenters'){ fetchAllCenters(); return; }
   if(t.id==='btnExportCon'){ exportConsolidationCSV(); return; }
   if(t.id==='btnApplyFilter'){
     state.logFilter.center=document.getElementById("filterCenter")?.value||"";
@@ -1989,7 +1771,6 @@ document.addEventListener('click', e=>{
     state.logFilter.date=document.getElementById("filterDate")?.value||"";
     render(); return;
   }
-  // Logout
   if(t.id==='btnLogoutHeader'||t.id==='btnLogout'){
     if(confirm("Logout?")){
       sendLog('LOGOUT',`Logout — ${centerCode}`);
@@ -2005,15 +1786,11 @@ document.addEventListener('click', e=>{
       render();
     } return;
   }
-  // Nav tabs
   if(t.matches('#nav button')){ state.tab=Number(t.dataset.tab); render(); return; }
-  // Month nav
   if(t.id==='prevM'){ prevMonth(); return; }
   if(t.id==='nextM'){ nextMonth(); return; }
-  // Calendar cell
   const cell=t.closest('.cal-cell');
   if(cell&&cell.dataset.day){ openModal(Number(cell.dataset.day)); return; }
-  // Modal
   if(t.id==='modalCancel'){ closeModal(); return; }
   if(t.id==='modalSave'){ saveModal(); return; }
   if(t.id==='modalClear'){ clearModal(); return; }
@@ -2023,41 +1800,15 @@ document.addEventListener('click', e=>{
   if(t.id==='btnShareM'){ shareMonthly(); return; }
   if(t.id==='btnPDF'){ generateMonthlyPDF(); return; }
   if(t.id==='btnExport'){ exportBackup(); return; }
-  if(t.id==='btnImport'){ 
-    const fileInput = document.getElementById('fileImport');
-    if(fileInput){
-      fileInput.value = ''; // Clear previous value
-      fileInput.click();
-    }
-    return; 
-  }
+  if(t.id==='btnImport'){ document.getElementById('fileImport').click(); return; }
 });
-
-// File import handler - Mobile compatible
-const fileImportInput = document.getElementById('fileImport');
-if(fileImportInput){
-  fileImportInput.addEventListener('change', function(e){
-    if(this.files && this.files[0]){
-      importBackup(this.files[0]);
-      this.value = '';
-    }
-  });
-}
-
-// Fallback handler for different event types
-document.addEventListener('change', function(e){
-  if(e.target && e.target.id === 'fileImport' && e.target.files && e.target.files[0]){
-    importBackup(e.target.files[0]);
-    e.target.value = '';
-  }
-}, true);
 
 document.addEventListener('input', e=>{
   const t=e.target;
   if(t.matches('input[data-inv]')){
     state.inv[t.dataset.inv][t.dataset.field] = parseFloat(t.value)||0;
     invalidateCache();
-    scheduleSave(); // ✅ Debounced — no rapid save on every key
+    scheduleSave();
   }
   if(t.id==='modalInput') state.modalVal=t.value;
   if(t.id==='fileImport'&&t.files&&t.files[0]){ importBackup(t.files[0]); t.value=""; }
@@ -2065,28 +1816,9 @@ document.addEventListener('input', e=>{
 
 document.addEventListener('change', e=>{
   if(e.target.matches('input[data-inv]')) render();
-  // Consolidation month/year/sajo selector
+  if(e.target.id==='conSelSajo'){ state.con.selSajo=e.target.value; render(); }
   if(e.target.id==='conSelY'){ state.con.selY=parseInt(e.target.value); render(); }
   if(e.target.id==='conSelM'){ state.con.selM=parseInt(e.target.value); render(); }
-  if(e.target.id==='conSelSajo'){ 
-    state.con.sajoFilter=e.target.value;
-    if(e.target.value === 'All Centers'){
-      fetchAllCenters();
-    } else {
-      // Load centers for selected Sajo
-      const key = 'sajo_' + e.target.value + '_centers';
-      const localCenters = JSON.parse(localStorage.getItem(key) || '[]');
-      state.con.centers = localCenters.map(c => ({
-        centerCode: c.code,
-        centerName: c.name,
-        sajo: e.target.value,
-        inv: JSON.parse(localStorage.getItem('mdr_offline_' + c.code) || '{}').inv || {},
-        ben: JSON.parse(localStorage.getItem('mdr_offline_' + c.code) || '{}').ben || {}
-      }));
-      state.con.loading = false;
-      render();
-    }
-  }
 });
 
 document.addEventListener('keydown', e=>{
@@ -2096,16 +1828,14 @@ document.addEventListener('keydown', e=>{
 });
 
 /* ============================================================
-   BOOT  — ✅ instant local first, cloud in background
+   BOOT
 ============================================================ */
 if(centerCode){ bootApp(); } else { render(); }
 
-// ✅ Periodic sync check every 30 seconds (જો queue હોય તો)
 setInterval(() => {
   if(centerCode && isOnline && syncQueue.length > 0){
     processSyncQueue();
   }
-  // Check network status
   if(navigator.onLine !== isOnline){
     isOnline = navigator.onLine;
     if(isOnline){
@@ -2117,38 +1847,14 @@ setInterval(() => {
   }
 }, 30000);
 
-/* ============================================================
-   SERVICE WORKER — OPTIONAL (offline caching)
-   Note: If SW fails, offline-first sync queue still works via localStorage
-============================================================ */
-// SW is optional - core offline functionality works with localStorage
-if('serviceWorker' in navigator && navigator.onLine !== undefined){
-  window.addEventListener('load', ()=>{
-    // Disabled in some environments, but not critical
-    // Offline-first queue already handles sync via localStorage
-  });
-}
-
-// Mobile install prompt - optional feature
-if(window.beforeinstallprompt){
-  let deferredPrompt;
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    const msg = '📲 Home screen પર add કરો!';
-    setStatus(msg, '#2563a8');
-    setTimeout(() => {
-      if(centerCode && deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-          if(choiceResult.outcome === 'accepted') {
-            setStatus('✅ App installed!', '#1b8f57');
-          }
-          deferredPrompt = null;
-        });
-      }
-    }, 3000);
-  });
+const CURRENT_VERSION='2.5.1';
+const STORED_VERSION=localStorage.getItem('app_version');
+if(STORED_VERSION!==CURRENT_VERSION){
+  console.log('✅ App updated to v'+CURRENT_VERSION+' - clearing cache...');
+  localStorage.setItem('app_version',CURRENT_VERSION);
+  if('caches' in window){
+    caches.keys().then(names=>names.forEach(n=>caches.delete(n)));
+  }
 }
 </script>
   <footer style="text-align: center; margin: 20px 0; clear: both; display: block; position: relative; z-index: 9999;">
